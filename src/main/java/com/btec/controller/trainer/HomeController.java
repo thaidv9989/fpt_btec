@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,11 +48,16 @@ public class HomeController {
 	      return mav;
 	   }
 	
-	@RequestMapping(value = "/trainer/update-profile", method = RequestMethod.GET)
-	   public ModelAndView updateProfile(@RequestParam("username") String username) {
+	@RequestMapping(value = "/trainer/{username}", method = RequestMethod.GET)
+	   public ModelAndView updateProfile(@PathVariable String username,@RequestParam(required = false) Boolean success, HttpServletRequest request) {
 	      ModelAndView mav = new ModelAndView("trainer/updateprofile");
 	      UserDTO userinfo = new UserDTO();
 	      userinfo = userService.findOne(username);
+	      if (request.getParameter("message") != null) {
+				Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
+				mav.addObject("message", message.get("message"));
+				mav.addObject("alert", message.get("alert"));
+			}
 	      mav.addObject("userinfo", userinfo);
 	      return mav;
 	   }

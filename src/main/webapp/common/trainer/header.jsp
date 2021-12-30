@@ -23,9 +23,7 @@
 							alt="" /> <span class="btn-user-element"><%=SecurityUtils.getPrincipal().getFullName()%></span> <i
 							class="fas fa-chevron-down btn-user-element"></i>
 					</button>
-					<c:url var="updateProfileURL" value="/trainer/update-profile">
-						<c:param name="username" value="<%=SecurityUtils.getPrincipal().getUsername()%>"/>
-					</c:url>
+					<c:url var="updateProfileURL" value="<%=SecurityUtils.getPrincipal().getUsername()%>"/>
 					<div id="drop" class="header-sub-nav">
 						<a href="${updateProfileURL}"><i class="fas fa-user-cog"></i>
 							<span>Settings</span></a> <a href="<c:url value='/logout'/>"><i
@@ -38,7 +36,7 @@
 						<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 						<img class="img-user-sidenav"
 							src="<c:url value='/template/assets/images/user-img.jpg' />"
-							alt="" /> <a href="update-profile.html"><i
+							alt="" /> <a href="${updateProfileURL}"><i
 							class="fas fa-user-cog"></i> <span>Settings</span></a> <a href="<c:url value='/logout'/>"><i
 							class="fas fa-sign-out-alt"></i> <span>Log out</span></a>
 					</div>

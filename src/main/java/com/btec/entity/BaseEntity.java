@@ -1,5 +1,6 @@
 package com.btec.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -19,11 +20,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseEntity {
 	@Column(name = "createddate")
 	@CreatedDate
-	private LocalDateTime createdDate;
+	private Timestamp createdDate;
 	
 	@Column(name = "modifieddate")
 	@LastModifiedDate
-	private LocalDateTime modifiedDate;
+	private Timestamp modifiedDate;
 	
 	@Column(name = "createdby")
 	@CreatedBy
@@ -33,27 +34,19 @@ public abstract class BaseEntity {
 	@LastModifiedBy
 	private String modifiedBy;
 
-//	public Date getCreatedDate() {
-//		return createdDate;
-//	}
-//
-//	public Date getModifiedDate() {
-//		return modifiedDate;
-//	}
-
-	public LocalDateTime getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public LocalDateTime getModifiedDate() {
+	public Timestamp getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(LocalDateTime modifiedDate) {
+	public void setModifiedDate(Timestamp modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 

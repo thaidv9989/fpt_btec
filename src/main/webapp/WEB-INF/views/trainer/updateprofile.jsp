@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
     <%@include file="/common/taglib.jsp"%>
     <%@ page import="com.btec.util.SecurityUtils" %>
+<c:url var="userAPI" value="/api/user"/>
+<c:url var="updateProfileURL" value="/trainer"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,8 +28,13 @@
                 Update profile
               </button>
             </div>
+            <c:if test="${not empty message}">
+				<div class="alert alert-${alert}">
+					<strong>${message}!</strong>
+				</div>
+	      	</c:if>
             <div id="update-profile">
-              <form:form role="form" id="formUpdateProfile" modelAttribute="userinfo">
+              <form:form role="form" id="formUpdateProfile" modelAttribute="userinfo" enctype="multipart/form-data">
                 <table class="table-user-info">
                   <tr>
                     <th>Full Name</th>
@@ -39,22 +46,19 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>Password</th>
-                    <td>
-                      <input type="password"
-                        class="input-user-info"
-                        name="password"
-                        value="<%=SecurityUtils.getPrincipal().getPassword()%>"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
                     <th>Email Address</th>
                     <td>
                       <form:input
                         cssClass="input-user-info"
                         path="email"
                       />
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Gender</th>
+                    <td>
+                      Male <form:radiobutton path="gender" value="m"/>
+                      Female <form:radiobutton path="gender" value="f"/>
                     </td>
                   </tr>
                   <tr>
@@ -70,6 +74,7 @@
                     <th>Date Of Birth</th>
                     <td>
                       <form:input
+                      	type="date"
                         cssClass="input-user-info"
                         path="dob"
                       />
@@ -84,31 +89,32 @@
                       </select>
                     </td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <th>Decription</th>
                     <td>
                       <div id="editor">
-                        <!-- <textarea class="input-user-info" name="user-desc" style="resize: none;" id="" cols="30" rows="5"></textarea> -->
+                        <textarea class="input-user-info" name="user-desc" style="resize: none;" id="" cols="30" rows="5"></textarea>
                       </div>
                     </td>
-                  </tr>
+                  </tr> -->
                   <tr>
                     <th>Avatar</th>
                     <td>
-                      <input class="input-user-info" type="file" mutiple />
+                      <form:input type="file" path="avatar"/>
                     </td>
                   </tr>
                   <tr>
                     <th></th>
                     <td>
-                      <button class="btn btn-update-profile">
+                      <button id="btnUpdateProfile" class="btn btn-update-profile">
                         Update Profile
                       </button>
-                      <button class="btn btn-cancel-update-profile">
+                      <button type="button" onclick="history.back()" class="btn btn-cancel-update-profile">
                         Cancel
                       </button>
                     </td>
                   </tr>
+                  <form:hidden path="username"/>
                 </table>
               </form:form>
             </div>
@@ -192,5 +198,37 @@
           </div>
         </div>
       </div>
+      <script type="text/javascript">
+      $('#btnUpdateProfile').click(function(e) {
+			e.preventDefault();
+			var data = {};
+			var formData = $('#formUpdateProfile').serializeArray();
+			$.each(formData, function (i, v) {
+	            data[""+v.name+""] = v.value;
+	        });
+		    var username = $('#username').val();
+		    if (username == "") {
+		    	addAsm(data);
+		    } else {
+		    	updateProfile(data);
+		    }
+		});
+      
+      function updateProfile(data) {
+			$.ajax({
+	            url: '${userAPI}',
+	            type: 'PUT',
+	            contentType: 'application/json',
+	            data: JSON.stringify(data),
+	            dataType: 'json',
+	            success: function (result) {
+	            	window.location.href = "${updateProfileURL}/"+result.username+"?success=true&message=update_success";
+	            },
+	            error: function (error) {
+	            	window.location.href = "${contentdetailURL}?classId="+result.classId+"&asmId="+result.asmId+"&message=error_system";
+	            }
+	        });
+		}
+      </script>
 </body>
 </html>

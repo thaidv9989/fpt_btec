@@ -81,25 +81,16 @@ public class UserService implements IUserService {
 	@Override
 	public UserDTO save(UserDTO dto) {
 		// TODO Auto-generated method stub
-//		UserEntity userEntity = new UserEntity();
-//		UserEntity oldUser = userRepository.findOne(dto.getUsername());
-//		if (oldUser != null) {
-//			userEntity = userConverter.toEntity(oldUser,dto);
-//		}
-//		else
-//		{
-//			userEntity = userConverter.toEntity(dto);
-//		}
-//		return userConverter.toDto(userRepository.save(userEntity));
-		/*
-		 * UserEntity userEntity = new UserEntity(); if(dto.getUsername() != null) {
-		 * UserEntity oldUser = userRepository.findOne(dto.getUsername()); userEntity =
-		 * userConverter.toEntity(oldUser,dto); }else { userEntity =
-		 * userConverter.toEntity(dto); } return
-		 * userConverter.toDto(userRepository.save(userEntity));
-		 */
-		
-		return userConverter.toDto(userRepository.save(userConverter.toEntity(dto)));
+		UserEntity userEntity = new UserEntity();
+		UserEntity oldUser = userRepository.findOne(dto.getUsername());
+		if (oldUser != null) {
+			userEntity = userConverter.toEntity(oldUser,dto);
+		}
+		else
+		{
+			userEntity = userConverter.toEntity(dto);
+		}
+		return userConverter.toDto(userRepository.save(userEntity));
 	}
 	@Override
 	public boolean delete(String usernames) {

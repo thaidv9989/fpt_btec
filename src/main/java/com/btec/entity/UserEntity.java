@@ -37,6 +37,15 @@ public class UserEntity extends BaseEntity {
 
 	@Column(name = "dob")
 	private Date dob;
+	
+	@Column(name = "gender", columnDefinition="char(1)")
+	private String gender;
+	
+	@Column(name = "country")
+	private String country;
+
+	@Column(name = "avatar")
+	private String avatar;
 
 	@Column(name = "status")
 	private Integer status;
@@ -132,4 +141,29 @@ public class UserEntity extends BaseEntity {
 		this.roles = roles;
 	}
 
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	
 }

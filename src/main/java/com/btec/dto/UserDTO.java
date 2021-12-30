@@ -7,6 +7,9 @@ public class UserDTO extends AbstractDTO<UserDTO> {
 	private String password;
 	private String fullName;
 	private String phoneNumber;
+	private String gender;
+	private String avatar;
+	private String country;
 	private String email;
 	private Date dob;
 	public String getUsername() {
@@ -53,7 +56,24 @@ public class UserDTO extends AbstractDTO<UserDTO> {
 		RoleId = roleId;
 	}
 	private Long RoleId;
-	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
 	@Override
 	public String toString() {
 		return "UserDTO [username=" + username + ", password=" + password + ", fullName=" + fullName + ", phoneNumber="
