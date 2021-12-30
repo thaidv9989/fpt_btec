@@ -1,0 +1,68 @@
+#update-profile table th {
+  width: 30%;
+  text-align: right;
+}
+#update-profile table td {
+  width: 70%;
+  text-align: left;
+}
+
+#update-profile table td,
+th {
+  box-sizing: border-box;
+  padding: 8px 16px;
+}
+#update-profile .table-user-info {
+  width: 100%;
+}
+#update-profile table .input-user-info {
+  box-sizing: border-box;
+  padding: 4px 6px;
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #555;
+  border: 1px solid #cccccc;
+  min-width: 50%;
+  border-radius: 4px;
+  margin: 10px 0;
+  box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px 0px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#update-profile table .input-user-info:focus {
+  box-shadow: 0 0 5pt 0.5pt #ff7f50;
+  outline-width: 0px;
+}
+
+#update-profile table .btn-update-profile,
+#update-profile table .btn-cancel-update-profile {
+  border-radius: 4px;
+  border: 1px solid #4b8f29;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #5b8a3c;
+  font-family: Nunito;
+}
+
+#update-profile table .btn-update-profile:hover,
+#update-profile table .btn-cancel-update-profile:hover {
+    background-color: #000;
+    opacity: 1;
+}
+
+#update-profile table .btn-cancel-update-profile {
+    box-shadow: 0px 10px 14px -7px #FF7F50;
+  background-color: #f44336 !important;
+}
+
+#update-profile table .btn-update-profile {
+    box-shadow: 0px 10px 14px -7px #3e7327;
+    background-color: #72b352!important;
+}

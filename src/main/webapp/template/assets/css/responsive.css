@@ -1,0 +1,205 @@
+/* Responsive Web */
+
+@media all and (min-width: 48em) and (max-width: 75em) {
+  #top {
+    width: 900px;
+  }
+  #navigation {
+    padding: 0 calc((100% - 900px) / 2);
+  }
+}
+
+@media all and (min-width: 20em) and (max-width: 48em) {
+  /* Start Header Top */
+
+  #top {
+    display: block;
+    width: 100%;
+  }
+
+  .header-user {
+      position: absolute;
+      top: 0;
+      right: 0;
+  }
+
+  .header-logo {
+      margin-top: 72px;
+  }
+
+  #top .img-logo {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .drop-user .btn-drop-user {
+      display: none;
+  }
+
+  .btn-side-nav {
+      display: flex;
+  }
+
+  /* Navigation */
+
+  #navigation {
+    position: relative;
+    font-family: Nunito, sans-serif;
+  }
+
+  #navigation .nav-icon {
+    float: right;
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    box-sizing: border-box;
+    padding: 4px;
+    font-size: 32px;
+    color: #000;
+    font-weight: 700;
+  }
+
+  #nav li:not(:first-child) {
+    display: none;
+  }
+
+  #nav > li {
+    display: block;
+    overflow: hidden;
+  }
+
+  #navigation.responsive {
+    position: relative;
+  }
+  #navigation.responsive .nav-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  #navigation.responsive li {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  #navigation.responsive li a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  #navigation.responsive .subnav {
+    /* display: block; */
+    position: relative;
+  }
+
+  #nav .subnav {
+    padding: 8px 30px;
+    border-radius: 0;
+  }
+
+  .search-nav {
+    float: none;
+    width: 100%;
+  }
+
+  .search-nav input#search {
+    width: 100%;
+  }
+
+  .search-nav:hover button.icon, .search-nav:active button.icon, .search-nav:focus button.icon {
+    margin-left: -45px;
+  }
+
+  /* End Navigation */
+
+  /* Start Content */
+
+  #content {
+    margin: 0;
+  }
+
+  #main-content {
+    display: block;
+  }
+
+  #main-content .right-content {
+    width: 100%;
+    border: none;
+  }
+
+  #nav {
+    display: block;
+  }
+
+  #sidebar {
+    max-width: 100%;
+  }
+
+  /* Manage Class */
+
+  .col-two {
+    width: 100%;
+  }
+
+  /* Class Overview */
+
+  .tab-content {
+    min-height: 470px;
+  }
+
+  #main-content .tablink {
+    display: inline-block;
+    padding: 8px 8px;
+  }
+
+  #asm-info, .content-overview-btn {
+    width: 100%;
+  }
+
+  /* Content Overview */
+
+  .sub-asm {
+    font-size: 80%;
+  }
+  
+  .sub-asm tr > *:nth-child(5) {
+    min-width: 60px;
+  }
+
+  .sub-asm tr > *:nth-child(4) {
+    display: none;
+  }
+
+  /* View Sub Asm */
+
+  embed.sub-asm {
+    height: 500px;
+  }
+  #sub-asm-grade {
+    box-sizing: border-box;
+    padding: 8px 8px 32px;
+  }
+
+  /* Index Trainer */
+
+  .container-slides {
+    min-height: 200px;
+  }
+  /* Start Footer */
+
+  #footer {
+      padding: 20px;
+      font-size: 80%;
+  }
+
+  .footer-wrap {
+      display: block;
+  }
+
+  #footer .footer {
+      width: 100%;
+  }
+}

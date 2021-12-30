@@ -1,0 +1,22 @@
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+
+.alert-danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
+.alert {
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 4px;
+  position: absolute;
+  top: 40px;
+  left: 35%;
+  postion: fixed;
+  min-width: 30%;
+}

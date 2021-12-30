@@ -1,0 +1,182 @@
+/* Calendar */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+#calendari table button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+#calendari {
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+  height: 310px;
+  width: 100%;
+  font-size: 14px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
+}
+#calendari table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+#calendari table.actiu {
+  transform: translateX(0px) top;
+}
+#calendari table.inactiu {
+  transition: all 0.3s 0.01s ease;
+}
+#calendari table.amagat-esquerra {
+  transform: translateX(-299px);
+}
+#calendari table.amagat-dreta {
+  transform: translateX(300px);
+}
+#calendari table td,
+th {
+  text-align: center;
+  background-color: #fff;
+}
+#calendari table th {
+  padding: 10px;
+}
+#calendari table tr:first-child th {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  border-left: none;
+  border-top: none;
+}
+#calendari table td:last-child,
+#calendari table th:last-child {
+  border-right: none;
+}
+
+#calendari table th {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #009688;
+  color: #fff;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  font-weight: normal;
+}
+#calendari table th .any {
+  font-size: 12px;
+  font-weight: normal;
+  display: block;
+  text-shadow: none;
+  color: rgba(0, 0, 0, 0.4);
+}
+#calendari table tr:nth-child(2) th {
+  padding: 5px;
+}
+#calendari table td {
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+#calendari table td > span {
+  color: #000;
+  padding: 10px;
+  display: block;
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+}
+
+#calendari table td:nth-child(even) > span {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+td:last-child > span,
+td:nth-child(6) > span {
+  color: #000;
+}
+#calendari table td.avui > span {
+  font-weight: bold;
+  background-color: #fc951e;
+  color: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+td.fora > span {
+  opacity: 0.2;
+}
+#calendari table td > span:hover {
+  background: #ffa742;
+  color: #fff;
+}
+#calendari table .boto-next,
+#calendari table .boto-prev {
+  background: rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-family: inherit;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: inherit;
+  padding: 2px 10px 5px 10px;
+  line-height: 1px;
+  height: 30px;
+  width: 30px;
+  vertical-align: middle;
+  border-radius: 100%;
+  position: absolute;
+  top: 15px;
+}
+#calendari table .boto-next {
+  right: 10px;
+  padding-left: 13px;
+}
+#calendari table .boto-prev {
+  left: 10px;
+  padding-right: 13px;
+}
+#calendari table .boto-next:hover,
+.boto-prev:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+#calendari table button:hover {
+  cursor: pointer;
+}
+#calendari table button:focus {
+  outline: none;
+}
+
+#calendari table footer {
+  text-align: center;
+  color: #ddd;
+  background-color: #009688;
+  font-weight: normal;
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
+  padding: 20px;
+}
+
+#calendari table footer a,
+footer a:link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.calendar-title {
+  font-size: 30px;
+  font-weight: 700px;
+  color: #009688;
+}
+
+.fa-calendar-alt {
+  padding-right: 10px;
+}
+/* End calendar */
