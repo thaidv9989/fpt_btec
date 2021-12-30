@@ -32,7 +32,7 @@
                     function getClasses(){
                         $.ajax({
                             type : "GET",
-                            url  : "http://localhost:8080/cms-btec/trainee-api/classes",
+                            url  : "http://localhost:8083/cms-btec/trainee-api/classes",
                             success: function (res) {
                                 console.log(res)
                                 let data = ""
@@ -51,7 +51,7 @@
                     function searchClasses(){
                             $.ajax({
                                 type : "GET",
-                                url  : "http://localhost:8080/cms-btec/trainee-api/classes?subjectName="+$('#search-input').val(),
+                                url  : "http://localhost:8083/cms-btec/trainee-api/classes?subjectName="+$('#search-input').val(),
                                 success: function (res) {
                                     let data = ""
                                     res.forEach(c => {

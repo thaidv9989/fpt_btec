@@ -3,7 +3,7 @@
 	<%@include file="/common/taglib.jsp"%>
 <c:url var="classAPI" value="/api/class"/>
 <c:url var="homeURL" value="/staff/home"/>
-<c:url var="staffmanageclassURL" value="/staff/manageclass?page=1&limit=4"/>
+<c:url var="staffmanageclassURL" value="/staff/manageclass?page=1&limit=6"/>
 <c:url var="staffaddclassURL" value="/staff/edit"/>
 <!DOCTYPE html>
 <html>
@@ -162,10 +162,10 @@
 				data : JSON.stringify(data),
 				dataType : 'json',
 				success : function(result) {
-					window.location.href = "${staffaddclassURL}";
+					window.location.href = "${contentdetailURL}?classId="+result.classId+"&message=insert_success";
 				},
 				error : function(error) {
-					window.location.href = "${staffmanageclassURL}?page=1&limit=6&message=error_system";
+					window.location.href = "${staffaddclassURL}&message=error_system";
 				}
 			});
 		}

@@ -1,5 +1,7 @@
 package com.btec.converter;
 
+import java.sql.Timestamp;
+
 import org.springframework.stereotype.Component;
 
 import com.btec.dto.UserDTO;
@@ -14,9 +16,9 @@ public class UserConverter {
 		result.setPassword(entity.getPassword());
 		result.setFullName(entity.getFullName());
 		result.setModifiedBy(entity.getModifiedBy());
-		result.setModifiedDate(entity.getModifiedDate());
+		result.setModifiedDate(new Timestamp(entity.getModifiedDate().getTime()));
 		result.setCreatedBy(entity.getCreatedBy());
-		result.setCreatedDate(entity.getCreatedDate());
+		result.setCreatedDate(new Timestamp(entity.getCreatedDate().getTime()));
 		result.setDob(entity.getDob());
 		result.setEmail(entity.getEmail());
 		result.setPhoneNumber(entity.getPhoneNumber());

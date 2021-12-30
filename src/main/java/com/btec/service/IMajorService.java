@@ -21,4 +21,6 @@ public interface IMajorService {
 	List<MajorDTO> searchByMajorID(Long id);
 	
 	MajorDTO findById(Long id);
+	
+	Boolean isExsist(String name);
 }

@@ -77,5 +77,10 @@ public class MajorService implements IMajorService {
 	public MajorDTO findById(Long id) {
 		return MajorConverter.toDTO(majorRepository.getOne(id));
 	}
-
+	
+	@Override
+	public Boolean isExsist(String name) {
+		MajorEntity major = majorRepository.findAll().stream().filter(m -> m.getMajorName().equals(name)).findFirst().orElse(null);
+		return major != null ? true : false;
+	}
 }

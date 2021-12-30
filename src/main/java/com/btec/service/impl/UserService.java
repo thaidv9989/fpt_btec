@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.btec.converter.ClassConverter;
 import com.btec.converter.UserConverter;
+import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
 import com.btec.entity.UserEntity;
 import com.btec.repository.RoleRepository;
@@ -26,6 +28,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private ClassConverter classConverter;
 	
 	@Autowired UserConverter userConverter;
 	
@@ -107,11 +112,9 @@ public class UserService implements IUserService {
 		return false;
 	}
 	@Override
-	public Object getClassesOfTrainee(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ClassDTO> getClassesOfTrainee(String username){
+		return userRepository.findOne(username).getClassuser().stream().map(c -> ClassConverter.toDto(c)).collect(Collectors.toList());
 	}
-
 //	@Override
 //	public boolean delete(String usernames) {
 //		for (String username: usernames) {

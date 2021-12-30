@@ -180,7 +180,7 @@ $(function() {
 		startPage : currentPage,
 		onPageClick : function(event, page) {
 			if (currentPage != page) {
-				$('#limit').val(4);
+				$('#limit').val(6);
 				$('#page').val(page);
 				$('#formSubmit').submit();
 			}

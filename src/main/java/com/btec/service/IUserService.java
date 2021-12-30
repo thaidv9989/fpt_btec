@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.data.domain.Pageable;
 
 import com.btec.dto.AsmDTO;
+import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
 
 public interface IUserService {
@@ -17,5 +18,5 @@ public interface IUserService {
 	UserDTO save(UserDTO dto);
 	List<UserDTO> findAll();
 	boolean delete(String usernames);
-	Object getClassesOfTrainee(String username);
+	List<ClassDTO> getClassesOfTrainee(String username);
 }

@@ -76,6 +76,8 @@
                         $("#buttonUpload").hide();
                     }
 
+
+
                     $("#formEdit").on("submit", function (e){
                         e.preventDefault();
                         let a = $("#fileEdit").val().split(".").pop()
@@ -84,7 +86,7 @@
                         if(a === b){
                             $.ajax({
                                 type: "POST",
-                                url: "http://localhost:8080/cms-btec/trainee-api/upload",
+                                url: "http://localhost:8083/cms-btec/trainee-api/upload",
                                 data: new FormData(this),
                                 enctype: 'multipart/form-data',
                                 processData: false,
@@ -115,7 +117,7 @@
                     function getSubmissionInfo(){
                         $.ajax({
                             type: "GET",
-                            url: "http://localhost:8080/cms-btec/trainee-api/submission-info?asmId="+$("#asmId").val(),
+                            url: "http://localhost:8083/cms-btec/trainee-api/submission-info?asmId="+$("#asmId").val(),
                             success: function (res){
                                 if(res == ""){
                                     $("#formUpload").show()
@@ -136,7 +138,7 @@
                                             $("#submit-grade").text(res.grade)
                                         }
                                         $("#buttonUpload").show();
-                                        $("#submit-file").text(res.fileName);
+                                        $("#submit-file").text(res.fileName.split("-").pop());
                                         $("#subAsmId").val(res.subAsmId);
                                     }
                                 }
@@ -150,7 +152,7 @@
                     function submitAsm(json){
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/cms-btec/trainee-api/submit-asm",
+                            url: "http://localhost:8083/cms-btec/trainee-api/submit-asm",
                             data: JSON.stringify(json),
                             contentType: "application/json",
                             success: function (res) {
@@ -164,7 +166,7 @@
                     function editAsm(json){
                         $.ajax({
                             type: "POST",
-                            url: "http://localhost:8080/cms-btec/trainee-api/edit-asm",
+                            url: "http://localhost:8083/cms-btec/trainee-api/edit-asm",
                             data: JSON.stringify(json),
                             contentType: "application/json",
                             success: function (res) {
@@ -179,11 +181,12 @@
                     $("#formSubmit").on("submit", function (e){
                         e.preventDefault();
                         let a = $("#fileSubmit").val().split(".").pop()
-                        let b = $("#submitType").text()
+                        console.log(a)
+                        let b = $("#submitType").text().toLowerCase()
                         if(a === b){
                             $.ajax({
                                 type: "POST",
-                                url: "http://localhost:8080/cms-btec/trainee-api/upload",
+                                url: "http://localhost:8083/cms-btec/trainee-api/upload",
                                 data: new FormData(this),
                                 enctype: 'multipart/form-data',
                                 processData: false,
@@ -193,7 +196,6 @@
                                     $("#fileSubmit").val("");
                                     $("#buttonUpload").show();
                                     $("#formUpload").hide();
-                                    $("#submit-file").text(res);
                                     let json = {
                                         asmId: $("#asmId").val(),
                                         comment: "hello",

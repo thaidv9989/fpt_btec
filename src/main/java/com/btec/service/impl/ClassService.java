@@ -95,22 +95,20 @@ public class ClassService implements IClassService {
 	public ClassDTO save(ClassDTO dto) {
 		SubjectEntity subjectclass = subjectRepository.findOne(dto.getSubjectId());
 		ContentEntity contentclass = contentRepository.findOne(dto.getContentId());
-		List<UserEntity> userclass = userRepository.findAllByUsernameAndStatus(dto.getUsername(), SystemConstant.ACTIVE_STATUS);
-		ClassEntity classEntity = new ClassEntity();
+		UserEntity user = userRepository.findOne(dto.getUsername());
 		if (dto.getClassId() != null) {
 			ClassEntity oldClass = classRepository.findOne(dto.getClassId());
 			oldClass.setSubject(subjectclass);
-			oldClass.setUserclass(userclass);
+			oldClass.setPassword(dto.getPassword());
+			oldClass.getUserclass().stream().filter(u->u.getRoles().get(0).getRoleName().equals("trainer")).map(u->user);
 			oldClass.setContent(contentclass);
-			classEntity = classConverter.toEntity(oldClass,dto);
+			user.getClassuser().add(oldClass);
+			return classConverter.toDto(oldClass);
 		}
-		else
-		{
-			classEntity = classConverter.toEntity(dto);
-			classEntity.setUserclass(userclass);
+			ClassEntity classEntity = classConverter.toEntity(dto);
+			classEntity.getUserclass().add(user);
 			classEntity.setContent(contentclass);
 			classEntity.setSubject(subjectclass);
-		}
 		return classConverter.toDto(classRepository.save(classEntity));
 	}
 

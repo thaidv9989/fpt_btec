@@ -46,20 +46,9 @@
 	<!-- Start Navigation -->
 	<div id="navigation" class="topnav">
 		<ul id="nav">
-			<li><a href="<c:url value='/trainer/home'/>"><i
+			<li><a href="<c:url value='/trainee/home'/>"><i
 					class="fas fa-home"></i> Home</a></li>
-			<li class="dropres" onclick="dropRes()"><a href="#"> <i
-					class="fas fa-house-user"></i> My Class <i
-					class="fas fa-angle-down"></i>
-			</a>
-				<ul class="subnav">
-					<li><a href="<c:url value='/trainer/manageclass?page=1&limit=4'/>"><i
-							class="fas fa-graduation-cap"></i> Manage Class</a></li>
-					<li><a href="manage-student.html"><i
-							class="fas fa-user-graduate"></i> Manage Student</a></li>
-				</ul></li>
-			<li><a href="<c:url value='#'/>"><i class="fas fa-calendar-day"></i>
-					Event</a></li>
+			<li><a href="<c:url value='/trainee/classes'/>"><i class="fas fa-graduation-cap">My Class</i></a>
 		</ul>
 		<a href="javascript:void(0);" class="nav-icon" onclick="dropNavRes()">&#9776;</a>
 		<div class="search-nav">

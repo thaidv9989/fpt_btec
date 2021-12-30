@@ -1,5 +1,7 @@
 package com.btec.converter;
 
+import java.sql.Timestamp;
+
 //import java.sql.Timestamp;
 import org.springframework.stereotype.Component;
 import com.btec.dto.ClassDTO;
@@ -9,21 +11,22 @@ import com.btec.entity.ClassEntity;
 
 public class ClassConverter {
 
-	public ClassDTO toDto(ClassEntity entity) {
+	public static ClassDTO toDto(ClassEntity entity) {
 		ClassDTO result = new ClassDTO();
 		result.setClassId(entity.getClassId());
 		result.setClassName(entity.getClassName());
 		result.setPassword(entity.getPassword());
 		result.setSubjectId(entity.getSubject().getSubjectId());
 		result.setContentId(entity.getContent().getContentId());
+		result.setSubjectName(entity.getSubject().getSubjectName());
 		result.setModifiedBy(entity.getModifiedBy());
-		result.setModifiedDate(entity.getModifiedDate());
+		result.setModifiedDate(new Timestamp(entity.getModifiedDate().getTime()));
 		result.setCreatedBy(entity.getCreatedBy());
-		result.setCreatedDate(entity.getCreatedDate());
+		result.setCreatedDate(new Timestamp(entity.getCreatedDate().getTime()));
 		return result;
 	}
 	
-	public ClassEntity toEntity(ClassDTO dto) {
+	public static ClassEntity toEntity(ClassDTO dto) {
 		ClassEntity result = new ClassEntity();
 		result.setClassName(dto.getClassName());
 		result.setPassword(dto.getPassword());
@@ -34,7 +37,7 @@ public class ClassConverter {
 		return result;
 	}
 	
-	public ClassEntity toEntity(ClassEntity result, ClassDTO dto) {
+	public static ClassEntity toEntity(ClassEntity result, ClassDTO dto) {
 		result.setClassName(dto.getClassName());
 		result.setPassword(dto.getPassword());
 		result.setModifiedBy(dto.getModifiedBy());

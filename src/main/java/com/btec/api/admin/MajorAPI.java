@@ -1,6 +1,6 @@
 package com.btec.api.admin;
-
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,5 +67,10 @@ public class MajorAPI {
 			return ResponseEntity.ok(majorService.searchByMajorID(Long.parseLong(id)));
 		}
 		return ResponseEntity.ok(majorService.findListAll());
+	}
+	
+	@GetMapping("ce")
+	public ResponseEntity<?> checkExsist(@RequestParam(name = "name") String majorName){
+		return majorService.isExsist(majorName) ? ResponseEntity.ok(true) : ResponseEntity.ok(false);
 	}
 }

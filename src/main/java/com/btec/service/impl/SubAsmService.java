@@ -1,18 +1,31 @@
 package com.btec.service.impl;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import com.btec.entity.AsmEntity;
+import com.btec.entity.UserEntity;
+import com.btec.repository.AsmRepository;
+import com.btec.repository.UserRepository;
+import com.btec.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.btec.converter.SubasmConverter;
 import com.btec.dto.SubAsmDTO;
 import com.btec.entity.SubasmEntity;
 import com.btec.repository.SubAsmRepository;
 import com.btec.service.ISubAsmService;
+import org.springframework.web.multipart.MultipartFile;
+
 
 
 @Service
@@ -20,9 +33,17 @@ public class SubAsmService implements ISubAsmService {
 
 	@Autowired
 	private SubAsmRepository subAsmRepository;
-	
+
 	@Autowired
 	private SubasmConverter subAsmConverter;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private AsmRepository asmRepository;
+
+	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc";
 
 	@Override
 	public List<SubAsmDTO> findAll() {
@@ -46,32 +67,77 @@ public class SubAsmService implements ISubAsmService {
 	public SubAsmDTO savegrade(SubAsmDTO dto) {
 		SubasmEntity oldSubasm = subAsmRepository.findOne(dto.getSubAsmId());
 		SubasmEntity subasmEntity = new SubasmEntity();
+		dto.setSubStatus(2);
 		subasmEntity = subAsmConverter.toEntity(oldSubasm, dto);
+		System.out.println(subasmEntity);
+		System.out.println(subAsmConverter.toDto(subAsmRepository.save(subasmEntity)));
 		return subAsmConverter.toDto(subAsmRepository.save(subasmEntity));
+		
 	}
 
 	@Override
-	public Object uploadFile(MultipartFile fileSubmit) {
-		// TODO Auto-generated method stub
-		return null;
+	public SubAsmDTO getSubmissionAsmByUsernameAndAsmId(Long asmId){
+		SubasmEntity entity =userRepository.findOne(SecurityUtils.getPrincipal().getUsername()).getSubasmuser()
+				.stream().
+				filter(s -> s.getAsm().getAsmId().equals(asmId)).findFirst().orElse(null);
+		System.out.println(subAsmConverter.toDto(entity));
+		return entity == null ? null : subAsmConverter.toDto(entity);
+	}
+
+
+	@Override
+	public SubAsmDTO submitAsm(SubAsmDTO subAsmDTO){
+		UserEntity user = userRepository.findOne(SecurityUtils.getPrincipal().getUsername());
+		AsmEntity asm = asmRepository.findOne(subAsmDTO.getAsmId());
+		SubasmEntity entity = new SubasmEntity();
+		entity.setAsm(asm);
+		entity.setUser(user);
+		entity.setSubFile(subAsmDTO.getFileName());
+		entity.setSubStatus(1);
+		entity.setGrade(-1);
+		entity.setComment(subAsmDTO.getComment());
+		user.getSubasmuser().add(entity);
+		userRepository.save(user);
+		return subAsmConverter.toDto(subAsmRepository.save(entity));
 	}
 
 	@Override
-	public Object getSubmissionAsmByUsernameAndAsmId(long parseLong) {
-		// TODO Auto-generated method stub
-		return null;
+	public SubAsmDTO editAsm(SubAsmDTO subAsmDTO){
+		UserEntity user = userRepository.findOne(SecurityUtils.getPrincipal().getUsername());
+		SubasmEntity entity = subAsmRepository.findOne(subAsmDTO.getSubAsmId());
+		try {
+			Path oldSubmitFile = Paths.get(locationOfSubmitAsm + entity.getSubFile());
+			System.out.println(oldSubmitFile);
+//			Files.deleteIfExists(oldSubmitFile);
+			System.out.println(Files.deleteIfExists(oldSubmitFile));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		entity.setSubFile(subAsmDTO.getFileName());
+		entity.setSubStatus(1);
+		entity.setGrade(-1);
+		entity.setComment(subAsmDTO.getComment());
+		user.getSubasmuser().stream().filter(s -> s.getSubasmId().equals(subAsmDTO.getSubAsmId())).map(x-> entity);
+		userRepository.save(user);
+		return subAsmConverter.toDto(subAsmRepository.save(entity));
 	}
 
 	@Override
-	public Object submitAsm(SubAsmDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public String uploadFile(MultipartFile file){
+		String gen = generateUniqueFileName(SecurityUtils.getPrincipal().getUsername(), file.getOriginalFilename());
+		System.out.println("FILE NAME: " + gen);
+		try {
+			Path path = Paths.get(locationOfSubmitAsm);
+			InputStream ip = file.getInputStream();
+			Files.copy(ip, path.resolve(gen), StandardCopyOption.REPLACE_EXISTING);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return gen;
 	}
 
 	@Override
-	public Object editAsm(SubAsmDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public String generateUniqueFileName(String username, String fileName){
+		return username + "-" + UUID.randomUUID().toString().replace("-", "") + "-" + fileName;
 	}
-
 }
