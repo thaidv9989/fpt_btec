@@ -46,6 +46,7 @@
                         name="password"
                         value="<%=SecurityUtils.getPrincipal().getPassword()%>"
                       />
+                    <li><a href="http://localhost:8083/cms-btec/user/changepass">Change Password</a></li>
                     </td>
                   </tr>
                   <tr>

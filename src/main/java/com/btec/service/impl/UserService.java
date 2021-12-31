@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.btec.converter.ClassConverter;
@@ -18,6 +19,7 @@ import com.btec.entity.UserEntity;
 import com.btec.repository.RoleRepository;
 import com.btec.repository.UserRepository;
 import com.btec.service.IUserService;
+import com.btec.util.SecurityUtils;
 
 
 @Service
@@ -28,6 +30,10 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private ClassConverter classConverter;
@@ -121,5 +127,21 @@ public class UserService implements IUserService {
 //			userRepository.delete(username);
 //		}
 //	}
+	
+	@Override
+	public boolean checkPassword(String password){
+		UserEntity user = userRepository.findOne(SecurityUtils.getPrincipal().getUsername());
+		return passwordEncoder.matches(password, user.getPassword());
+	}
+
+	@Override
+	public boolean changePwd(String password){
+		UserEntity user = userRepository.findOne(SecurityUtils.getPrincipal().getUsername());
+		user.setPassword(password);
+		if(userRepository.save(user) != null){
+			return true;
+		}
+		return false;
+	}
 
 }

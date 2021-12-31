@@ -19,4 +19,7 @@ public interface IUserService {
 	List<UserDTO> findAll();
 	boolean delete(String usernames);
 	List<ClassDTO> getClassesOfTrainee(String username);
+	boolean checkPassword(String password);
+
+	boolean changePwd(String password);
 }
