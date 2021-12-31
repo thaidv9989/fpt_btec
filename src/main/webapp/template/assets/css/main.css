@@ -79,7 +79,9 @@ a {
   font-size: 15px;
   cursor: pointer;
 }
-
+#buttonUpload{
+	align-items: center;
+}
 .header-user .header-icon {
   font-size: 25px;
 }
@@ -95,7 +97,9 @@ a {
   position: relative;
   justify-content: center;
 }
-
+.b-edit button{
+	color: #fff;
+}
 #mySidenav {
   /* display: none; */
 }

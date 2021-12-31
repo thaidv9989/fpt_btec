@@ -2,14 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
 <%@ page import="com.btec.util.SecurityUtils"%>
+<c:url var="subjectURL" value='/admin/subjects'/>
 <c:url var="usermanageURL" value='/admin/user-manage'>
     <c:param name="page" value="1"/>
 	<c:param name="limit" value="6"/>
 </c:url>
-<c:url var="majormanageURL" value='/admin/major-manage'>
-	<c:param name="page" value="1"/>
-	<c:param name="limit" value="4"/>
-</c:url>
+<c:url var="majormanageURL" value='/admin/majors'/>
 <div id="container">
 	<div id="top">
 		<div class="header-logo">
@@ -69,7 +67,7 @@
 							class="fas fa-graduation-cap"></i> Manage Account</a></li>
 					<li><a href="${majormanageURL}"><i
 							class="fas fa-graduation-cap"></i> Manage major</a></li>
-					<li><a href="manage-subject.html"><i
+					<li><a href="${subjectURL}"><i
 							class="fas fa-user-graduate"></i> Manage subject</a></li>
 					<li><a href="manage-class.html"><i
 							class="fas fa-user-graduate"></i> Manage class</a></li>

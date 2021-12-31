@@ -1,22 +1,21 @@
 package com.btec.service.impl;
 
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.btec.converter.ClassConverter;
+import com.btec.converter.SubjectConverter;
+import com.btec.dto.ClassDTO;
+import com.btec.dto.SubjectDTO;
+import com.btec.entity.ClassEntity;
+import com.btec.entity.MajorEntity;
+import com.btec.repository.MajorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.btec.converter.SubjectConverter;
-import com.btec.dto.AsmDTO;
-import com.btec.dto.SubjectDTO;
-import com.btec.entity.AsmEntity;
 import com.btec.entity.SubjectEntity;
-import com.btec.entity.UserEntity;
-import com.btec.repository.MajorRepository;
 import com.btec.repository.SubjectRepository;
 import com.btec.service.ISubjectService;
 
@@ -25,10 +24,7 @@ public class SubjectService implements ISubjectService{
 
 	@Autowired
 	private SubjectRepository subjectRepository;
-	
-	@Autowired
-	private SubjectConverter subjectConverter;
-	
+
 	@Autowired
 	private MajorRepository majorRepository;
 	
@@ -43,35 +39,55 @@ public class SubjectService implements ISubjectService{
 	}
 
 	@Override
-	public List<SubjectDTO> findAllSub(Pageable pageable) {
-		List<SubjectDTO> model = new ArrayList<>();
-		List<SubjectEntity> entities = subjectRepository.findAll(); 
-		return model;
+	public List<ClassDTO> findClassesBySubjectName(String name){
+		List<ClassEntity> classes =  subjectRepository.findAll().stream().filter(s -> s.getSubjectName().contains(name)).map(s -> s.getClasses()).findFirst().get();
+		return classes.stream().map(c -> ClassConverter.toDto(c)).collect(Collectors.toList());
 	}
 
 	@Override
-	public int getTotalItem() {
-		return (int) subjectRepository.count();
+	public List<SubjectDTO> getAllSubjects(){
+		return subjectRepository.findAll().stream().sorted((m1, m2) -> m2.getModifiedDate().compareTo(m1.getModifiedDate())).map(SubjectConverter::toDto).collect(Collectors.toList());
 	}
 
 	@Override
-	public SubjectDTO findById(long asmId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SubjectDTO> getSubjectByMajorId(Long id){
+		return subjectRepository.findAll().stream().filter(s -> s.getMajor().getMajorId().equals(id)).map(SubjectConverter::toDto).collect(Collectors.toList());
 	}
 
 	@Override
-	public SubjectDTO save(AsmDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public SubjectDTO create(SubjectDTO dto){
+		MajorEntity major = majorRepository.getOne(dto.getMajorId());
+		SubjectEntity subject = new SubjectEntity();
+		subject.setMajor(major);
+		return SubjectConverter.toDto(subjectRepository.save(SubjectConverter.toEntity(dto, subject)));
 	}
 
 	@Override
-	public void delete(long[] asmIds) {
-		// TODO Auto-generated method stub
-		
+	public SubjectDTO findById(Long id){
+		return SubjectConverter.toDto(subjectRepository.findOne(id));
 	}
 
-	
+	@Override
+	public boolean delete(Long id){
+		if(subjectRepository.findOne(id) != null){
+			subjectRepository.delete(id);
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public List<SubjectDTO> getListByName(String subjectName){
+		return subjectRepository.findAll().stream().filter(s -> s.getSubjectName().toLowerCase().contains(subjectName.toLowerCase())).map(SubjectConverter::toDto).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<SubjectDTO> getListById(Long id){
+		return subjectRepository.findAll().stream().filter(s -> s.getSubjectId().toString().contains(id.toString())).map(SubjectConverter::toDto).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<SubjectDTO> getListByMajorName(String majorName){
+		return subjectRepository.findAll().stream().filter(s-> s.getMajor().getMajorName().toLowerCase().contains(majorName.toLowerCase())).map(SubjectConverter::toDto).collect(Collectors.toList());
+	}
 }

@@ -66,8 +66,7 @@
 							<button class="modal-close-btn" id="close-btn">
 								<i class="fa fa-times" title="Close"></i>
 							</button>
-							<form:form role="form" id="formSubmitAsm"
-								modelAttribute="model">
+							<form:form role="form" id="formSubmitAsm" modelAttribute="model">
 								<h4>Assignment Name</h4>
 								<form:input cssClass="input-info edit-input" path="asmName" />
 								<h4>Assignment Brief</h4>
@@ -75,20 +74,26 @@
 								<h4>Submission Type</h4>
 								<form:input cssClass="input-info edit-input" path="subType" />
 								<h4>Due</h4>
-								<form:input type="date" cssClass="input-info edit-input" path="asmDateDue"/>
-								<form:input type="time" step="2" cssClass="input-info edit-input" path="asmTimeDue"/>
+								<form:input type="date" cssClass="input-info edit-input"
+									path="asmDateDue" />
+								<form:input type="time" step="2"
+									cssClass="input-info edit-input" path="asmTimeDue" />
 								<h4>Limit Item</h4>
 								<form:input cssClass="input-info edit-input" path="limitItem" />
 								<h4>Class Name</h4>
-								<input type="hidden" id="classId" name="classId" value="${classmodel.classId}">
-								<input class="input-info edit-input" id="className" name="className" value="${classmodel.className}" disabled>
+								<input type="hidden" id="classId" name="classId"
+									value="${classmodel.classId}">
+								<input class="input-info edit-input" id="className"
+									name="className" value="${classmodel.className}" disabled>
 								<br>
-								<form:hidden path="asmId" id="asmId"/>
+								<form:hidden path="asmId" id="asmId" />
 								<button type="button" id="btnAddOrUpdateAsm" title="Edit"
 									class="btn-edit-asm">Edit</button>
 							</form:form>
 						</div>
-						<button style="background-color: #D11A2A; color : #fff;" id="btnDeleteAsm" class="btn btn-delete" type ="button" onclick="warningBeforeDelete()">
+						<button style="background-color: #D11A2A; color: #fff;"
+							id="btnDeleteAsm" class="btn btn-delete" type="button"
+							onclick="warningBeforeDelete()">
 							<i class="fas fa-trash"></i> Delete
 						</button>
 					</div>
@@ -112,8 +117,7 @@
 								</form>
 							</td>
 						</tr>
-						<form action="<c:url value='/trainer/classoverview/edit'/>"
-			id="formSubmit" method="get">
+						<form action="<c:url value='/trainer/classoverview/edit'/>" id="formSubmit" method="get">
 						<c:forEach var="subasmlist" items="${subasmlist.listResult}">
 						<tr>
 							<td>${subasmlist.subAsmId}</td>

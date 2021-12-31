@@ -8,33 +8,53 @@
 <title>This is Major Management JSP Page</title>
 </head>
 <body>
-	<div style="display: grid; justify-content: center;">
-		<table style="width: 300px">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>NAME</th>
-					<th>DESCRIPTION</th>
-					<th>ACTION</th>
-				</tr>
-			</thead>
-			<tbody id="major-table">
+	<div id="content">
+		<div id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li><a href="home">Home</a></li>
+				<li>Manage Major</a></li>
+				<select id="search-mode"
+					style="margin-left: 625px; border: 1px solid #ccc; outline: none; padding: 2px;">
+					<option disabled="disabled" selected="selected">Select
+						Search Mode</option>
+					<option value="name">Major Name</option>
+					<option value="id">Major ID</option>
+				</select>
+				<input type="text" id="search-input" placeholder="search...."
+					oninput="searchMajor()"
+					style="float: right; margin-right: 10px; outline: none; border-radius: 5px; border: none; padding: 2px;" />
+			</ul>
+		</div>
+		<div id="main-content" style="width: 100%">
+			<div class="table-content" style="width: 100%">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>DESCRIPTION</th>
+							<th>ACTION</th>
+						</tr>
+					</thead>
+					<tbody id="major-table">
 
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
-
-	SEARCH BY :
-	<select id="search-mode">
-		<option disabled="disabled" selected="selected">Select Search Mode</option>
-		<option value="name">Major Name</option>
-		<option value="id">Major ID</option>
-	</select>
-	<input type="text" id="search-input" oninput="searchMajor()"/>
 	<form id="exform">
-		<input type="hidden" readonly id="majorId"><br> Name: <input
-			type="text" id="majorName" /><br> Desc: <input type="text"
-			id="majorDesc"/><br>
+		<div class="form-group">
+			<input type="hidden" readonly id="majorId">
+			 <label class="control-label col-sm-2">Major Name:</label>
+			<div class="col-sm-3">
+				<input type="text" id="majorName" />
+			</div>
+			<label class="control-label col-sm-2">Major Desc:</label>
+			<div class="col-sm-3">
+				<input type="text" id="majorDesc" />
+			</div>
+		</div>
 	</form>
 	<button id="addMajor" onclick="validateMajorName()">Submit</button>
 	<!-- <button id="updateMajor" onclick="updateMajor()">Update</button> -->
@@ -67,14 +87,14 @@
 		function checkInput(){
 			if(count >= 20){
 				if($('#search-mode').val() === null){
-					alert("YAMETEEEEEEEEEEEEEEEEEEEEE KUDASAIIIIIIIIIIIIIIIIIIIIII !")
+					alert("SUCCESSFULL !")
 					$('#search-input').val("")
 					return false;
 				}
 			}
 			if(count >= 10){
 				if($('#search-mode').val() === null){
-					alert("YOU MOTHER FUCKERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR !")
+					alert("WRONG !")
 					$('#search-input').val("")
 					count += 1;
 					return false;
@@ -82,7 +102,7 @@
 			}
 			if(count >= 1){
 				if($('#search-mode').val() === null){
-					alert("I told you to SELECT SEARCH MODE, IDIOT!")
+					alert("YOU MUST BE TO SELECT SEARCH MODE")
 					$('#search-input').val("")
 					count += 1;
 					return false;

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MajorController {
 	@GetMapping("")
 	public String majorHome() {
-		return "admin/major";
+		return "admin/major/major";
 	}
 }

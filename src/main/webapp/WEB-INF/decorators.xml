@@ -11,7 +11,7 @@
 	<decorator name="staff" page="staff.jsp">
 		<pattern>/staff*</pattern>
 	</decorator>
-	<decorator name="trainee" page="staff.jsp">
+	<decorator name="trainee" page="trainee.jsp">
 		<pattern>/trainee*</pattern>
 	</decorator>
 	

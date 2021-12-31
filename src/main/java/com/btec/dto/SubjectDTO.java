@@ -4,6 +4,16 @@ public class SubjectDTO extends AbstractDTO<SubjectDTO> {
 	private Long subjectId;
 	private String subjectName;
 	private Long majorId;
+	private String majorName;
+
+	public String getMajorName() {
+		return majorName;
+	}
+
+	public void setMajorName(String majorName) {
+		this.majorName = majorName;
+	}
+
 	public Long getSubjectId() {
 		return subjectId;
 	}

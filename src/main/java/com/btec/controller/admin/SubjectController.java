@@ -1,13 +1,14 @@
 package com.btec.controller.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import com.btec.service.ISubjectService;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SubjectController {
 
-	@Autowired
-	private ISubjectService subjectService;
+    @GetMapping("/admin/subjects")
+    public String subjectPage(){
+        return "admin/subject/subject";
+    }
+
 }
