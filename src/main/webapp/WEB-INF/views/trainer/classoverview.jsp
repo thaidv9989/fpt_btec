@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-<%@ page import="com.btec.util.SecurityUtils" %>
+<%@ page import="com.btec.util.SecurityUtils"%>
 <c:url var="manageclassURL" value="/trainer/manageclass?page=1&limit=4" />
 <c:url var="homeURL" value="/trainer/home" />
 <c:url var="editpassURL" value="/trainer/classoverview/editpass">
 	<c:param name="classId" value="${classinfo.classId}" />
 </c:url>
+<c:url var="getlinkURL" value="/trainer/">
+	<c:param name="classId" value="${classinfo.classId}" />
+</c:url>
 <c:url var="mngtraineeURL" value="/trainer/manage-trainee">
-	<c:param name="classId" value="${classinfo.classId}"/>
-	<c:param name="username" value="<%=SecurityUtils.getPrincipal().getUsername()%>"/>
+	<c:param name="classId" value="${classinfo.classId}" />
+	<c:param name="username"
+		value="<%=SecurityUtils.getPrincipal().getUsername()%>" />
 </c:url>
 <!DOCTYPE html>
 <html>
@@ -47,7 +51,9 @@
 							<a href="${editpassURL}">Edit Code</a>
 						</button>
 						<button class="btn tablink"
-							onclick="openTab(event, 'Manage-Student')"><a href='${mngtraineeURL}'>Manage Student</button>
+							onclick="openTab(event, 'Manage-Student')">
+							<a href='${mngtraineeURL}'>Manage Student 
+						</button>
 					</div>
 					<div id="Class-Overview" class="tab-content class-overview">
 						<div class="class-info">
@@ -57,6 +63,8 @@
 								type="checkbox" name="" id="" onclick="showpassFunc()" /> Show
 							Password
 						</div>
+						<div></div>
+						<div></div>
 						<c:forEach var="item" items="${model.listResult}">
 							<div class="topic">
 								<h1 class="topic-title">Topic 1</h1>
@@ -280,7 +288,7 @@
 		</form>
 	</div>
 	<script>
-		var totalPages = $
+		/* var totalPages = $
 		{
 			model.totalPage
 		};
@@ -302,12 +310,44 @@
 				}
 			});
 		});
-
+		 */
 		$('#btnAddOrUpdateAsm').click(function(e) {
 			e.preventDefault();
 			var formData = $('#formSubmitAsm').serializeArray();
 			console.log(formData);
 		});
+
+		function myFunction() {
+			var copyText = document.getElementById("myInput");
+			copyText.select();
+			copyText.setSelectionRange(0, 99999);
+			navigator.clipboard.writeText(copyText.value);
+
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Copied: " + copyText.value;
+		}
+
+		function outFunc() {
+			var tooltip = document.getElementById("myTooltip");
+			tooltip.innerHTML = "Copy to clipboard";
+		}
+
+		function getLink() {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8083/cms-btec/api/class/gen?id="
+						+ $('#classID').val(),
+				success : function(res) {
+					console.log(res)
+					$("#myInput").val(res)
+				},
+				error : function(res) {
+					console.log(res)
+				}
+			})
+		}
 	</script>
+
+
 </body>
 </html>

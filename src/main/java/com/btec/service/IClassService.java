@@ -19,4 +19,11 @@ public interface IClassService {
 	ClassDTO save(ClassDTO dto);
 	void delete(long[] classIds);
 	List<UserDTO> listTraineeOfClass(Long classId, String username);
+    boolean joinClass(ClassDTO dto, String username);
+
+	boolean isTraineeHasClass(Long id, String username);
+
+	boolean checkClassPassword(ClassDTO dto);
+
+	String genLinkInvite(Long id);
 }

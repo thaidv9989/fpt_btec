@@ -143,5 +143,36 @@ public class ClassService implements IClassService {
 		}
 		return usersDTO;
 	}
+	@Override
+	public boolean joinClass(ClassDTO dto, String username){
+		ClassEntity classEntity = classRepository.findOne(dto.getClassId());
+		UserEntity user = userRepository.findOne(username);
+		classEntity.getUserclass().add(user);
+		user.getClassuser().add(classEntity);
+		if(classRepository.save(classEntity) != null && userRepository.save(user) != null){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isTraineeHasClass(Long id, String username){
+		return userRepository.findOne(username).getClassuser().stream().anyMatch(c -> c.getClassId().equals(id));
+	}
+
+	@Override
+	public boolean checkClassPassword(ClassDTO dto){
+		return classRepository.findOne(dto.getClassId()).getPassword().equals(dto.getPassword());
+	}
+
+	@Override
+	public String genLinkInvite(Long id){
+		try{
+			if(classRepository.findOne(id) == null) return "";
+		}catch (Exception e){
+			return "";
+		}
+		return "http://localhost:8083/cms-btec/invitation/class?id="+id.toString();
+	}
 
 }

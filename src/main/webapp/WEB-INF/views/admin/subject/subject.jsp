@@ -43,13 +43,12 @@
 								<input type="text" id="subjectName" />
 							</div>
 							<select id="majorselect">
-								<option disabled="disabled" selected="selected">Select
-									Major</option>
+								
 								
 							</select>
 						</div>
 					</form>
-					<button id="addSubject">Add new</button>
+					<button onclick="addSubject()">Add new</button>
 				</div>
 				<script type="text/javascript">
                     getSubjects()
@@ -67,9 +66,10 @@
             				type: "GET",
             				url: "http://localhost:8083/cms-btec/api-majors",
             				success: function(res){
-            					let data = ""
+            					let data = '<option disabled="disabled" selected="selected">Select Major</option>'
             					res.forEach(major => {
-            						data += '<option value="'+major.majorId+'">'+major.majorName+'</option>'           						
+            						data += '<option value="'+major.majorId+'">'+major.majorName+'</option>'
+            						
             					});
             					$("#majorselect").html(data)
             				}
@@ -110,14 +110,17 @@
                         }
                     }
                     function addSubject(){
-            			if($("#subjectName").val().trim() === "" || $("#majorName").val() == null){
-            				alert("Subject Name and MajorName must not be null or full of white space")
+                    	console.log($("#subjectName").val().trim())
+                    	console.log( $("#majorselect").val())
+            			if($("#subjectName").val().trim() === "" || $("#majorselect").val() === null){
+            				alert("You must select Major Name and Subject Name must not be null or full of white space")
             			}
             			else{
             					var json = {
             							subjectName: $("#subjectName").val(),
-            							majorName: $("#majorName").val()
+            							majorId: $("#majorselect").val()
             						}
+            					
             						$.ajax({
             							type: "POST",
             							url: "http://localhost:8083/cms-btec/api-subjects",
@@ -125,7 +128,7 @@
             							contentType: "application/json",
             							success: function(res){
             								alert("Created Successfully !")
-            								getTableData();
+            								getSubjects();
             								resetForm();
             							},
             							error: function(err){

@@ -56,10 +56,11 @@ public class SubjectService implements ISubjectService{
 
 	@Override
 	public SubjectDTO create(SubjectDTO dto){
-		MajorEntity major = majorRepository.getOne(dto.getMajorId());
+		MajorEntity major = majorRepository.findOne(dto.getMajorId());
 		SubjectEntity subject = new SubjectEntity();
 		subject.setMajor(major);
-		return SubjectConverter.toDto(subjectRepository.save(SubjectConverter.toEntity(dto, subject)));
+		subject.setSubjectName(dto.getSubjectName());
+		return SubjectConverter.toDto(subjectRepository.save(subject));
 	}
 
 	@Override

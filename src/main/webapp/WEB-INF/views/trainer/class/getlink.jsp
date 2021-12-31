@@ -47,27 +47,15 @@
 					<button class="btn tablink"
 						onclick="openTab(event, 'Manage-Student')">Manage Student</button>
 				</div>
-				<c:if test="${not empty message}">
-					<div class="alert alert-${alert}">
-						<strong>${message}!</strong>
-					</div>
-				</c:if>
-				<div id="Create-Code" class="tab-content">
-					<form:form role="form" id="formEditPass" modelAttribute="classinfo">
-						<h4>Code for Class</h4>
-						<form:hidden path="classId" />
-						<form:hidden path="className" />
-						<form:input type="password" id="codeInput" cssClass="input-info"
-							path="password" />
-						<br />
-						<input type="checkbox" id="" onclick="showpassFunc()" /> Show Password <br>
-						<button type="button" id="btnEditPass" title="Edit"
-							class="btn btn-create-code">Edit</button>
-					</form:form>
+				<input type="text" id="myInput">
+				<h2>Get Link Of Class</h2>
+				<div class="tooltip">
+					<input type="hidden" value="${classinfo.classId}" id="classID" />
+					<button onclick="myFunction()" onmouseout="outFunc()">
+						<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+						Copy text
+					</button>
 				</div>
-				<h2>Link</h2>
-				<input type="text" readonly id="myInput" style="width: 50%;">
-				<input type="hidden" value="${classinfo.classId}" id="classID" />
 			</div>
 			<div id="sidebar">
 				<div id="calendar">
@@ -144,50 +132,35 @@
 		</div>
 	</div>
 	<script>
-		$('#btnEditPass').click(function(e) {
-			e.preventDefault();
-			var data = {};
-			var formData = $('#formEditPass').serializeArray();
-			$.each(formData, function(i, v) {
-				data["" + v.name + ""] = v.value;
-			});
-			var classId = $('#classId').val();
-			editPass(data);
-		});
+	function myFunction() {
+		var copyText = document.getElementById("myInput");
+		copyText.select();
+		copyText.setSelectionRange(0, 99999);
+		navigator.clipboard.writeText(copyText.value);
 
-		function editPass(data) {
-			$.ajax({
-				url : '${classAPI}',
-				type : 'PUT',
-				contentType : 'application/json',
-				data : JSON.stringify(data),
-				dataType : 'json',
-				success : function(result) {
-					window.location.href = "${editpassURL}?classId="
-							+ result.classId + "&message=update_success";
-				},
-				error : function(error) {
-					window.location.href = "${editpassURL}?classId="
-							+ result.classId + "&message=error_system";
-				}
-			});
-		}
-		
-		getLink()
-		function getLink() {
-			$.ajax({
-				type : "GET",
-				url : "http://localhost:8083/cms-btec/api/class/gen?id="
-						+ $('#classID').val(),
-				success : function(res) {
-					console.log(res)
-					$("#myInput").val(res)
-				},
-				error : function(res) {
-					console.log(res)
-				}
-			})
-		}
+		var tooltip = document.getElementById("myTooltip");
+		tooltip.innerHTML = "Copied: " + copyText.value;
+	}
+
+	function outFunc() {
+		var tooltip = document.getElementById("myTooltip");
+		tooltip.innerHTML = "Copy to clipboard";
+	}
+
+	function getLink() {
+		$.ajax({
+			type : "GET",
+			url : "http://localhost:8083/cms-btec/api/class/gen?id="
+					+ $('#classID').val(),
+			success : function(res) {
+				console.log(res)
+				$("#myInput").val(res)
+			},
+			error : function(res) {
+				console.log(res)
+			}
+		})
+	}
 	</script>
 </body>
 </html>
