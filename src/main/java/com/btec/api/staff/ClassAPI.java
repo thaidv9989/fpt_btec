@@ -32,6 +32,11 @@ public class ClassAPI {
 	public ClassDTO editClass(@RequestBody ClassDTO editclassDTO) {
 		return classService.save(editclassDTO);
 	}
+	
+	@PutMapping("/api/class/resetpass")
+	public ClassDTO editClassPass(@RequestBody ClassDTO editclassDTO) {
+		return classService.savePass(editclassDTO);
+	}
 	@DeleteMapping("/api/class")
 	public void deleteClass(@RequestBody long[] classIds) {
 		classService.delete(classIds);

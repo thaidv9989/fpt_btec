@@ -52,7 +52,7 @@
 						</button>
 						<button class="btn tablink"
 							onclick="openTab(event, 'Manage-Student')">
-							<a href='${mngtraineeURL}'>Manage Student 
+							<a href='${mngtraineeURL}'>Manage Student</a> 
 						</button>
 					</div>
 					<div id="Class-Overview" class="tab-content class-overview">

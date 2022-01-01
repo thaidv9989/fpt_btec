@@ -39,16 +39,23 @@
 					</button>
 				</div>
 				<div id="Create-Account" class="tab-content create-account">
-					<form:form class="form-horizontal" role="form" id="formSubmitUser"
+					<form:form class="form-horizontal" role="form" id="formSaveUser"
 						modelAttribute="model">
+						<c:if test="${not empty model.username}">
 						<div class="form-group">
 							<label for="exampleFormControlInput1">UserName</label>
-							<form:input path="username" cssClass="form-control"  />
+							<input id="username" name="username" value="${model.username}" class="form-control" disabled />
 						</div>
+							<form:hidden path="password"/>
+						</c:if>
+						<c:if test="${empty model.username}">
 						<div class="form-group">
-							<label for="exampleFormControlTextarea1">Password</label>
-							<form:input path="password" cssClass="form-control" />
+							<label for="exampleFormControlInput1">UserName</label>
+							<form:input path="username" cssClass="form-control" />
 						</div>
+							<input type="hidden" id="password" name="password" value="$2a$10$/RUbuT9KIqk6f8enaTQiLOXzhnUkiwEJRdtzdrMXXwU7dgnLKTCYG">
+							<input type="hidden" id="userStatus" name="userStatus" value="1">
+						</c:if>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Full Name</label>
 							<form:input path="fullName" cssClass="form-control" />
@@ -57,6 +64,11 @@
 							<label for="exampleFormControlInput1">Date of Birth</label>
 							<form:input type="date" cssClass="form-control" path="dob" />
 						</div>
+						<%-- <div class="form-group">
+							<label for="exampleFormControlInput1">Gender</label>
+							Male <form:radiobutton path="gender" value="m"/>
+                      		Female <form:radiobutton path="gender" value="f"/>
+						</div> --%>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Email</label>
 							<form:input path="email" cssClass="form-control" />
@@ -65,19 +77,28 @@
 							<label for="exampleFormControlInput1">Phone</label>
 							<form:input path="phoneNumber" cssClass="form-control" />
 						</div>
-						
-						<form:hidden path="username" id="username" />
+						<c:if test="${not empty model.username}">
+							<form:select path="roleId" cssClass="input-info">
+								<form:options items="${rolemodel}"/>
+							</form:select>
+						</c:if>
+						<c:if test="${empty model.username}">
+							<form:select path="roleId" cssClass="input-info">
+							<form:option value="" label="---Pick a Role---" />
+							<form:options items="${rolemodel}"/>
+						</form:select>
+						</c:if>
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-10">
 								<c:if test="${not empty model.username}">
 									<button class="btn btn-info" type="button"
-										id="btnAddOrUpdateNew">
+										id="btnSaveUser">
 										<i class="ace-icon fa fa-check bigger-110"></i> Update
 									</button>
 								</c:if>
 								<c:if test="${empty model.username}">
 									<button class="btn btn-info" type="button"
-										id="btnAddOrUpdateNew">
+										id="btnSaveUser">
 										<i class="ace-icon fa fa-check bigger-110"></i> Add new
 									</button>
 								</c:if>
@@ -167,44 +188,31 @@
 		<!-- 	</form> -->
 	</div>
 	<script>
-	$('#btnAddOrUpdateNew').click(function (e) {
-		var json = {
-				
-				username: $("#username").val(),
-				password: $("#password").val(),
-				fullName: $("#fullName").val(),
-				phoneNumber: $("#phoneNumber").val(),
-				email: $("#email").val(),
-				dob: $("#dob").val()
-			}
-		$.ajax({
-			type: "POST",
-			url: "http://localhost:8083/cms-btec/api/user",
-			data: JSON.stringify(json),
-			contentType: "application/json",
-			success: function(res){
-				alert("Created Successfully !")
-			},
-			error: function(err){
-				alert("THERE ARE ERROR IN THIS SYSTEM, GO CHECK IT NOW")
-			}
-			
-		})	
+	$('#btnSaveUser').click(function (e) {
+		e.preventDefault();
+		var data = {};
+		var formData = $('#formSaveUser').serializeArray();
+		$.each(formData, function(i, v) {
+			data["" + v.name + ""] = v.value;
+		});
+		saveUser(data);
 	});
 	
-	function addNew(data) {
+	function saveUser(data) {
 		$.ajax({
             url: '${userAPI}',
-            type: 'POST',
+            type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (result) {
-            	console.log(result);
-            	window.location.href = "${editAccURL}?username="+result.username+"&message=insert_success";
+            	alert('Create New User Success !')
+            	/* console.log(result);
+            	window.location.href = "${editAccURL}?username="+result.username+"&message=insert_success"; */
             },
             error: function (error) {
-            	window.location.href = "${editAccURL}?page=1&limit=6&message=error_system";
+            	alert('Something Went Wrong !')
+            	/* window.location.href = "${editAccURL}?page=1&limit=6&message=error_system"; */
             }
         });
 	}

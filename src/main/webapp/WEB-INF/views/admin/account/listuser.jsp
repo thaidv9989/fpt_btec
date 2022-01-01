@@ -21,7 +21,7 @@
 							<div class="nav-tab">
 								<button class="btn tablink first-tab"
 									onclick="openTab(event,'Account-list')">Account List</button>
-								<c:url var="editNewURL" value="/admin/user-manage/edit" />
+								<c:url var="editNewURL" value="/admin/user-manage/create" />
 								<button class="btn tablink"
 									onclick="openTab(event, 'Create-Account')">
 									<a href='${editNewURL}'>Create Account</a>
@@ -59,9 +59,7 @@
 									<td>${item.email}</td>
 									<td>${item.phoneNumber}</td>
 									<td>
-									<c:url var="editNewURL" value='/admin/user-manage/edit'>
-									<c:param name="username" value="${item.username}" />
-								</c:url>
+									<c:url var="editNewURL" value='/admin/user-manage/edit/${item.username}'/>
 								<a href="${editNewURL}">View</a>
 									</td>
 								</tr>

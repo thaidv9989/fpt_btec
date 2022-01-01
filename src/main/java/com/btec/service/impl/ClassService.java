@@ -174,5 +174,13 @@ public class ClassService implements IClassService {
 		}
 		return "http://localhost:8083/cms-btec/invitation/class?id="+id.toString();
 	}
-
+	
+	@Override
+	public ClassDTO savePass(ClassDTO dto) {
+		// TODO Auto-generated method stub
+		ClassEntity oldClass = classRepository.findOne(dto.getClassId());
+		oldClass.setPassword(dto.getPassword());
+		classRepository.save(oldClass);
+		return classConverter.toDto(oldClass);
+	}
 }

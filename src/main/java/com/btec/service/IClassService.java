@@ -26,4 +26,5 @@ public interface IClassService {
 	boolean checkClassPassword(ClassDTO dto);
 
 	String genLinkInvite(Long id);
+	ClassDTO savePass(ClassDTO dto);
 }

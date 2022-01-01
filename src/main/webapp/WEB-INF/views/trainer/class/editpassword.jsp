@@ -10,7 +10,7 @@
 	<c:param name="limit" value="4"></c:param>
 </c:url>
 <c:url var="editpassURL" value="/trainer/classoverview/editpass" />
-<c:url var="classAPI" value="/api/class" />
+<c:url var="classAPI" value="/api/class/resetpass" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,7 +154,7 @@
 			var classId = $('#classId').val();
 			editPass(data);
 		});
-
+	
 		function editPass(data) {
 			$.ajax({
 				url : '${classAPI}',
