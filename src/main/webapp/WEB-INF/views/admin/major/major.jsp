@@ -64,7 +64,7 @@
 		function validateMajorName(){
 			var result = false;
 			$.ajax({
-				url: "http://localhost:8083/cms-btec/api-majors/ce?name="+$("#majorName").val(),
+				url: "http://localhost:8080/cms-btec/api-majors/ce?name="+$("#majorName").val(),
 				type: "GET",
 				success: function(res){
 					if(!res){
@@ -123,7 +123,7 @@
 					if($('#search-mode').val() === "name"){
 						$.ajax({
 							type: "GET",
-							url: "http://localhost:8083/cms-btec/api-majors?name="+$('#search-input').val(),
+							url: "http://localhost:8080/cms-btec/api-majors?name="+$('#search-input').val(),
 							success: function(res){
 								let data = ""
 									res.forEach(major => {
@@ -144,7 +144,7 @@
 					if($('#search-mode').val() === "id"){
 						$.ajax({
 							type: "GET",
-							url: "http://localhost:8083/cms-btec/api-majors?id="+$('#search-input').val(),
+							url: "http://localhost:8080/cms-btec/api-majors?id="+$('#search-input').val(),
 							success: function(res){
 								let data = ""
 									res.forEach(major => {
@@ -180,7 +180,7 @@
 						}
 						$.ajax({
 							type: "POST",
-							url: "http://localhost:8083/cms-btec/api-majors",
+							url: "http://localhost:8080/cms-btec/api-majors",
 							data: JSON.stringify(json),
 							contentType: "application/json",
 							success: function(res){
@@ -198,7 +198,7 @@
 		function getTableData(){
 			$.ajax({
 				type: "GET",
-				url: "http://localhost:8083/cms-btec/api-majors",
+				url: "http://localhost:8080/cms-btec/api-majors",
 				success: function(res){
 					let data = ""
 					res.forEach(major => {
@@ -265,7 +265,7 @@
 				if(confirm("This is the last time to confirm, you really want to delete this major ????")){
 					$.ajax({
 						type: "DELETE",
-						url: "http://localhost:8083/cms-btec/api-majors?id="+id,
+						url: "http://localhost:8080/cms-btec/api-majors?id="+id,
 						success: function(res){
 							getTableData()
 							alert("THAT POOR LITTLE MAJOR IS ON THE HEAVEN NOW, YOU BASTARD!)")

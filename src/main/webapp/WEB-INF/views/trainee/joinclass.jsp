@@ -16,12 +16,12 @@
         function joinClass(json){
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8083/cms-btec/api/class/join-class",
+                url: "http://localhost:8080/cms-btec/api/class/join-class",
                 data: JSON.stringify(json),
                 contentType: "application/json",
                 success: function (res){
                     console.log(res)
-                    window.location.replace("http://localhost:8083/cms-btec/trainee/class-details?id="+$("#classId").val())
+                    window.location.replace("http://localhost:8080/cms-btec/trainee/class-details?id="+$("#classId").val())
                 },
                 error: function (res){
                     console.log(res)
@@ -39,7 +39,7 @@
                 console.log(json);
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost:8083/cms-btec/api/class/cp",
+                    url: "http://localhost:8080/cms-btec/api/class/cp",
                     data: JSON.stringify(json),
                     contentType: "application/json",
                     success: function (res){

@@ -24,6 +24,7 @@ public class traineeAPI {
     @Autowired
     private ISubAsmService subAsmService;
 
+
     @GetMapping("/classes")
     public ResponseEntity<List<ClassDTO>> getClasses(@RequestParam(name = "subjectName", defaultValue = "") String subjectName){
         if(SecurityUtils.getPrincipal().getUsername() != null){
@@ -66,4 +67,6 @@ public class traineeAPI {
         }
         return ResponseEntity.badRequest().build();
     }
+
+
 }

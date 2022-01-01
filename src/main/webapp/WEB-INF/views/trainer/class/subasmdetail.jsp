@@ -27,7 +27,7 @@
 				</div>
 				<div id="view-sub-asm" class="tab-content content-overview">
 					<embed
-						src="<c:url value='../../template/assets/doc/Assignment1Pro.pdf'/>"
+						src="<c:url value='../../template/assets/doc/${subasminfo.fileName}'/>"
 						type="application/pdf" class="sub-asm" />
 				</div>
 			</div>

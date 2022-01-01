@@ -43,7 +43,7 @@ public class SubAsmService implements ISubAsmService {
 	@Autowired
 	private AsmRepository asmRepository;
 
-	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc";
+	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc\\";
 
 	@Override
 	public List<SubAsmDTO> findAll() {
@@ -66,13 +66,11 @@ public class SubAsmService implements ISubAsmService {
 	@Transactional
 	public SubAsmDTO savegrade(SubAsmDTO dto) {
 		SubasmEntity oldSubasm = subAsmRepository.findOne(dto.getSubAsmId());
-		SubasmEntity subasmEntity = new SubasmEntity();
-		dto.setSubStatus(2);
-		subasmEntity = subAsmConverter.toEntity(oldSubasm, dto);
-		System.out.println(subasmEntity);
-		System.out.println(subAsmConverter.toDto(subAsmRepository.save(subasmEntity)));
-		return subAsmConverter.toDto(subAsmRepository.save(subasmEntity));
-		
+		oldSubasm.setGrade(dto.getGrade());
+		oldSubasm.setSubStatus(2);
+		oldSubasm.setComment(dto.getComment());
+		subAsmRepository.save(oldSubasm);
+		return subAsmConverter.toDto(oldSubasm);
 	}
 
 	@Override
@@ -80,7 +78,6 @@ public class SubAsmService implements ISubAsmService {
 		SubasmEntity entity =userRepository.findOne(SecurityUtils.getPrincipal().getUsername()).getSubasmuser()
 				.stream().
 				filter(s -> s.getAsm().getAsmId().equals(asmId)).findFirst().orElse(null);
-		System.out.println(subAsmConverter.toDto(entity));
 		return entity == null ? null : subAsmConverter.toDto(entity);
 	}
 

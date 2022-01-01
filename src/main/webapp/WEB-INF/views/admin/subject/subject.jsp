@@ -64,7 +64,7 @@
                     function getMajors(){
             			$.ajax({
             				type: "GET",
-            				url: "http://localhost:8083/cms-btec/api-majors",
+            				url: "http://localhost:8080/cms-btec/api-majors",
             				success: function(res){
             					let data = '<option disabled="disabled" selected="selected">Select Major</option>'
             					res.forEach(major => {
@@ -79,7 +79,7 @@
                         $("#search-input").val("")
                         $.ajax({
                             type : "GET",
-                            url  : "http://localhost:8083/cms-btec/api-subjects",
+                            url  : "http://localhost:8080/cms-btec/api-subjects",
                             success: function (res) {
                                 let data = ""
                                 res.forEach(s => {
@@ -99,7 +99,7 @@
                         if(confirm("Are You Sure?")){
                             $.ajax({
                                 type : "DELETE",
-                                url  : "http://localhost:8083/cms-btec/api-subjects?id="+id,
+                                url  : "http://localhost:8080/cms-btec/api-subjects?id="+id,
                                 success: function () {
                                     getSubjects();
                                 },
@@ -123,7 +123,7 @@
             					
             						$.ajax({
             							type: "POST",
-            							url: "http://localhost:8083/cms-btec/api-subjects",
+            							url: "http://localhost:8080/cms-btec/api-subjects",
             							data: JSON.stringify(json),
             							contentType: "application/json",
             							success: function(res){
@@ -143,7 +143,7 @@
                                 if($("#search-mode").val() === "subjectId"){
                                     $.ajax({
                                         type : "GET",
-                                        url  : "http://localhost:8083/cms-btec/api-subjects?subjectId="+$('#search-input').val(),
+                                        url  : "http://localhost:8080/cms-btec/api-subjects?subjectId="+$('#search-input').val(),
                                         success: function (res) {
                                             let data = ""
                                             res.forEach(s => {
@@ -164,7 +164,7 @@
                                 if($("#search-mode").val() === "subjectName"){
                                     $.ajax({
                                         type : "GET",
-                                        url  : "http://localhost:8083/cms-btec/api-subjects?subjectName="+$('#search-input').val(),
+                                        url  : "http://localhost:8080/cms-btec/api-subjects?subjectName="+$('#search-input').val(),
                                         success: function (res) {
                                             let data = ""
                                             res.forEach(s => {
@@ -182,7 +182,7 @@
                                 if($("#search-mode").val() === "majorName"){
                                     $.ajax({
                                         type : "GET",
-                                        url  : "http://localhost:8083/cms-btec/api-subjects?majorName="+$("#search-input").val(),
+                                        url  : "http://localhost:8080/cms-btec/api-subjects?majorName="+$("#search-input").val(),
                                         success: function (res) {
                                             let data = ""
                                             res.forEach(s => {

@@ -5,6 +5,12 @@ import org.springframework.stereotype.Component;
 import com.btec.dto.SubAsmDTO;
 import com.btec.entity.SubasmEntity;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class SubasmConverter {
 	
@@ -16,6 +22,7 @@ public class SubasmConverter {
 		result.setSubStatus(entity.getSubStatus());
 		result.setUsername(entity.getUser().getFullName());
 		result.setFileName(entity.getSubFile());
+		result.setModifiedDate(new Timestamp(entity.getModifiedDate().getTime()));
 		return result;
 	}
 	

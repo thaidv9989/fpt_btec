@@ -94,6 +94,4 @@ public class SubasmEntity extends BaseEntity {
 	public void setSubasmId(Long subasmId) {
 		this.subasmId = subasmId;
 	}
-
-	
 }

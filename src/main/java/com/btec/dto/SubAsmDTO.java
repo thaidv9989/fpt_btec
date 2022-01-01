@@ -1,11 +1,16 @@
 package com.btec.dto;
 
 public class SubAsmDTO extends AbstractDTO<SubAsmDTO> {
+	@Override
+	public String toString() {
+		return "SubAsmDTO [subAsmId=" + subAsmId + ", fileName=" + fileName + ", comment=" + comment + ", subStatus="
+				+ subStatus + ", grade=" + grade + ", asmId=" + asmId + ", username=" + username + "]";
+	}
 	private Long subAsmId;
 	private String fileName;
 	private String comment;
 	private Integer subStatus;
-	private Integer grade;
+	private int grade;
 	private Long asmId;
 	private String username;
 	public Long getSubAsmId() {
@@ -33,10 +38,10 @@ public class SubAsmDTO extends AbstractDTO<SubAsmDTO> {
 	public void setSubStatus(Integer subStatus) {
 		this.subStatus = subStatus;
 	}
-	public Integer getGrade() {
+	public int getGrade() {
 		return grade;
 	}
-	public void setGrade(Integer grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 	public Long getAsmId() {
