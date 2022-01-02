@@ -91,7 +91,8 @@ td {
   border-radius: 4px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   vertical-align: middle;
-  z-index: 5;
+  z-index: 6;
+  display: block;
 }
 .modal-close-btn {
   position: absolute;

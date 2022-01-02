@@ -19,6 +19,8 @@ public interface IClassService {
 	ClassDTO save(ClassDTO dto);
 	void delete(long[] classIds);
 	List<UserDTO> listTraineeOfClass(Long classId, String username);
+	
+	List<ClassDTO> findClassByUser(String username);
     boolean joinClass(ClassDTO dto, String username);
 
 	boolean isTraineeHasClass(Long id, String username);

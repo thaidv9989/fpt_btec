@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,14 +60,14 @@ public class HomeController {
 	   }
 	
 	@RequestMapping(value = "/trainer/manageclass", method = RequestMethod.GET)
-	   public ModelAndView manageClass(@RequestParam("page") int page, @RequestParam("limit") int limit,
+	   public ModelAndView manageClass(@RequestParam(value = "username") String username, @RequestParam("page") int page, @RequestParam("limit") int limit,
 				HttpServletRequest request) {
 		ClassDTO model = new ClassDTO();
 		model.setPage(page);
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("trainer/manageclass");
 		Pageable pageable = new PageRequest(page - 1, limit);
-		model.setListResult(classService.findAll(pageable));
+		model.setListResult(classService.findClassByUser(username));
 		model.setTotalItem(classService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
 		if (request.getParameter("message") != null) {

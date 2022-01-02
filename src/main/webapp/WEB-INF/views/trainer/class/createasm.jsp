@@ -60,10 +60,7 @@
 							<form:input type="time" step="2" value="01:00:00" cssClass="input-info edit-input" path="asmTimeDue"/>
 							<h4>Limit Item</h4>
 							<form:input cssClass="input-info edit-input" path="limitItem"/>
-							<h4>Class Name</h4>
-							<form:select cssClass="input-info edit-input" path="classId">					
-									<form:options items="${classlist}"/>
-							</form:select><br>
+							<input type="hidden" name="classId" value="${classlist.classId}"/>
 							<form:hidden path="asmId" id="asmId"/>
 							<button type="button" id="btnAddOrUpdateAsm" title="Create Assignment"
 									class="btn-edit-asm">Create Assignment</button>

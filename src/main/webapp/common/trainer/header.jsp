@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
 <%@ page import="com.btec.util.SecurityUtils" %>
+<c:url var="trainermanageclassURL" value="/trainer/manageclass">
+	<c:param name="username" value="<%=SecurityUtils.getPrincipal().getUsername()%>"/>
+	<c:param name="page" value="1"/>
+	<c:param name="limit" value="4"/>
+</c:url>
 <div id="container">
 	<div id="top">
 		<div class="header-logo">
@@ -56,7 +61,7 @@
 					class="fas fa-angle-down"></i>
 			</a>
 				<ul class="subnav">
-					<li><a href="<c:url value='/trainer/manageclass?page=1&limit=4'/>"><i
+					<li><a href="${trainermanageclassURL}"><i
 							class="fas fa-graduation-cap"></i> Manage Class</a></li>
 					<li><a href="manage-student.html"><i
 							class="fas fa-user-graduate"></i> Manage Student</a></li>

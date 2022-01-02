@@ -39,7 +39,7 @@
 			<div id="main-content">
 				<div class="right-content">
 					<div class="nav-tab">
-						<c:url var="createAsmURL" value="/trainer/classoverview/edit" />
+						<c:url var="createAsmURL" value="/trainer/classoverview/${classinfo.classId}/edit" />
 						<button class="btn tablink first-tab"
 							onclick="openTab(event,'Class-Overview')">Class Overview</button>
 						<button class="btn tablink"
@@ -69,7 +69,7 @@
 							<div class="topic">
 								<h1 class="topic-title">Topic 1</h1>
 								<c:url var="contentdetailURL"
-									value="/trainer/classoverview/edit">
+									value="/trainer/classoverview/${classinfo.classId}/edit">
 									<c:param name="asmId" value="${item.asmId}" />
 								</c:url>
 								<div class="topic-content">

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,8 +60,8 @@ public class AsmController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/trainer/classoverview/edit", method = RequestMethod.GET)
-	public ModelAndView createEditAsm(@RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
+	@RequestMapping(value = "/trainer/classoverview/{classId}/edit", method = RequestMethod.GET)
+	public ModelAndView createEditAsm(@PathVariable(value = "classId") Long classId, @RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
 		ModelAndView mav;
 		SubAsmDTO subasm = new SubAsmDTO();
 		AsmDTO model = new AsmDTO();
@@ -80,7 +81,7 @@ public class AsmController {
 			mav.addObject("message", message.get("message"));
 			mav.addObject("alert", message.get("alert"));
 		}
-		mav.addObject("classlist", classService.findAll());
+		mav.addObject("classlist", classService.findOne(classId));
 		mav.addObject("model", model);
 		return mav;
 	}

@@ -183,4 +183,15 @@ public class ClassService implements IClassService {
 		classRepository.save(oldClass);
 		return classConverter.toDto(oldClass);
 	}
+
+	@Override
+	public List<ClassDTO> findClassByUser(String username) {
+		List<ClassDTO> classDTOs = new ArrayList<>();
+		List<ClassEntity> classEntities = userRepository.findOne(username).getClassuser();
+		for (ClassEntity classitem: classEntities) {
+			ClassDTO classDTO = classConverter.toDto(classitem);
+			classDTOs.add(classDTO);
+		}
+		return classDTOs;
+	}
 }
