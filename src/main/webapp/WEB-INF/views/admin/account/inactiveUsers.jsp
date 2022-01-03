@@ -3,8 +3,7 @@
 <%@ include file="/common/taglib.jsp"%>
 <c:url var="homeURL" value="/admin/home" />
 <c:url var="editNewURL" value="/admin/user-manage/create" />
-<c:url var="inactiveUsers" value="/admin/user-manage/inactive-users" />
-<c:url var="usermanageURL" value="admin/user-manage" />
+<c:url var="usermanageURL" value="/admin/user-manage" />
 <!-- Start Main Content -->
 <div id="content">
 	<div id="breadcrumbs">
@@ -20,7 +19,7 @@
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="nav-tab">
-								<button class="btn tablink first-tab" onclick="window.location.href='${usermanageURL}';">
+								<button class="btn tablink" onclick="window.location.href='${usermanageURL}';">
 									Account List
 								</button>
 								<button class="btn tablink" onclick="window.location.href='${inactiveUsers}';">
@@ -41,7 +40,6 @@
 							<th>FullName</th>
 							<th>Email</th>
 							<th>Phone</th>
-							<th>Gender</th>
 							<th>Actions</th>
 			              </tr>
 			            </thead>
@@ -51,7 +49,6 @@
 							<th>FullName</th>
 							<th>Email</th>
 							<th>Phone</th>
-							<th>Gender</th>
 							<th>Actions</th>
 			              </tr>
 			            </tfoot>
@@ -62,7 +59,6 @@
 									<td>${item.fullName}</td>
 									<td>${item.email}</td>
 									<td>${item.phoneNumber}</td>
-									<td><c:if test="${item.gender == 'm'}">Male</c:if><c:if test="${item.gender == 'f'}">Female</c:if></td>
 									<td>
 									<c:url var="editNewURL" value='/admin/user-manage/edit/${item.username}'/>
 								<a href="${editNewURL}"><button><i class="fas fa-eye"></i> View Detail</button></a>

@@ -21,7 +21,10 @@ public class UserConverter {
 		result.setCreatedDate(new Timestamp(entity.getCreatedDate().getTime()));
 		result.setDob(entity.getDob());
 		result.setEmail(entity.getEmail());
+		result.setCountry(entity.getCountry());
+		result.setGender(entity.getGender());
 		result.setPhoneNumber(entity.getPhoneNumber());
+		result.setUserStatus(entity.getStatus());
 		return result;
 	}
 
@@ -36,7 +39,10 @@ public class UserConverter {
 		result.setCreatedDate(dto.getCreatedDate());
 		result.setDob(dto.getDob());
 		result.setEmail(dto.getEmail());
+		result.setGender(dto.getGender());
+		result.setCountry(dto.getCountry());
 		result.setPhoneNumber(dto.getPhoneNumber());
+		result.setStatus(dto.getUserStatus());
 		return result;
 	}
 	
@@ -49,7 +55,10 @@ public class UserConverter {
 		result.setCreatedDate(dto.getCreatedDate());
 		result.setDob(dto.getDob());
 		result.setEmail(dto.getEmail());
+		result.setGender(dto.getGender());
+		result.setCountry(dto.getCountry());
 		result.setPhoneNumber(dto.getPhoneNumber());
+		result.setStatus(dto.getUserStatus());
 		return result;
 		
 	}

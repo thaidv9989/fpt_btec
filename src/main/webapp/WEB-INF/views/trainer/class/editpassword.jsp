@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <c:url var="manageclassURL" value="/trainer/manageclass?page=1&limit=4" />
+<c:url var="createNewAsmURL" value="/trainer/classoverview/${classinfo.classId}/create"/>
 <c:url var="homeURL" value="/trainer/home" />
 <c:url var="classoverviewURL"
 	value="/trainer/manageclass/class-overview">
@@ -9,7 +10,14 @@
 	<c:param name="page" value="1"></c:param>
 	<c:param name="limit" value="4"></c:param>
 </c:url>
-<c:url var="editpassURL" value="/trainer/classoverview/editpass" />
+<c:url var="editpassURL" value="/trainer/classoverview/editpass">
+	<c:param name="classId" value="${classinfo.classId}" />
+</c:url>
+<c:url var="classoverviewtabURL" value="/trainer/manageclass/class-overview">
+	<c:param name="classId" value="${classinfo.classId}"></c:param>
+	<c:param name="page" value="1"></c:param>
+	<c:param name="limit" value="4"></c:param>
+</c:url>
 <c:url var="classAPI" value="/api/class/resetpass" />
 <!DOCTYPE html>
 <html>
@@ -33,17 +41,15 @@
 		<div id="main-content">
 			<div class="right-content">
 				<div class="nav-tab">
-					<c:url var="createAsmURL" value="/trainer/classoverview/edit" />
-					<button class="btn tablink"
-						onclick="openTab(event,'Class-Overview')">
-						<a href='${classoverviewURL}'>Class Overview</a>
+					<button class="btn tablink" onclick="window.location.href='${classoverviewtabURL}';">
+						Class Overview
 					</button>
-					<button class="btn tablink"
-						onclick="openTab(event, 'Create-Assignment')">
-						<a href='${createAsmURL}'>Create Assignment</a>
+					<button class="btn tablink" onclick="window.location.href='${createNewAsmURL}';">
+						Create Assignment
 					</button>
-					<button class="btn tablink first-tab"
-						onclick="openTab(event, 'Create-Code')">Edit Code</button>
+					<button class="btn tablink" onclick="window.location.href='${editpassURL}';">
+						Edit Code
+					</button>
 					<button class="btn tablink"
 						onclick="openTab(event, 'Manage-Student')">Manage Student</button>
 				</div>
@@ -163,8 +169,8 @@
 				data : JSON.stringify(data),
 				dataType : 'json',
 				success : function(result) {
-					window.location.href = "${editpassURL}?classId="
-							+ result.classId + "&message=update_success";
+					alert('Update Password of Class Successful !!!');
+					window.location.href = "${classoverviewtabURL}";
 				},
 				error : function(error) {
 					window.location.href = "${editpassURL}?classId="

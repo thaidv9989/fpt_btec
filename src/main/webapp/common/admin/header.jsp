@@ -3,10 +3,7 @@
 <%@ include file="/common/taglib.jsp"%>
 <%@ page import="com.btec.util.SecurityUtils"%>
 <c:url var="subjectURL" value='/admin/subjects'/>
-<c:url var="usermanageURL" value='/admin/user-manage'>
-    <c:param name="page" value="1"/>
-	<c:param name="limit" value="6"/>
-</c:url>
+<c:url var="usermanageURL" value='/admin/user-manage'/>
 <c:url var="majormanageURL" value='/admin/majors'/>
 <div id="container">
 	<div id="top">

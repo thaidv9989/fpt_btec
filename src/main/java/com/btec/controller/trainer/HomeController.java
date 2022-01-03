@@ -33,7 +33,8 @@ public class HomeController {
 	@Autowired
 	private IClassService classService;
 	
-	@Autowired IUserService userService;
+	@Autowired 
+	private IUserService userService;
 	
 	@Autowired
 	private MessageUtil messageUtil;

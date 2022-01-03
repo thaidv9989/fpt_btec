@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.data.domain.Pageable;
 
-import com.btec.dto.AsmDTO;
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
 
@@ -17,7 +16,9 @@ public interface IUserService {
 	int getTotalItem();
 	UserDTO save(UserDTO dto);
 	List<UserDTO> findAll();
-	boolean delete(String usernames);
+	List<UserDTO> findAllInactiveUser();
+	void inactiveUser(String[] usernames);
+	void activeUser(String[] usernames);
 	List<ClassDTO> getClassesOfTrainee(String username);
 	boolean checkPassword(String password);
 

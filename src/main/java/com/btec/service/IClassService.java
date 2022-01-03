@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import com.btec.dto.AsmDTO;
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
-import com.btec.entity.AsmEntity;
 
 public interface IClassService {
 	List<ClassDTO> findAll(Pageable pageable);

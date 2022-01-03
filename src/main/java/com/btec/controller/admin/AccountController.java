@@ -32,15 +32,10 @@ public class AccountController{
 	private MessageUtil messageUtil;
 
 	@RequestMapping(value = "/admin/user-manage", method = RequestMethod.GET)
-	public ModelAndView showList(@RequestParam("page") int page, @RequestParam("limit") int limit, HttpServletRequest request) {
+	public ModelAndView showList(HttpServletRequest request) {
 		UserDTO model = new UserDTO();
-		model.setPage(page);
-		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("admin/account/listuser");
-		Pageable pageable = new PageRequest(page - 1, limit);
-		model.setListResult(userService.findAll(pageable));
-		model.setTotalItem(userService.getTotalItem());
-		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
+		model.setListResult(userService.findAll());
 		if (request.getParameter("message") != null) {
 			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
 			mav.addObject("message", message.get("message"));
@@ -49,6 +44,21 @@ public class AccountController{
 		mav.addObject("model", model);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/admin/user-manage/inactive-users", method = RequestMethod.GET)
+	public ModelAndView inactiveUsers(HttpServletRequest request) {
+		UserDTO model = new UserDTO();
+		ModelAndView mav = new ModelAndView("admin/account/inactiveUsers");
+		model.setListResult(userService.findAllInactiveUser());
+		if (request.getParameter("message") != null) {
+			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
+			mav.addObject("message", message.get("message"));
+			mav.addObject("alert", message.get("alert"));
+		}
+		mav.addObject("model", model);
+		return mav;
+	}
+	
 	@RequestMapping(value = {"/admin/user-manage/create", "/admin/user-manage/edit/{username}"}, method = RequestMethod.GET)
 	public ModelAndView editUser(@PathVariable(value = "username", required = false) String username, HttpServletRequest request) {
 		ModelAndView mav;

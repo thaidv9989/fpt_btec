@@ -46,7 +46,6 @@ public class AsmController {
 		model.setPage(page);
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("trainer/classoverview");
-		Pageable pageable = new PageRequest(page - 1, limit);
 		model.setListResult(classService.findByClassId(classId));
 		model.setTotalItem(asmService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
@@ -60,7 +59,7 @@ public class AsmController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/trainer/classoverview/{classId}/edit", method = RequestMethod.GET)
+	@RequestMapping(value = {"/trainer/classoverview/{classId}/detail", "/trainer/classoverview/{classId}/create"}, method = RequestMethod.GET)
 	public ModelAndView createEditAsm(@PathVariable(value = "classId") Long classId, @RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
 		ModelAndView mav;
 		SubAsmDTO subasm = new SubAsmDTO();

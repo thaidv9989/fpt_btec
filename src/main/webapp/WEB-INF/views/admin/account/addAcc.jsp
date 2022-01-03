@@ -5,6 +5,8 @@
 <c:url var="editAccURL" value="/admin/user-manage/edit" />
 <c:url var="homeURL" value="/admin/home" />
 <c:url var="userAPI" value="/api/user" />
+<c:url var="inactiveuserAPI" value="/api/inactiveuser" />
+<c:url var="activeuserAPI" value="/api/activeuser" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,13 +31,11 @@
 			<div class="right-content">
 				<div class="nav-tab">
 					<c:url var="editAccURL" value="/admin/user-manage/edit" />
-					<button class="btn tablink first-tab"
-						onclick="openTab(event,'User-Overview')">
-						<a href='${usermanageURL}'>Account Information</a>
+					<button class="btn tablink first-tab">
+						Account Information
 					</button>
-					<button class="btn tablink first-tab"
-						onclick="openTab(event,'Create-Account')">
-						<a href='${usermanageURL}'>Create Account</a>
+					<button class="btn tablink first-tab" onclick="window.location.href='${usermanageURL}';">
+						Create Account
 					</button>
 				</div>
 				<div id="Create-Account" class="tab-content create-account">
@@ -44,7 +44,9 @@
 						<c:if test="${not empty model.username}">
 						<div class="form-group">
 							<label for="exampleFormControlInput1">UserName</label>
-							<input id="username" name="username" value="${model.username}" class="form-control" disabled />
+							<input value="${model.username}" class="form-control" disabled />
+							<input type="hidden" id="username" name="username" value="${model.username}"/>
+							<input type="hidden" id="userStatus" name="userStatus" value="${model.userStatus}">
 						</div>
 							<form:hidden path="password"/>
 						</c:if>
@@ -62,13 +64,17 @@
 						</div>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Date of Birth</label>
-							<form:input type="date" cssClass="form-control" path="dob" />
+							<form:input type="date" cssClass="form-cont	rol" path="dob" />
 						</div>
-						<%-- <div class="form-group">
-							<label for="exampleFormControlInput1">Gender</label>
+						<div class="form-group">
+							<label for="exampleFormControlInput1">Gender : </label>
 							Male <form:radiobutton path="gender" value="m"/>
                       		Female <form:radiobutton path="gender" value="f"/>
-						</div> --%>
+						</div>
+						<div class="form-group">
+							<label for="exampleFormControlInput1">Country</label>
+							<form:input path="country" cssClass="form-control" />
+						</div>
 						<div class="form-group">
 							<label for="exampleFormControlInput1">Email</label>
 							<form:input path="email" cssClass="form-control" />
@@ -81,6 +87,12 @@
 							<form:select path="roleId" cssClass="input-info">
 								<form:options items="${rolemodel}"/>
 							</form:select>
+							<p>Created By : <b>${model.createdBy}</b> at <b>${model.createdDate}</b></p>
+							<p>Modified By : <b>${model.modifiedBy}</b> at <b>${model.modifiedDate}</b></p>
+							<%-- <input type="hidden" id="createdBy" name="createdBy" value="${model.createdBy}" class="form-control" />
+							<input type="hidden" id="createdDate" name="createdDate" value="${model.createdDate}" class="form-control" />
+							<input type="hidden" id="modifiedBy" name="modifiedBy" value="${model.modifiedBy}" class="form-control"  />
+							<input type="hidden" id="modifiedDate" name="modifiedDate" value="${model.modifiedDate}" class="form-control"  /> --%>
 						</c:if>
 						<c:if test="${empty model.username}">
 							<form:select path="roleId" cssClass="input-info">
@@ -90,10 +102,24 @@
 						</c:if>
 						<div class="clearfix form-actions">
 							<div class="col-md-offset-3 col-md-10">
-								<c:if test="${not empty model.username}">
+								<c:if test="${not empty model.username && model.userStatus == 1}">
 									<button class="btn btn-info" type="button"
 										id="btnSaveUser">
-										<i class="ace-icon fa fa-check bigger-110"></i> Update
+										<i class="fas fa-user-edit"></i> Update
+									</button>
+									<button style="background-color: #FF6347;" class="btn btn-info" type="button"
+										id="btnInactiveUser">
+										<i class="fas fa-user-times"></i> Inactive
+									</button>
+								</c:if>
+								<c:if test="${not empty model.username && model.userStatus == 0}">
+									<button class="btn btn-info" type="button"
+										id="btnSaveUser">
+										<i class="fas fa-user-edit"></i> Update
+									</button>
+									<button style="background-color: #008000;" class="btn btn-info" type="button"
+										id="btnActiveUser">
+										<i class="fas fa-user-check"></i> Active
 									</button>
 								</c:if>
 								<c:if test="${empty model.username}">
@@ -105,7 +131,7 @@
 
 								&nbsp; &nbsp; &nbsp;
 								<button class="btn" type="reset">
-									<i class="ace-icon fa fa-undo bigger-110"></i> Cancel
+									<i class="ace-icon fa fa-undo bigger-110"></i> Reset
 								</button>
 							</div>
 						</div>
@@ -187,6 +213,7 @@
 		</div>
 		<!-- 	</form> -->
 	</div>
+	<script type='text/javascript' src='<c:url value="/template/assets/js/jquery-2.2.3.min.js" />'></script>
 	<script>
 	$('#btnSaveUser').click(function (e) {
 		e.preventDefault();
@@ -197,6 +224,58 @@
 		});
 		saveUser(data);
 	});
+	
+	$('#btnInactiveUser').click(function (e) {
+		let inactive = confirm('Are you sure you want to inactivate this account?');
+		if (inactive == true) {
+			var usernames = $('#username').map(function () {
+	            return $(this).val();
+	        }).get();
+			inactiveUser(usernames);
+		}
+	});
+	
+	$('#btnActiveUser').click(function (e) {
+		let inactive = confirm('Are you sure you want to active this account?');
+		if (inactive == true) {
+			var usernames = $('#username').map(function () {
+	            return $(this).val();
+	        }).get();
+			activeUser(usernames);
+		}
+	});
+	
+	function inactiveUser(data) {
+        $.ajax({
+            url: '${inactiveuserAPI}',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+            	alert('Inactive User Successful !!! You can active this account again in manage Inactive Account')
+                window.location.reload();
+            },
+            error: function (error) {
+            	alert('Some Thing Went Worng !!!');
+            }
+        });
+	}
+	
+	function activeUser(data) {
+        $.ajax({
+            url: '${activeuserAPI}',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+            	alert('Active User Successful !!!')
+                window.location.reload();
+            },
+            error: function (error) {
+            	alert('Some Thing Went Worng !!!');
+            }
+        });
+	}
 	
 	function saveUser(data) {
 		$.ajax({

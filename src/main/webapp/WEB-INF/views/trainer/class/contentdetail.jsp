@@ -308,10 +308,11 @@
 	            contentType: 'application/json',
 	            data: JSON.stringify(data),
 	            success: function (result) {
-	                window.location.href = "${classoverviewURL}?classId="+result.classId+"page=1&limit=4&message=delete_success";
+	            	alert('Delete Assignment Success !!!')
+	                window.location.href = "${classoverviewtabURL}";
 	            },
 	            error: function (error) {
-	            	window.location.href = "${classoverviewURL}?classId="+result.classId+"page=1&limit=4&message=error_system";
+	            	alert('Some Thing Went Worng !!!');
 	            }
 	        });
 	    }
