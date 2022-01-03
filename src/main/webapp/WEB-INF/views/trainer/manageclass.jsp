@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<link rel="stylesheet"href="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 <%@ include file="/common/taglib.jsp"%>
 <div id="content">
 	<div id="breadcrumbs">
@@ -15,32 +16,54 @@
 					onclick="openTab(event,'Class-Overview')">My Class</button>
 			</div>
 			<div id="Class-Overview" class="tab-content class-overview">
-			<form action="<c:url value='/trainer/manageclass'/>" id="formSubmit" method="get">
-				<div class="row place-list">
-				<c:forEach var="classlist" items="${model.listResult}">
-					<div class="col col-two s-col-full mt-16">
-						<img src="<c:url value='/template/assets/images/p3.jpg' />" alt="" class="place-img" />
-						<div class="place-body">
-							<h3 class="place-heading">${classlist.className}</h3>
-							<c:url var="classoverviewURL" value='/trainer/manageclass/class-overview?page=1&limit=4'>
-								<c:param name="classId" value="${classlist.classId}"/>
-							</c:url>
-							<a href="${classoverviewURL}"
-								class="place-buy-btn js-buy-ticket s-full-width">View</a>
+				<form action="<c:url value='/trainer/manageclass'/>" id="formSubmit"
+					method="get">
+					<div class="table-content">
+						<label>Search</label> <input id="myInput" type="text" placeholder="Search.." style="padding: 6px; border-radius: 10px; height: 25px; border: 1px solid ;">
+						<br> <br>
+						<table id="example" class="table table-striped table-bordered"
+							style="width: 100%">
+							<thead>
+								<tr>
+									<th>Class ID</th>
+									<th>Class Name</th>
+									<th>Password</th>
+									<th>Modified By</th>
+									<th>Modified Date</th>
+									<th>Created By</th>
+									<th>Created Date</th>
+									<th>Subject Name</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody id="myTable">
+								<c:forEach var="item" items="${model.listResult}">
+									<tr>
+										<td>${item.classId}</td>
+										<td>${item.className}</td>
+										<td>${item.password}</td>
+										<td>${item.modifiedBy}</td>
+										<td>${item.modifiedDate}</td>
+										<td>${item.createdBy}</td>
+										<td>${item.createdDate}</td>
+										<td>${item.subjectName}</td>
+										<td><c:url var="classoverviewURL"
+												value='/trainer/manageclass/class-overview?page=1&limit=4'>
+												<c:param name="classId" value="${item.classId}" />
+											</c:url> <a href="${classoverviewURL}" class=""><i
+												class="fas fa-eye"></i>View</a></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+					<div class="clearfix">
+						<div class="pagination">
+							<ul class="pagination" id="pagination"></ul>
+							<input type="hidden" value="" id="page" name="page" /> <input
+								type="hidden" value="" id="limit" name="limit" />
 						</div>
 					</div>
-					</c:forEach>
-				</div>
-				<div class="clearfix">
-					<div class="hint-text">
-						Showing <b>5</b> out of <b>10</b> entries
-					</div>
-					<div class="pagination">
-						 <ul class="pagination" id="pagination"></ul>
-						<input type="hidden" value="" id="page" name="page" /> 
-						<input type="hidden" value="" id="limit" name="limit" />
-					</div>
-				</div>
 				</form>
 			</div>
 		</div>
@@ -128,11 +151,36 @@ $(function() {
 		startPage : currentPage,
 		onPageClick : function(event, page) {
 			if (currentPage != page) {
-				$('#limit').val(4);
+				$('#limit').val(10);
 				$('#page').val(page);
 				$('#formSubmit').submit();
 			}
 		}
 	});
+});
+
+	$('#btnAddOrUpdateAsm').click(function(e) {
+		e.preventDefault();
+		var data = {};
+		var formData = $('#formSubmitAsm').serializeArray();
+		$.each(formData, function(i, v) {
+			data["" + v.name + ""] = v.value;
+		});
+		var asmId = $('#asmId').val();
+		if (asmId == "") {
+			addAsm(data);
+		} else {
+			updateAsm(data);
+		}
+	});
+</script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
 </script>

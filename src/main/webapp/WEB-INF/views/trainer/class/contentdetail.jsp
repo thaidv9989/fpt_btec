@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 </head>
 <body>
 	<div id="content">
@@ -308,11 +307,10 @@
 	            contentType: 'application/json',
 	            data: JSON.stringify(data),
 	            success: function (result) {
-	            	alert('Delete Assignment Success !!!')
-	                window.location.href = "${classoverviewtabURL}";
+	                window.location.href = "${classoverviewURL}?classId="+result.classId+"page=1&limit=4&message=delete_success";
 	            },
 	            error: function (error) {
-	            	alert('Some Thing Went Worng !!!');
+	            	window.location.href = "${classoverviewURL}?classId="+result.classId+"page=1&limit=4&message=error_system";
 	            }
 	        });
 	    }

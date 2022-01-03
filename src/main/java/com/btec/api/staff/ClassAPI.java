@@ -1,5 +1,7 @@
 package com.btec.api.staff;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.btec.dto.ClassDTO;
+import com.btec.dto.MajorDTO;
 import com.btec.service.IClassService;
 import com.btec.util.SecurityUtils;
 
@@ -23,19 +26,15 @@ public class ClassAPI {
 	@PostMapping("/api/class")
 	public ClassDTO addNewClass(@RequestBody ClassDTO newclassDTO) {
 		return classService.save(newclassDTO);
-//		System.out.println(newclassDTO);
-//		return null;
 	
 	}
-	
-	@PutMapping("/api/class")
-	public ClassDTO editClass(@RequestBody ClassDTO editclassDTO) {
-		return classService.save(editclassDTO);
-	}
-	
 	@PutMapping("/api/class/resetpass")
 	public ClassDTO editClassPass(@RequestBody ClassDTO editclassDTO) {
 		return classService.savePass(editclassDTO);
+	}
+	@PutMapping("/api/class")
+	public ClassDTO editClass(@RequestBody ClassDTO editclassDTO) {
+		return classService.save(editclassDTO);
 	}
 	@DeleteMapping("/api/class")
 	public void deleteClass(@RequestBody long[] classIds) {
@@ -55,4 +54,6 @@ public class ClassAPI {
 	public ResponseEntity<?> getLinkClass(@RequestParam Long id){
 		return ResponseEntity.ok(classService.genLinkInvite(id));
 	}
+	
+
 }

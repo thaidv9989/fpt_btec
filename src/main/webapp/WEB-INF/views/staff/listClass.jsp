@@ -32,6 +32,7 @@
 				</div>
 				<div class="table-content">
 				<br>
+				
 				<input id="myInput" type="text" placeholder="Search..">
                  <br><br>
 					<table id="example" class="table table-striped table-bordered" style="width:100%">

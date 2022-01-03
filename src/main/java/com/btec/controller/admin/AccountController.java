@@ -58,7 +58,6 @@ public class AccountController{
 		mav.addObject("model", model);
 		return mav;
 	}
-	
 	@RequestMapping(value = {"/admin/user-manage/create", "/admin/user-manage/edit/{username}"}, method = RequestMethod.GET)
 	public ModelAndView editUser(@PathVariable(value = "username", required = false) String username, HttpServletRequest request) {
 		ModelAndView mav;

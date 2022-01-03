@@ -48,16 +48,15 @@ public class JPAConfig {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/finalweb");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/finalcms");
 		dataSource.setUsername("root");
-		dataSource.setPassword("admin");
+		dataSource.setPassword("123456");
 		return dataSource;
 	}
 	
 	Properties additionalProperties() {
 		Properties properties = new Properties();
 //		properties.setProperty("hibernate.hbm2ddl.auto", "create");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 //		properties.setProperty("hibernate.hbm2ddl.auto", "none");
 		properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");

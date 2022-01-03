@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <c:url var="manageclassURL" value="/trainer/manageclass?page=1&limit=4" />
-<c:url var="createNewAsmURL" value="/trainer/classoverview/${classinfo.classId}/create"/>
 <c:url var="homeURL" value="/trainer/home" />
 <c:url var="classoverviewURL"
 	value="/trainer/manageclass/class-overview">
@@ -10,14 +9,8 @@
 	<c:param name="page" value="1"></c:param>
 	<c:param name="limit" value="4"></c:param>
 </c:url>
-<c:url var="editpassURL" value="/trainer/classoverview/editpass">
-	<c:param name="classId" value="${classinfo.classId}" />
-</c:url>
-<c:url var="classoverviewtabURL" value="/trainer/manageclass/class-overview">
-	<c:param name="classId" value="${classinfo.classId}"></c:param>
-	<c:param name="page" value="1"></c:param>
-	<c:param name="limit" value="4"></c:param>
-</c:url>
+<c:url var="editpassURL" value="/trainer/classoverview/editpass" />
+<c:url var="classAPI" value="/api/class" />
 <c:url var="classAPI" value="/api/class/resetpass" />
 <!DOCTYPE html>
 <html>
@@ -41,15 +34,17 @@
 		<div id="main-content">
 			<div class="right-content">
 				<div class="nav-tab">
-					<button class="btn tablink" onclick="window.location.href='${classoverviewtabURL}';">
-						Class Overview
+					<c:url var="createAsmURL" value="/trainer/classoverview/edit" />
+					<button class="btn tablink"
+						onclick="openTab(event,'Class-Overview')">
+						<a href='${classoverviewURL}'>Class Overview</a>
 					</button>
-					<button class="btn tablink" onclick="window.location.href='${createNewAsmURL}';">
-						Create Assignment
+					<button class="btn tablink"
+						onclick="openTab(event, 'Create-Assignment')">
+						<a href='${createAsmURL}'>Create Assignment</a>
 					</button>
-					<button class="btn tablink" onclick="window.location.href='${editpassURL}';">
-						Edit Code
-					</button>
+					<button class="btn tablink first-tab"
+						onclick="openTab(event, 'Create-Code')">Edit Code</button>
 					<button class="btn tablink"
 						onclick="openTab(event, 'Manage-Student')">Manage Student</button>
 				</div>
@@ -160,7 +155,7 @@
 			var classId = $('#classId').val();
 			editPass(data);
 		});
-	
+
 		function editPass(data) {
 			$.ajax({
 				url : '${classAPI}',
@@ -169,8 +164,8 @@
 				data : JSON.stringify(data),
 				dataType : 'json',
 				success : function(result) {
-					alert('Update Password of Class Successful !!!');
-					window.location.href = "${classoverviewtabURL}";
+					window.location.href = "${editpassURL}?classId="
+							+ result.classId + "&message=update_success";
 				},
 				error : function(error) {
 					window.location.href = "${editpassURL}?classId="
@@ -183,7 +178,7 @@
 		function getLink() {
 			$.ajax({
 				type : "GET",
-				url : "http://localhost:8083/cms-btec/api/class/gen?id="
+				url : "http://localhost:8080/cms-btec/api/class/gen?id="
 						+ $('#classID').val(),
 				success : function(res) {
 					console.log(res)

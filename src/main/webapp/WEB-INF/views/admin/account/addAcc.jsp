@@ -155,7 +155,7 @@
 						<div class="panel panel-danger">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<span class="glyphicon glyphicon-calendar"></span>  Calendar
+									<span class="glyphicon glyphicon-calendar"></span>  Calendar
 									Events
 								</h3>
 							</div>

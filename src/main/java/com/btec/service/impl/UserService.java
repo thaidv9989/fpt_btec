@@ -51,27 +51,8 @@ public class UserService implements IUserService {
 	}
 	@Override
 	public List<UserDTO> findAll(){
-		/*return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());*/
-		List<UserDTO> userDTOs = new ArrayList<>();
-		List<UserEntity> userEntities = userRepository.findAllByStatus(SystemConstant.ACTIVE_STATUS);
-		for (UserEntity userEntity: userEntities) {
-			UserDTO userDTO = userConverter.toDto(userEntity);
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
+		return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());
 	}
-	
-	public List<UserDTO> findAllInactiveUser(){
-		/*return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());*/
-		List<UserDTO> userDTOs = new ArrayList<>();
-		List<UserEntity> userEntities = userRepository.findAllByStatus(SystemConstant.INACTIVE_STATUS);
-		for (UserEntity userEntity: userEntities) {
-			UserDTO userDTO = userConverter.toDto(userEntity);
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
-	}
-	
 	@Override
 	public Map<String, String> findAllTrainer() {
 		Long roleId = 2L;
@@ -130,12 +111,9 @@ public class UserService implements IUserService {
 		return userConverter.toDto(userRepository.save(userEntity));
 	}
 	@Override
-	public void inactiveUser(String[] usernames) {
-		for (String username : usernames) {
-			UserEntity userEntity = userRepository.findOne(username);
-			userEntity.setStatus(SystemConstant.INACTIVE_STATUS);
-			userRepository.save(userEntity);
-		}
+	public boolean delete(String usernames) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	@Override
 	public List<ClassDTO> getClassesOfTrainee(String username){
@@ -162,6 +140,19 @@ public class UserService implements IUserService {
 			return true;
 		}
 		return false;
+	}
+	@Override
+	public List<UserDTO> findAllInactiveUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void inactiveUser(String[] usernames) {
+		for (String username : usernames) {
+			UserEntity userEntity = userRepository.findOne(username);
+			userEntity.setStatus(SystemConstant.INACTIVE_STATUS);
+			userRepository.save(userEntity);
+		}
 	}
 	@Override
 	public void activeUser(String[] usernames) {

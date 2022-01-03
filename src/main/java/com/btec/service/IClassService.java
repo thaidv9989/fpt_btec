@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.btec.dto.AsmDTO;
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
+import com.btec.entity.AsmEntity;
 
 public interface IClassService {
 	List<ClassDTO> findAll(Pageable pageable);
@@ -18,8 +19,6 @@ public interface IClassService {
 	ClassDTO save(ClassDTO dto);
 	void delete(long[] classIds);
 	List<UserDTO> listTraineeOfClass(Long classId, String username);
-	
-	List<ClassDTO> findClassByUser(String username);
     boolean joinClass(ClassDTO dto, String username);
 
 	boolean isTraineeHasClass(Long id, String username);
@@ -28,4 +27,5 @@ public interface IClassService {
 
 	String genLinkInvite(Long id);
 	ClassDTO savePass(ClassDTO dto);
+	List<ClassDTO> findClassByUser(String username);
 }

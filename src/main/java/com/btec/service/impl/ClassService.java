@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.btec.constant.SystemConstant;
 import com.btec.converter.AsmConverter;
 import com.btec.converter.ClassConverter;
 import com.btec.converter.UserConverter;
@@ -18,10 +20,12 @@ import com.btec.dto.UserDTO;
 import com.btec.entity.AsmEntity;
 import com.btec.entity.ClassEntity;
 import com.btec.entity.ContentEntity;
+import com.btec.entity.RoleEntity;
 import com.btec.entity.SubjectEntity;
 import com.btec.entity.UserEntity;
 import com.btec.repository.ClassRepository;
 import com.btec.repository.ContentRepository;
+import com.btec.repository.RoleRepository;
 import com.btec.repository.SubjectRepository;
 import com.btec.repository.UserRepository;
 import com.btec.service.IClassService;
@@ -44,6 +48,9 @@ public class ClassService implements IClassService {
 
 	@Autowired
 	private ContentRepository contentRepository;
+	
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -56,7 +63,7 @@ public class ClassService implements IClassService {
 		List<ClassDTO> models = new ArrayList<>();
 		List<ClassEntity> entities = classRepository.findAll(pageable).getContent();
 		for (ClassEntity classlist : entities) {
-			ClassDTO classDTO = classConverter.toClassDto(classlist);
+			ClassDTO classDTO = classConverter.toDto(classlist);
 			models.add(classDTO);
 		}
 		return models;
@@ -80,7 +87,7 @@ public class ClassService implements IClassService {
 	@Override
 	public ClassDTO findOne(Long classId) {
 		ClassEntity entity = classRepository.findOne(classId);
-		return classConverter.toClassDto(entity);
+		return classConverter.toDto(entity);
 	}
 
 	@Override
@@ -96,13 +103,13 @@ public class ClassService implements IClassService {
 			oldClass.getUserclass().stream().filter(u->u.getRoles().get(0).getRoleName().equals("trainer")).map(u->user);
 			oldClass.setContent(contentclass);
 			user.getClassuser().add(oldClass);
-			return classConverter.toClassDto(oldClass);
+			return classConverter.toDto(oldClass);
 		}
 			ClassEntity classEntity = classConverter.toEntity(dto);
 			classEntity.getUserclass().add(user);
 			classEntity.setContent(contentclass);
 			classEntity.setSubject(subjectclass);
-		return classConverter.toClassDto(classRepository.save(classEntity));
+		return classConverter.toDto(classRepository.save(classEntity));
 	}
 
 	@Override
@@ -126,6 +133,8 @@ public class ClassService implements IClassService {
 	public List<UserDTO> listTraineeOfClass(Long classId, String username) {
 		List<UserEntity> usersEntity = classRepository.findOne(classId).getUserclass();
 		List<UserDTO> usersDTO = new ArrayList<>();
+		Long roleId = 2L;
+		RoleEntity trainerrole = roleRepository.findOne(roleId);
 		for (UserEntity users: usersEntity) {
 			if (!(users.getUsername() == username)) {
 				UserDTO userDTO = userConverter.toDto(users);
@@ -172,7 +181,7 @@ public class ClassService implements IClassService {
 		ClassEntity oldClass = classRepository.findOne(dto.getClassId());
 		oldClass.setPassword(dto.getPassword());
 		classRepository.save(oldClass);
-		return classConverter.toClassDto(oldClass);
+		return classConverter.toDto(oldClass);
 	}
 
 	@Override
@@ -185,4 +194,5 @@ public class ClassService implements IClassService {
 		}
 		return classDTOs;
 	}
+
 }

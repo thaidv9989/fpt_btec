@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
+
 <div id="content">
 	<div id="breadcrumbs">
 		<ul class="breadcrumb">
@@ -48,7 +49,7 @@
 							</select>
 						</div>
 					</form>
-					<button onclick="addSubject()">Add new</button>
+					<button id="addSubject" onclick="validateSubjectName()">Add new</button>
 				</div>
 				<script type="text/javascript">
                     getSubjects()
@@ -109,6 +110,30 @@
                             })
                         }
                     }
+                    var count = 0;
+            		
+            		function validateSubjectName(){
+            			var result = false;
+            			$.ajax({
+            				url: "http://localhost:8080/cms-btec/api-subjects/ce?name="+$("#subjectName").val(),
+            				type: "GET",
+            				success: function(res){
+            					if(!res){
+            						addSubject()
+            						
+            					}
+            					else{
+            						alert("This subject is existed. try another !"),
+            						$("#subjectName").val("")
+            					}
+            				},
+            				error: function(res){
+            					console.log(res)
+            				}
+            			})
+            			console.log("Sau khi ra khoi ajax:", result)
+            			return result
+            		}
                     function addSubject(){
                     	console.log($("#subjectName").val().trim())
                     	console.log( $("#majorselect").val())

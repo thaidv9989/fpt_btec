@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
 <%@ page import="com.btec.util.SecurityUtils"%>
-<c:url var="createNewAsmURL" value="/trainer/classoverview/${classinfo.classId}/create"/>
-
 <c:url var="manageclassURL" value="/trainer/manageclass?page=1&limit=4" />
 <c:url var="homeURL" value="/trainer/home" />
 <c:url var="editpassURL" value="/trainer/classoverview/editpass">
@@ -41,18 +39,20 @@
 			<div id="main-content">
 				<div class="right-content">
 					<div class="nav-tab">
-						<button class="btn tablink first-tab" onclick="window.location.href='';">
-							Class Overview
+						<c:url var="createAsmURL" value="/trainer/classoverview/edit" />
+						<button class="btn tablink first-tab"
+							onclick="openTab(event,'Class-Overview')">Class Overview</button>
+						<button class="btn tablink"
+							onclick="openTab(event, 'Create-Assignment')">
+							<a href='${createAsmURL}'>Create Assignment</a>
 						</button>
-						<button class="btn tablink" onclick="window.location.href='${createNewAsmURL}';">
-							Create Assignment
-						</button>
-						<button class="btn tablink" onclick="window.location.href='${editpassURL}';">
-							Edit Code
+						<button class="btn tablink"
+							onclick="openTab(event, 'Create-Code')">
+							<a href="${editpassURL}">Edit Code</a>
 						</button>
 						<button class="btn tablink"
 							onclick="openTab(event, 'Manage-Student')">
-							<a href='${mngtraineeURL}'>Manage Student</a> 
+							<a href='${mngtraineeURL}'>Manage Student 
 						</button>
 					</div>
 					<div id="Class-Overview" class="tab-content class-overview">
@@ -69,7 +69,7 @@
 							<div class="topic">
 								<h1 class="topic-title">Topic 1</h1>
 								<c:url var="contentdetailURL"
-									value="/trainer/classoverview/${classinfo.classId}/detail">
+									value="/trainer/classoverview/edit">
 									<c:param name="asmId" value="${item.asmId}" />
 								</c:url>
 								<div class="topic-content">

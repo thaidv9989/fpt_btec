@@ -12,6 +12,24 @@ public class UserDTO extends AbstractDTO<UserDTO> {
 	private String gender;
 	private String country;
 	private Integer userStatus;
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public Integer getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(Integer userStatus) {
+		this.userStatus = userStatus;
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -62,23 +80,4 @@ public class UserDTO extends AbstractDTO<UserDTO> {
 		return "UserDTO [username=" + username + ", password=" + password + ", fullName=" + fullName + ", phoneNumber="
 				+ phoneNumber + ", email=" + email + ", dob=" + dob + ", RoleId=" + RoleId + "]";
 	}
-	public Integer getUserStatus() {
-		return userStatus;
-	}
-	public void setUserStatus(Integer userStatus) {
-		this.userStatus = userStatus;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	
 }
