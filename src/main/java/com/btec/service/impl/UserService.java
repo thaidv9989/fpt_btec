@@ -1,7 +1,6 @@
 package com.btec.service.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.btec.constant.SystemConstant;
 import com.btec.converter.ClassConverter;
 import com.btec.converter.UserConverter;
 import com.btec.dto.ClassDTO;
@@ -37,8 +35,8 @@ public class UserService implements IUserService {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-	@Autowired
-	private ClassConverter classConverter;
+//	@Autowired
+//	private ClassConverter classConverter;
 	
 	@Autowired UserConverter userConverter;
 	
@@ -93,22 +91,26 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserDTO save(UserDTO dto) {
-		UserEntity userEntity = new UserEntity();
-		List<UserEntity> userEntities = roleRepository.findOne(dto.getRoleId()).getUsers();
-		UserEntity oldUser = userRepository.findOne(dto.getUsername());
-		if (oldUser != null) {
-			userEntity = userConverter.toEntity(oldUser,dto);
-			userEntity.setModifiedDate(new Date());
-		}
-		else
-		{
-			userEntity = userConverter.toEntity(dto);
-			userEntity.getRoles().add(roleRepository.findOne(dto.getRoleId()));
-			userEntities.add(userEntity);
-			userEntity.setCreatedDate(new Date());
-			userEntity.setModifiedDate(new Date());
-		}
-		return userConverter.toDto(userRepository.save(userEntity));
+		// TODO Auto-generated method stub
+//		UserEntity userEntity = new UserEntity();
+//		UserEntity oldUser = userRepository.findOne(dto.getUsername());
+//		if (oldUser != null) {
+//			userEntity = userConverter.toEntity(oldUser,dto);
+//		}
+//		else
+//		{
+//			userEntity = userConverter.toEntity(dto);
+//		}
+//		return userConverter.toDto(userRepository.save(userEntity));
+		/*
+		 * UserEntity userEntity = new UserEntity(); if(dto.getUsername() != null) {
+		 * UserEntity oldUser = userRepository.findOne(dto.getUsername()); userEntity =
+		 * userConverter.toEntity(oldUser,dto); }else { userEntity =
+		 * userConverter.toEntity(dto); } return
+		 * userConverter.toDto(userRepository.save(userEntity));
+		 */
+		
+		return userConverter.toDto(userRepository.save(userConverter.toEntity(dto)));
 	}
 	@Override
 	public boolean delete(String usernames) {
@@ -134,34 +136,13 @@ public class UserService implements IUserService {
 
 	@Override
 	public boolean changePwd(String password){
+		System.out.println(password);
 		UserEntity user = userRepository.findOne(SecurityUtils.getPrincipal().getUsername());
-		user.setPassword(password);
+		user.setPassword(passwordEncoder.encode(password));
 		if(userRepository.save(user) != null){
 			return true;
 		}
 		return false;
-	}
-	@Override
-	public List<UserDTO> findAllInactiveUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void inactiveUser(String[] usernames) {
-		for (String username : usernames) {
-			UserEntity userEntity = userRepository.findOne(username);
-			userEntity.setStatus(SystemConstant.INACTIVE_STATUS);
-			userRepository.save(userEntity);
-		}
-	}
-	@Override
-	public void activeUser(String[] usernames) {
-		// TODO Auto-generated method stub
-		for (String username : usernames) {
-			UserEntity userEntity = userRepository.findOne(username);
-			userEntity.setStatus(SystemConstant.ACTIVE_STATUS);
-			userRepository.save(userEntity);
-		}
 	}
 
 }

@@ -40,15 +40,6 @@ public class UserAPI {
 //	public void deleteUser(@RequestBody String username) {
 //		userService.delete(username);
 //	}
-	@PutMapping("/api/inactiveuser")
-	public void inactiveUser(@RequestBody String[] usernames) {
-		userService.inactiveUser(usernames);
-	}
-
-	@PutMapping("/api/activeuser")
-	public void activeUser(@RequestBody String[] usernames) {
-		userService.activeUser(usernames);
-	}
 	
 	@GetMapping("/api/user/cpw")
 	public ResponseEntity<?> checkPassword(@RequestParam String pwd){
