@@ -13,6 +13,7 @@ public class AsmDTO extends AbstractDTO<AsmDTO>{
 	private String subType;
 	private String feedback;
 	private Long classId;
+	private int status;
 	
 	
 	public void setAsmBrief(String asmBrief) {
@@ -77,5 +78,15 @@ public class AsmDTO extends AbstractDTO<AsmDTO>{
 	public void setAsmTimeDue(Time asmTimeDue) {
 		this.asmTimeDue = asmTimeDue;
 	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	
 	
 }

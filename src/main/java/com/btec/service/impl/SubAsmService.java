@@ -43,7 +43,7 @@ public class SubAsmService implements ISubAsmService {
 	@Autowired
 	private AsmRepository asmRepository;
 
-	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc\\";
+	private final String locationOfSubmitAsm = "D:\\GITTTTTTTTTTTTTT\\fpt_btec\\src\\main\\webapp\\template\\assets\\doc\\";
 
 	@Override
 	public List<SubAsmDTO> findAll() {
@@ -80,7 +80,7 @@ public class SubAsmService implements ISubAsmService {
 				filter(s -> s.getAsm().getAsmId().equals(asmId)).findFirst().orElse(null);
 		return entity == null ? null : subAsmConverter.toDto(entity);
 	}
-
+	
 
 	@Override
 	public SubAsmDTO submitAsm(SubAsmDTO subAsmDTO){
@@ -91,7 +91,7 @@ public class SubAsmService implements ISubAsmService {
 		entity.setUser(user);
 		entity.setSubFile(subAsmDTO.getFileName());
 		entity.setSubStatus(1);
-		entity.setGrade(-1);
+		entity.setGrade(0);
 		entity.setComment(subAsmDTO.getComment());
 		user.getSubasmuser().add(entity);
 		userRepository.save(user);
@@ -105,14 +105,13 @@ public class SubAsmService implements ISubAsmService {
 		try {
 			Path oldSubmitFile = Paths.get(locationOfSubmitAsm + entity.getSubFile());
 			System.out.println(oldSubmitFile);
-//			Files.deleteIfExists(oldSubmitFile);
 			System.out.println(Files.deleteIfExists(oldSubmitFile));
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		entity.setSubFile(subAsmDTO.getFileName());
 		entity.setSubStatus(1);
-		entity.setGrade(-1);
+		entity.setGrade(0);
 		entity.setComment(subAsmDTO.getComment());
 		user.getSubasmuser().stream().filter(s -> s.getSubasmId().equals(subAsmDTO.getSubAsmId())).map(x-> entity);
 		userRepository.save(user);

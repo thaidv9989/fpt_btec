@@ -28,4 +28,5 @@ public interface IClassService {
 	String genLinkInvite(Long id);
 	ClassDTO savePass(ClassDTO dto);
 	List<ClassDTO> findClassByUser(String username);
+	List<AsmDTO> findAsmByUsernameAndClassId(Long classId);
 }

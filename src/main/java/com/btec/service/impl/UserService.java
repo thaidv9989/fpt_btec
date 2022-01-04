@@ -1,6 +1,8 @@
 package com.btec.service.impl;
 
 import java.util.ArrayList;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,9 @@ import com.btec.converter.ClassConverter;
 import com.btec.converter.UserConverter;
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
+import com.btec.entity.ClassEntity;
 import com.btec.entity.UserEntity;
+import com.btec.repository.ClassRepository;
 import com.btec.repository.RoleRepository;
 import com.btec.repository.UserRepository;
 import com.btec.service.IUserService;
@@ -30,6 +35,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired 
+	private ClassRepository classRepository;
 	
 	
 	@Autowired
@@ -49,7 +57,7 @@ public class UserService implements IUserService {
 	}
 	@Override
 	public List<UserDTO> findAll(){
-		return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());
+		return userRepository.findAll().stream().map(u -> userConverter.toDto(u)).collect(Collectors.toList());
 	}
 	@Override
 	public Map<String, String> findAllTrainer() {
@@ -117,10 +125,26 @@ public class UserService implements IUserService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 	@Override
 	public List<ClassDTO> getClassesOfTrainee(String username){
-		return userRepository.findOne(username).getClassuser().stream().map(c -> ClassConverter.toDto(c)).collect(Collectors.toList());
+		return userRepository.findOne(username).getClassuser().stream().map((ClassEntity c) -> {
+			ClassDTO dto = ClassConverter.toDto(c);
+			if(c.getAsms().size() == 0) {
+				dto.setStatus("Preparing");
+			}
+			else {
+				if(c.getAsms().stream().allMatch(a -> a.getAsmDateDue().before(Date.valueOf(LocalDate.now())))) {
+					dto.setStatus("Complete");
+				}
+				else {
+					dto.setStatus("On Going");
+				}
+			}
+			return dto;
+		}).collect(Collectors.toList());
 	}
+	
 //	@Override
 //	public boolean delete(String usernames) {
 //		for (String username: usernames) {
@@ -144,5 +168,7 @@ public class UserService implements IUserService {
 		}
 		return false;
 	}
+	
+
 
 }

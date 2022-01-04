@@ -58,7 +58,7 @@
                         </form>
                     </div>
                     <div id="formUpload">
-                        <h3>Hãy Submit Assignment Trầm Kẽm này đi bruh</h3>
+                        <h3>Hãy Submit Assignment đi bruh</h3>
                         <form id="formSubmit">
                             <input id="fileSubmit" required type="file" name="fileSubmit" formenctype="multipart/form-data"/>
                             <button type="submit">Submit File</button>
