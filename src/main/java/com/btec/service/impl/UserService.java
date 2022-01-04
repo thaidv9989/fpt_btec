@@ -134,7 +134,7 @@ public class UserService implements IUserService {
 				dto.setStatus("Preparing");
 			}
 			else {
-				if(c.getAsms().stream().allMatch(a -> a.getAsmDateDue().before(Date.valueOf(LocalDate.now())))) {
+				if(c.getAsms().stream().allMatch(a -> a.getAsmDateDue().getTime() + (a.getAsmTimeDue().getHours() * 60 * 60 + a.getAsmTimeDue().getMinutes()* 60 + a.getAsmTimeDue().getSeconds())*1000 - System.currentTimeMillis()  < 0)) {
 					dto.setStatus("Complete");
 				}
 				else {

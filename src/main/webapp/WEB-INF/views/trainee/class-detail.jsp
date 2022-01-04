@@ -27,7 +27,6 @@
                             <div class="topic">
                                 <h1 class="topic-title">ASM ${loop.index + 1}</h1>
                                 <div class="topic-content">
-                                   
                                         <a href="submit-asm?id=${a.asmId}"><i class="fas fa-file-alt"></i> <span>${a.asmName}</span></a>
                                     	<span style="float: right; color: ${a.status == 1 ? "blue" : "red"}">${a.status == 1 ? "Submitted" : "No Attempt"}</span>
                                 </div>

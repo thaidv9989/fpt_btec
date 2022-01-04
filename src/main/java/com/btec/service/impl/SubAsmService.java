@@ -1,11 +1,13 @@
 package com.btec.service.impl;
 
+import java.io.Console;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,7 +80,23 @@ public class SubAsmService implements ISubAsmService {
 		SubasmEntity entity =userRepository.findOne(SecurityUtils.getPrincipal().getUsername()).getSubasmuser()
 				.stream().
 				filter(s -> s.getAsm().getAsmId().equals(asmId)).findFirst().orElse(null);
-		return entity == null ? null : subAsmConverter.toDto(entity);
+		if(entity != null) {
+			if(isOverDue(entity)) {
+				entity.setSubStatus(3);
+			}
+			else {
+				if(!entity.getSubFile().equals("")){
+					if(entity.getGrade() == 0) {
+						entity.setSubStatus(1);
+					}
+					else {
+						entity.setSubStatus(2);
+					}
+				}
+			}
+			return subAsmConverter.toDto(entity);
+		}
+		return null;
 	}
 	
 
@@ -130,6 +148,13 @@ public class SubAsmService implements ISubAsmService {
 			e.printStackTrace();
 		}
 		return gen;
+	}
+	
+	
+	public boolean isOverDue(SubasmEntity subAsm) {
+		long a = subAsm.getModifiedDate().getTime();
+		long b = subAsm.getAsm().getAsmDateDue().getTime() + (subAsm.getAsm().getAsmTimeDue().getHours() * 60 * 60 + subAsm.getAsm().getAsmTimeDue().getMinutes()* 60 + subAsm.getAsm().getAsmTimeDue().getSeconds())*1000; 
+		return a > b ? true : false;
 	}
 
 	@Override
