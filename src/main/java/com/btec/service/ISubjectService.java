@@ -26,4 +26,5 @@ public interface ISubjectService {
 	List<SubjectDTO> getListById(Long id);
 
 	List<SubjectDTO> getListByMajorName(String majorName);
+	Boolean isExsist(String name);
 }

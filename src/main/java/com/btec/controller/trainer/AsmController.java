@@ -59,6 +59,7 @@ public class AsmController {
 		return mav;
 	}
 
+
 	@RequestMapping(value = {"/trainer/classoverview/{classId}/detail", "/trainer/classoverview/{classId}/create"}, method = RequestMethod.GET)
 	public ModelAndView createEditAsm(@PathVariable(value = "classId") Long classId, @RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
 		ModelAndView mav;
@@ -84,6 +85,7 @@ public class AsmController {
 		mav.addObject("model", model);
 		return mav;
 	}
+	
 	
 	@RequestMapping(value = "/trainer/classoverview/editpass", method = RequestMethod.GET)
 	public ModelAndView editPass(@RequestParam (value = "classId") Long classId, HttpServletRequest request) {

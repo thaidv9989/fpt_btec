@@ -1,20 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
-<c:url var="contentdetailURL" value="/trainer/classoverview/${classlist.classId}/edit"/>
-<c:url var="createNewAsmURL" value="/trainer/classoverview/${classlist.classId}/create"/>
+<c:url var="contentdetailURL" value="/trainer/classoverview/edit"/>
 <c:url var="classoverviewURL" value="/trainer/manageclass/class-overview"/>
 <c:url var="asmAPI" value="/api/asm"/>
 <c:url var="manageclassURL" value="/trainer/manageclass?page=1&limit=4"/>
 <c:url var="homeURL" value="/trainer/home"/>
-<c:url var="editpassURL" value="/trainer/classoverview/editpass">
-	<c:param name="classId" value="${classlist.classId}" />
-</c:url>
-<c:url var="classoverviewtabURL" value="/trainer/manageclass/class-overview">
-	<c:param name="classId" value="${classlist.classId}"></c:param>
-	<c:param name="page" value="1"></c:param>
-	<c:param name="limit" value="4"></c:param>
-</c:url>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +13,8 @@
 </head>
 <body>
 	<div id="content">
-	
+		<form action="<c:url value='/trainer/manageclass/class-overview'/>"
+			id="formSubmit" method="get">
 			<div id="breadcrumbs">
 				<ul class="breadcrumb">
 					<li><a href="${homeURL}">Home</a></li>
@@ -33,16 +25,19 @@
 			<div id="main-content">
 				<div class="right-content">
 					<div class="nav-tab">
-					
-						<button class="btn tablink" onclick="window.location.href='${classoverviewtabURL}';">
-							Class Overview
+					<c:url var="classoverviewtabURL" value="/trainer/manageclass/class-overview">
+						<c:param name="classId" value="${classlist.classId}"></c:param>
+						<c:param name="page" value="1"></c:param>
+						<c:param name="limit" value="4"></c:param>
+					</c:url>
+						<button class="btn tablink"
+							onclick="openTab(event,'Class-Overview')"><a href='${classoverviewtabURL}'>Class Overview</a></button>
+						<button class="btn tablink first-tab"
+							onclick="openTab(event, 'Create-Assignment')">
+							<a href='${contentdetailURL}'>Create Assignment</a>
 						</button>
-						<button class="btn tablink" onclick="window.location.href='${createNewAsmURL}';">
-							Create Assignment
-						</button>
-						<button class="btn tablink" onclick="window.location.href='${editpassURL}';">
-							Edit Code
-						</button>
+						<button class="btn tablink"
+							onclick="openTab(event, 'Create-Code')">Create Code</button>
 						<button class="btn tablink"
 							onclick="openTab(event, 'Manage-Student')">Manage
 							Student</button>
@@ -65,7 +60,10 @@
 							<form:input type="time" step="2" value="01:00:00" cssClass="input-info edit-input" path="asmTimeDue"/>
 							<h4>Limit Item</h4>
 							<form:input cssClass="input-info edit-input" path="limitItem"/>
-							<input type="hidden" name="classId" value="${classlist.classId}"/>
+							<h4>Class Name</h4>
+							<form:select cssClass="input-info edit-input" path="classId">					
+									<form:options items="${classlist}"/>
+							</form:select><br>
 							<form:hidden path="asmId" id="asmId"/>
 							<button type="button" id="btnAddOrUpdateAsm" title="Create Assignment"
 									class="btn-edit-asm">Create Assignment</button>
@@ -145,13 +143,14 @@
 					</div>
 				</div>
 			</div>
+		</form>
 	</div>
 	<script>
 
 	$('#btnAddOrUpdateAsm').click(function(e) {
 		e.preventDefault();
 		var data = {};
-		var formData = $('#formSubmitAsm').serializeArray();
+		var formData = $('#formSubmit').serializeArray();
 		$.each(formData, function (i, v) {
             data[""+v.name+""] = v.value;
         });
@@ -171,12 +170,7 @@
             data: JSON.stringify(data),
             dataType: 'json',
             success: function (result) {
-            	let rs = confirm('Create new Assignment successfully! Do you want to create another assignment?');
-            	if (rs == true) {
-            			window.location.reload();
-            		} else {
-            			window.location.href = "${contentdetailURL}?asmId="+result.asmId;
-            		}
+            	window.location.href = "${contentdetailURL}?asmId="+result.asmId+"&message=insert_success";
             },
             error: function (error) {
             	window.location.href = "${classoverviewURL}?page=1&limit=4&message=error_system";

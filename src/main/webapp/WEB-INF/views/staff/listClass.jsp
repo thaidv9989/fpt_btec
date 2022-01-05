@@ -29,6 +29,13 @@
 					</div>
 				</div>
 				<div class="table-content">
+<<<<<<< HEAD
+=======
+				<br>
+				
+				<input id="myInput" type="text" placeholder="Search..">
+                 <br><br>
+>>>>>>> 6bcedbe8c7732cf4a7ac0e0808005d8765735084
 					<table id="example" class="table table-striped table-bordered" style="width:100%">
 						<thead>
 							<tr>

@@ -41,12 +41,7 @@
                   <tr>
                     <th>Password</th>
                     <td>
-                      <input type="password"
-                        class="input-user-info"
-                        name="password"
-                        value="<%=SecurityUtils.getPrincipal().getPassword()%>"
-                      />
-                    <li><a href="http://localhost:8083/cms-btec/user/changepass">Change Password</a></li>
+                    	<span><a href="http://localhost:8080/cms-btec/user/changepass">Change Password</a></span>
                     </td>
                   </tr>
                   <tr>

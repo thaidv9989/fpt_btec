@@ -19,6 +19,7 @@
                                 <tr>
                                     <th>ClASS</th>
                                     <th>SUBJECT</th>
+                                    <th>STATUS</th>
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     data += '<tr>'
                                     data += '<td>'+c.className+'</td>'
                                     data += '<td>'+c.subjectName+'</td>'
+                                    data += '<td>'+c.status+'</td>'
                                     data += '<td><a href="class-details?id='+c.classId+'">View</a></td>'
                                     data += '</tr>'
                                 })
@@ -58,6 +60,7 @@
                                         data += '<tr>'
                                         data += '<td>'+c.className+'</td>'
                                         data += '<td>'+c.subjectName+'</td>'
+                                        data += '<td>'+c.status+'</td>'
                                         data += '<td><a href="class-details?id='+c.classId+'">View</a></td>'
                                         data += '</tr>'
                                     })

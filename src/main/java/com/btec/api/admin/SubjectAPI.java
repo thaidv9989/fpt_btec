@@ -42,4 +42,8 @@ public class SubjectAPI {
         if(subjectService.delete(id)) return ResponseEntity.ok("DELETED");
         return ResponseEntity.badRequest().build();
     }
+    @GetMapping("ce")
+	public ResponseEntity<?> checkExsist(@RequestParam(name = "name") String subjectName){
+		return subjectService.isExsist(subjectName) ? ResponseEntity.ok(true) : ResponseEntity.ok(false);
+	}
 }

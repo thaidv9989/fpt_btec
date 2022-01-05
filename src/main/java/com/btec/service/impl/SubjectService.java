@@ -91,4 +91,10 @@ public class SubjectService implements ISubjectService{
 	public List<SubjectDTO> getListByMajorName(String majorName){
 		return subjectRepository.findAll().stream().filter(s-> s.getMajor().getMajorName().toLowerCase().contains(majorName.toLowerCase())).map(SubjectConverter::toDto).collect(Collectors.toList());
 	}
+
+	@Override
+	public Boolean isExsist(String name) {
+		SubjectEntity subject = subjectRepository.findAll().stream().filter(m -> m.getSubjectName().equals(name)).findFirst().orElse(null);
+		return subject != null ? true : false;
+	}
 }

@@ -6,12 +6,10 @@
 <c:url var="changepwdURL" value="/" />
 <c:url var="classAPI" value="/api/class" />
 <!DOCTYPE html>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
 .pass_show {
@@ -35,52 +33,89 @@
 </style>
 <body>
 	<div id="content">
-		<div id="breadcrumbs"></div>
-		<c:if test="${not empty message}">
-			<div class="alert alert-${alert}">
-				<strong>${message}!</strong>
-			</div>
-		</c:if>
-		<div class="row">
-			<div class="col-sm-4">
-				<div id="Create-Code" class="tab-content" style="border: 1px solid; margin-top: 50px; ">
-					<input type="hidden" id="username" value="${username}" /> <label>Current
-						Password</label>
+		<div id="breadcrumbs">
+		</div>
+		<div id="main-content">
+			<div class="right-content">
+				<div id="Create-Code" class="tab-content">
+				<div id="message" style="display: none; color: red"></div>
+					<label>Current Password *</label>
 					<div class="form-group pass_show">
-						<input type="password" id="cpw" value="dasak" class="form-control"
-							placeholder="Current Password">
+						<input  type="password"  id="cpw" class="form-control"
+							placeholder="Current Password" required>
 					</div>
-					<br> <label>New Password</label>
+					<br>
+					<label>New Password *</label>
 					<div class="form-group pass_show">
-						<input type="password" id="npw" class="form-control"
-							placeholder="New Password">
+						<input type="password" id="npw"
+							class="form-control" placeholder="New Password" required>
 					</div>
-					<br> <label>Confirm Password</label>
+					<br>
+					<label>Confirm Password *</label>
 					<div class="form-group pass_show">
-						<input type="password" id="cpf" class="form-control"
-							placeholder="Confirm Password">
+						<input type="password" id="cfpw"
+							class="form-control" placeholder="Confirm Password" required>
 					</div>
-					<br> <input type="submit"
-						class="col-xs-12 btn btn-primary btn-load btn-lg"
-						data-loading-text="Changing Password..." value="Change Password">
+					<br>
+					<button onclick="checkPassword()">Change Password</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-		$(document).ready(function() {
-			$('.pass_show').append('<span class="ptxt">Show</span>');
-		});
-
-		$(document).on('click', '.pass_show .ptxt', function() {
-
-			$(this).text($(this).text() == "Show" ? "Hide" : "Show");
-
-			$(this).prev().attr('type', function(index, attr) {
-				return attr == 'password' ? 'text' : 'password';
-			});
-
-		});
+		<script type="text/javascript">
+		function displayMess(mess){
+			$("#message").text(mess)
+			$("#message").fadeIn(500, function(){
+				$("#message").fadeOut(3000)	
+			})
+		}
+		
+		
+		function checkPassword(){
+			console.log(123)
+			if($("#cpw").val().trim() === "" || $("#npw").val().trim() === "" || $("#cfpw").val().trim() === ""){
+				displayMess("Password must not be empty or contains only white space!")
+			}else{
+				$.ajax({
+					type: "GET",
+					url: "http://localhost:8080/cms-btec/api/user/cpw?pwd="+$("#cpw").val(),
+					success: function(res){
+						if(res){
+							changePwd()
+						}
+					},
+					error: function(res){
+						displayMess("Current password is incorrect !")
+					}
+				})
+			}
+		}
+		
+		function changePwd(){
+			if($("#npw").val().length < 8){
+				displayMess("Password length must equal or greater than 8 letters");
+			}
+			else{
+				if($("#npw").val() !== $("#cfpw").val()){
+					displayMess("Confirm password is not same as new password, try again !")
+					$("#cfpw").val("")
+				}
+				else{
+					$.ajax({
+						type: "PUT",
+						url: "http://localhost:8080/cms-btec/api/user/cpw?pwd="+$("#npw").val(),
+						success: function(res){
+							if(res){
+								window.location.replace("http://localhost:8080/cms-btec/logout")
+							}
+						},
+						error: function(res){
+							displayMess("error !")
+						}
+					})	
+				}
+			}
+		}
 	</script>
-</body>
+	</body>
 </html>

@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,8 +32,7 @@ public class HomeController {
 	@Autowired
 	private IClassService classService;
 	
-	@Autowired 
-	private IUserService userService;
+	@Autowired IUserService userService;
 	
 	@Autowired
 	private MessageUtil messageUtil;
@@ -68,6 +66,7 @@ public class HomeController {
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("trainer/manageclass");
 		Pageable pageable = new PageRequest(page - 1, limit);
+//		model.setListResult(classService.findAll(pageable));
 		model.setListResult(classService.findClassByUser(username));
 		model.setTotalItem(classService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));

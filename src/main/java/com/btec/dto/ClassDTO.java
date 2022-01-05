@@ -9,6 +9,7 @@ public class ClassDTO extends AbstractDTO<ClassDTO> {
 	private String username;
 	private Long subjectId;
 	private String subjectName;
+	private String status;
 	
 	
 	public Long getClassId() {
@@ -66,4 +67,13 @@ public class ClassDTO extends AbstractDTO<ClassDTO> {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
+	
 }

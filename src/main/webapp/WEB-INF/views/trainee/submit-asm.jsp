@@ -14,9 +14,9 @@
                     <input type="hidden" id="asmId"  value="${assignment.asmId}">
                     <input type="hidden" id="subAsmId" value="">
                     <input type="hidden" id="asmDueInSecond" value="${due}">
-                    <table>
+                    <table id="subasm-table">
                         <tr>
-                            <th>NAME</th>
+                            <th>ASSIGNMENT NAME</th>
                             <td>${assignment.asmName}</td>
                         </tr>
                         <tr>
@@ -40,10 +40,6 @@
                             <td id="submit-file">--</td>
                         </tr>
                         <tr>
-                            <th>GRADE</th>
-                            <td id="submit-grade">--</td>
-                        </tr>
-                        <tr>
                             <th>LAST MODIFIED</th>
                             <td id="submit-time">--</td>
                         </tr>
@@ -58,7 +54,6 @@
                         </form>
                     </div>
                     <div id="formUpload">
-                        <h3>Hãy Submit Assignment Trầm Kẽm này đi bruh</h3>
                         <form id="formSubmit">
                             <input id="fileSubmit" required type="file" name="fileSubmit" formenctype="multipart/form-data"/>
                             <button type="submit">Submit File</button>
@@ -100,7 +95,7 @@
                                         asmId: $("#asmId").val(),
                                         comment: "hello",
                                         fileName: res
-                                    }
+                                    };
                                     editAsm(json)
                                 },
                                 error: function (res) {
@@ -120,31 +115,53 @@
                             url: "http://localhost:8080/cms-btec/trainee-api/submission-info?asmId="+$("#asmId").val(),
                             success: function (res){
                                 if(res == ""){
-                                    $("#formUpload").show()
+                                    
                                 }
                                 else{
-                                    if($("#asmDueInSecond").val() - res.modifiedDate < 0){
-                                        $("#submit-status").text("Overdue You Failed Bro 🙁")
-                                    }else{
                                         console.log(res)
                                         $("#submit-time").text(new Date(res.modifiedDate).toLocaleString())
+                                        if(res.subStatus == 3){
+                                        	 $("#submit-status").text("Overdued")
+                                        	 $("#submit-status").css("background-color", "#FB4570")
+                                             $("#formUpload").hide();
+                                             $("#buttonUpload").hide();
+                                             $("#formButtonEdit").hide();
+                                        }
                                         if(res.subStatus == 1){
                                             $("#submit-status").text("Waiting for Grading")
+                                            $("#submit-status").css("background-color", "#F8D210")
+                                            $("#buttonUpload").show();
                                         }
                                         if(res.subStatus == 2){
                                             $("#submit-status").text("Graded")
+                                            $("#submit-status").css("background-color", "#81B622")
+                                            
+                                            let data = ''
+                                            data += '<tr>'
+                                            data += '<th>GRADE</th>'
+                                            data += '<td id="submit-grade">'+res.grade+'</td>'   		
+                                            data += '</tr>'
+                                           	data += '<tr>'
+                                            data += '<th>Comment of mentor</th>'
+                                            data += '<td><textarea id="submit-comment" readonly rows="5" cols="50">'+res.comment+'</textarea></td>'   		
+                                            data += '</tr>'
+                                            $("#subasm-table").append(data)
+                                            $("#submit-comment").css("background-color", "#ECF87F")
+                                            
+                                            $("#formUpload").hide();
+                                            $("#buttonUpload").hide();
+                                            $("#formButtonEdit").hide();
+                                            
                                         }
-                                        if(res.grade != -1){
-                                            $("#submit-grade").text(res.grade)
-                                        }
-                                        $("#buttonUpload").show();
                                         $("#submit-file").text(res.fileName.split("-").pop());
                                         $("#subAsmId").val(res.subAsmId);
-                                    }
                                 }
                             },
                             error: function () {
-                                alert("Something went wrong [x_x]")
+                            	$("#formUpload").show()
+                            	$("#submit-status").text("No Attempt")
+                                $("#submit-status").css("background-color", "#FF8300")
+                            	
                             }
                         })
                     }

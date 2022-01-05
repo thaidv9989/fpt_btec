@@ -47,7 +47,9 @@ public class traineeAPI {
     @GetMapping("/submission-info")
     public ResponseEntity<?> getSubmissionInfo(@RequestParam("asmId") String asmId){
         if(asmId.trim() != ""){
-            return ResponseEntity.ok(subAsmService.getSubmissionAsmByUsernameAndAsmId(Long.parseLong(asmId)));
+            if(subAsmService.getSubmissionAsmByUsernameAndAsmId(Long.parseLong(asmId)) != null){
+            	return ResponseEntity.ok(subAsmService.getSubmissionAsmByUsernameAndAsmId(Long.parseLong(asmId)));
+            }
         }
         return ResponseEntity.badRequest().build();
     }

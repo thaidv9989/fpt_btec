@@ -26,7 +26,7 @@ public class ClassConverter {
 		return result;
 	}
 	
-	public ClassDTO toClassDto(ClassEntity entity) {
+	public static ClassDTO toClassDto(ClassEntity entity) {
 		ClassDTO result = new ClassDTO();
 		result.setClassId(entity.getClassId());
 		result.setClassName(entity.getClassName());
@@ -41,7 +41,7 @@ public class ClassConverter {
 		return result;
 	}
 	
-	public ClassEntity toEntity(ClassDTO dto) {
+	public static ClassEntity toEntity(ClassDTO dto) {
 		ClassEntity result = new ClassEntity();
 		result.setClassName(dto.getClassName());
 		result.setPassword(dto.getPassword());
@@ -52,7 +52,7 @@ public class ClassConverter {
 		return result;
 	}
 	
-	public ClassEntity toEntity(ClassEntity result, ClassDTO dto) {
+	public static ClassEntity toEntity(ClassEntity result, ClassDTO dto) {
 		result.setClassName(dto.getClassName());
 		result.setPassword(dto.getPassword());
 		result.setModifiedBy(dto.getModifiedBy());

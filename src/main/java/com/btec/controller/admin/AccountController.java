@@ -35,7 +35,7 @@ public class AccountController{
 	public ModelAndView showList(HttpServletRequest request) {
 		UserDTO model = new UserDTO();
 		ModelAndView mav = new ModelAndView("admin/account/listuser");
-		model.setListResult(userService.findAll());
+		model.setListResult(userService.findAllActiveUser());
 		if (request.getParameter("message") != null) {
 			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
 			mav.addObject("message", message.get("message"));
@@ -58,7 +58,6 @@ public class AccountController{
 		mav.addObject("model", model);
 		return mav;
 	}
-	
 	@RequestMapping(value = {"/admin/user-manage/create", "/admin/user-manage/edit/{username}"}, method = RequestMethod.GET)
 	public ModelAndView editUser(@PathVariable(value = "username", required = false) String username, HttpServletRequest request) {
 		ModelAndView mav;

@@ -1,11 +1,13 @@
 package com.btec.service.impl;
 
+import java.io.Console;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class SubAsmService implements ISubAsmService {
 	@Autowired
 	private AsmRepository asmRepository;
 
-	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc\\";
+	private final String locationOfSubmitAsm = "D:\\GITTTTTTTTTTTTTT\\fpt_btec\\src\\main\\webapp\\template\\assets\\doc\\";
 
 	@Override
 	public List<SubAsmDTO> findAll() {
@@ -78,9 +80,25 @@ public class SubAsmService implements ISubAsmService {
 		SubasmEntity entity =userRepository.findOne(SecurityUtils.getPrincipal().getUsername()).getSubasmuser()
 				.stream().
 				filter(s -> s.getAsm().getAsmId().equals(asmId)).findFirst().orElse(null);
-		return entity == null ? null : subAsmConverter.toDto(entity);
+		if(entity != null) {
+			if(isOverDue(entity)) {
+				entity.setSubStatus(3);
+			}
+			else {
+				if(!entity.getSubFile().equals("")){
+					if(entity.getGrade() == 0) {
+						entity.setSubStatus(1);
+					}
+					else {
+						entity.setSubStatus(2);
+					}
+				}
+			}
+			return subAsmConverter.toDto(entity);
+		}
+		return null;
 	}
-
+	
 
 	@Override
 	public SubAsmDTO submitAsm(SubAsmDTO subAsmDTO){
@@ -91,7 +109,7 @@ public class SubAsmService implements ISubAsmService {
 		entity.setUser(user);
 		entity.setSubFile(subAsmDTO.getFileName());
 		entity.setSubStatus(1);
-		entity.setGrade(-1);
+		entity.setGrade(0);
 		entity.setComment(subAsmDTO.getComment());
 		user.getSubasmuser().add(entity);
 		userRepository.save(user);
@@ -105,14 +123,13 @@ public class SubAsmService implements ISubAsmService {
 		try {
 			Path oldSubmitFile = Paths.get(locationOfSubmitAsm + entity.getSubFile());
 			System.out.println(oldSubmitFile);
-//			Files.deleteIfExists(oldSubmitFile);
 			System.out.println(Files.deleteIfExists(oldSubmitFile));
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		entity.setSubFile(subAsmDTO.getFileName());
 		entity.setSubStatus(1);
-		entity.setGrade(-1);
+		entity.setGrade(0);
 		entity.setComment(subAsmDTO.getComment());
 		user.getSubasmuser().stream().filter(s -> s.getSubasmId().equals(subAsmDTO.getSubAsmId())).map(x-> entity);
 		userRepository.save(user);
@@ -131,6 +148,13 @@ public class SubAsmService implements ISubAsmService {
 			e.printStackTrace();
 		}
 		return gen;
+	}
+	
+	
+	public boolean isOverDue(SubasmEntity subAsm) {
+		long a = subAsm.getModifiedDate().getTime();
+		long b = subAsm.getAsm().getAsmDateDue().getTime() + (subAsm.getAsm().getAsmTimeDue().getHours() * 60 * 60 + subAsm.getAsm().getAsmTimeDue().getMinutes()* 60 + subAsm.getAsm().getAsmTimeDue().getSeconds())*1000; 
+		return a > b ? true : false;
 	}
 
 	@Override
