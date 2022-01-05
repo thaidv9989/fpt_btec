@@ -12,9 +12,7 @@
 		</ul>
 	</div>
 	<div id="main-content">
-		<div class="container-content">
-			<div class="table-wrapper">
-			<form action="<c:url value='/staff/manageclass'/>" id="formSubmit" method="get">
+		<div class="container">
 				<div class="table-title">
 					<div class="row">
 						<div class="col-sm-6">
@@ -31,19 +29,19 @@
 					</div>
 				</div>
 				<div class="table-content">
+<<<<<<< HEAD
+=======
 				<br>
 				
 				<input id="myInput" type="text" placeholder="Search..">
                  <br><br>
+>>>>>>> 6bcedbe8c7732cf4a7ac0e0808005d8765735084
 					<table id="example" class="table table-striped table-bordered" style="width:100%">
 						<thead>
 							<tr>
 								<th>ClassName</th>
-								<th>Password</th>
 								<th>Modified By</th>
-								<th>Modified Date</th>
 								<th>Created By</th>
-								<th>Created Date</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -51,35 +49,20 @@
 							<c:forEach var="item" items="${model.listResult}">
 								<tr>
 									<td>${item.className}</td>
-									<td>${item.password}</td>
 									<td>${item.modifiedBy}</td>
-									<td>${item.modifiedDate}</td>
 									<td>${item.createdBy}</td>
-									<td>${item.createdDate}</td>
 									<td>
 									<c:url var="editNewURL" value='/staff/edit'>
 									<c:param name="classId" value="${item.classId}" />
 								</c:url>
-								<a href="${editNewURL}">View</a>
+								<button type="button" class="btn btn-primary" onclick="window.location.href='${editNewURL}'">Go Into</button>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
-				<!-- Pagination -->
-				<div class="clearfix">
-					<div class="hint-text">
-						Showing <b>5</b> out of <b>10</b> entries
-					</div>
-					<div class="pagination">
-						 <ul class="pagination" id="pagination"></ul>
-						<input type="hidden" value="" id="page" name="page" /> 
-						<input type="hidden" value="" id="limit" name="limit" />
-					</div>
-				</div>
-				</form>
-			</div>
+
 			<!-- Edit Modal HTML -->
 			<div id="editEmployeeModal" class="modal fade">
 				<div class="modal-dialog">

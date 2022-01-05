@@ -36,6 +36,8 @@ public class HomeController {
 
 	@GetMapping("/class-details")
 	public String classDetail(@RequestParam String id, Model model){
+
+		/*model.addAttribute("assignment", classService.findAsmByClassId(Long.parseLong(id)));*/
 		model.addAttribute("assignment", classService.findAsmByUsernameAndClassId(Long.parseLong(id)));
 		model.addAttribute("content", classService.findOne(Long.parseLong(id)).getContentLink());
 		return "trainee/class-detail";

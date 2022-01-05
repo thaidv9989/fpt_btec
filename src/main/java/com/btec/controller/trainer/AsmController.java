@@ -46,7 +46,7 @@ public class AsmController {
 		model.setPage(page);
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("trainer/classoverview");
-		model.setListResult(classService.findByClassId(classId));
+		model.setListResult(classService.findAsmByClassId(classId));
 		model.setTotalItem(asmService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
 		if (request.getParameter("message") != null) {

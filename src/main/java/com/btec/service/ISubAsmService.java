@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ISubAsmService {
 	List<SubAsmDTO> findAll();
+	List<SubAsmDTO> findAllByAsmId(Long asmId);
 	SubAsmDTO findById(long subAsmId);
 
 	SubAsmDTO savegrade(SubAsmDTO dto);

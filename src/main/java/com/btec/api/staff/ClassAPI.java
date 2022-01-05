@@ -28,6 +28,25 @@ public class ClassAPI {
 		return classService.save(newclassDTO);
 	
 	}
+<<<<<<< HEAD
+=======
+	
+	@DeleteMapping("/api/class/removeuser")
+	private void removeUser(@RequestBody String[] usernames) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@PutMapping("/api/class/addtrainee")
+	private void addTrainee(@RequestBody String[] usernames) {
+		// TODO Auto-generated method stub
+	}
+	
+	@PutMapping("/api/class/resetpass")
+	public ClassDTO editClassPass(@RequestBody ClassDTO editclassDTO) {
+		return classService.savePass(editclassDTO);
+	}
+>>>>>>> e777997bf3aa1210d94fb461de14d8adeaee0862
 	@PutMapping("/api/class")
 	public ClassDTO editClass(@RequestBody ClassDTO editclassDTO) {
 		return classService.save(editclassDTO);
