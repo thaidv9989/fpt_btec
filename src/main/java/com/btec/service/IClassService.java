@@ -11,14 +11,14 @@ import com.btec.dto.UserDTO;
 
 public interface IClassService {
 	List<ClassDTO> findAll(Pageable pageable);
-	List<AsmDTO> findByClassId(Long classId);
+	List<AsmDTO> findAsmByClassId(Long classId);
 	int getTotalItem();
 	Map<Long, String> findAll();
 	ClassDTO findOne(Long classId);
 	ClassDTO save(ClassDTO dto);
 	void delete(long[] classIds);
 	List<UserDTO> listTraineeOfClass(Long classId, String username);
-	
+	boolean addTrainee(long[] username);
 	List<ClassDTO> findClassByUser(String username);
     boolean joinClass(ClassDTO dto, String username);
 

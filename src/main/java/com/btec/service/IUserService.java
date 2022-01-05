@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
+import com.btec.entity.UserEntity;
 
 public interface IUserService {
 	UserDTO findOne(String username);
@@ -21,6 +22,7 @@ public interface IUserService {
 	void activeUser(String[] usernames);
 	List<ClassDTO> getClassesOfTrainee(String username);
 	boolean checkPassword(String password);
-
+	List<UserDTO> findAllTrainee();
+	
 	boolean changePwd(String password);
 }

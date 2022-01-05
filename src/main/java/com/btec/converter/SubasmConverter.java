@@ -26,6 +26,22 @@ public class SubasmConverter {
 		return result;
 	}
 	
+	public SubAsmDTO toDtoReport(SubasmEntity entity) {
+		SubAsmDTO result = new SubAsmDTO();
+		result.setSubAsmId(entity.getSubasmId());
+		result.setComment(entity.getComment());
+		result.setGrade(entity.getGrade());
+		result.setSubStatus(entity.getSubStatus());
+		result.setUsername(entity.getUser().getUsername());
+		result.setFullName(entity.getUser().getFullName());
+		result.setUserEmail(entity.getUser().getEmail());
+		result.setGender(entity.getUser().getGender());
+		result.setFileName(entity.getSubFile());
+		result.setModifiedDate(new Timestamp(entity.getModifiedDate().getTime()));
+		
+		return result;
+	}
+	
 	public SubasmEntity toEntity(SubasmEntity result, SubAsmDTO dto) {
 		result.setComment(dto.getComment());
 		result.setGrade(dto.getGrade());

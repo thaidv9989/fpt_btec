@@ -106,7 +106,7 @@ public class ClassService implements IClassService {
 	}
 
 	@Override
-	public List<AsmDTO> findByClassId(Long classId) {
+	public List<AsmDTO> findAsmByClassId(Long classId) {
 		List<AsmDTO> asmmodel = new ArrayList<>();
 		List<AsmEntity> entities = classRepository.findOneByclassId(classId).getAsms();
 		for (AsmEntity item : entities) {
@@ -126,14 +126,17 @@ public class ClassService implements IClassService {
 	public List<UserDTO> listTraineeOfClass(Long classId, String username) {
 		List<UserEntity> usersEntity = classRepository.findOne(classId).getUserclass();
 		List<UserDTO> usersDTO = new ArrayList<>();
-		for (UserEntity users: usersEntity) {
-			if (!(users.getUsername() == username)) {
-				UserDTO userDTO = userConverter.toDto(users);
+		for (UserEntity item: usersEntity) {
+			if (!(item.getUsername() == username)) {
+				UserDTO userDTO = userConverter.toDto(item);
 				usersDTO.add(userDTO);
 			}
 		}
 		return usersDTO;
 	}
+	
+	
+	
 	@Override
 	public boolean joinClass(ClassDTO dto, String username){
 		ClassEntity classEntity = classRepository.findOne(dto.getClassId());
@@ -184,5 +187,11 @@ public class ClassService implements IClassService {
 			classDTOs.add(classDTO);
 		}
 		return classDTOs;
+	}
+
+	@Override
+	public boolean addTrainee(long[] username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

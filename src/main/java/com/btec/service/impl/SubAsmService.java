@@ -137,4 +137,16 @@ public class SubAsmService implements ISubAsmService {
 	public String generateUniqueFileName(String username, String fileName){
 		return username + "-" + UUID.randomUUID().toString().replace("-", "") + "-" + fileName;
 	}
+
+	@Override
+	public List<SubAsmDTO> findAllByAsmId(Long asmId) {
+		// TODO Auto-generated method stub
+		List<SubasmEntity> subasmEntities = asmRepository.findOne(asmId).getSubasms();
+		List<SubAsmDTO> subAsmDTOs = new ArrayList<>();
+		for (SubasmEntity subasmEntity: subasmEntities) {
+			SubAsmDTO subAsmDTO = subAsmConverter.toDtoReport(subasmEntity);
+			subAsmDTOs.add(subAsmDTO);
+		}
+		return subAsmDTOs;
+	}
 }

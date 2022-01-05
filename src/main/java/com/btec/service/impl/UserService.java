@@ -172,5 +172,20 @@ public class UserService implements IUserService {
 			userRepository.save(userEntity);
 		}
 	}
+	@Override
+	public List<UserDTO> findAllTrainee() {
+		// TODO Auto-generated method stub
+		String roleName = "trainee";
+		List<UserDTO> userDTOs = new ArrayList<>();
+		List<UserEntity> userEntities = roleRepository.findOneByRoleName(roleName).getUsers();
+		for (UserEntity userEntity : userEntities) {
+			UserDTO userDTO = new UserDTO();
+			if (userEntity.getStatus() == 1) {
+				userDTO = userConverter.toDto(userEntity);
+				userDTOs.add(userDTO);
+			}
+		}
+		return userDTOs;
+	}
 
 }
