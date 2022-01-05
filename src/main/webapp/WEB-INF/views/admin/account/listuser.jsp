@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/taglib.jsp"%>
 <c:url var="homeURL" value="/admin/home" />
-<c:url var="editNewURL" value="/admin/user-manage/create" />
-<c:url var="inactiveUsers" value="/admin/user-manage/inactive-users" />
-<c:url var="usermanageURL" value="admin/user-manage" />
+<c:url var="usermanageURL" value="admin/user-manage?page=1&limit=6" />
 <!-- Start Main Content -->
 <div id="content">
 	<div id="breadcrumbs">
@@ -16,61 +14,82 @@
 	<div id="main-content">
 		<div class="container-content">
 			<div class="table-wrapper">
+			<form action="<c:url value='/admin/user-manage'/>" id="formSubmit" method="get">
 				<div class="table-title">
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="nav-tab">
-								<button class="btn tablink first-tab" onclick="window.location.href='${usermanageURL}';">
-									Account List
-								</button>
-								<button class="btn tablink" onclick="window.location.href='${inactiveUsers}';">
-									Inactive User List
-								</button>
-								<button class="btn tablink" onclick="window.location.href='${editNewURL}';">
-									Create New Account
+								<button class="btn tablink first-tab"
+									onclick="openTab(event,'Account-list')">Account List</button>
+								<c:url var="editNewURL" value="/admin/user-manage/create" />
+								<button class="btn tablink"
+									onclick="openTab(event, 'Create-Account')">
+									<a href='${editNewURL}'>Create Account</a>
 								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="table-content">
-					<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-			            <thead>
-			              <tr>
-			                <th>UserName</th>
-							<th>FullName</th>
-							<th>Email</th>
-							<th>Phone</th>
-							<th>Gender</th>
-							<th>Actions</th>
-			              </tr>
-			            </thead>
-			            <tfoot>
-			              <tr>
-			                <th>UserName</th>
-							<th>FullName</th>
-							<th>Email</th>
-							<th>Phone</th>
-							<th>Gender</th>
-							<th>Actions</th>
-			              </tr>
-			            </tfoot>
-			            <tbody>
-			              <c:forEach var="item" items="${model.listResult}">
+					<table class="table table-striped table-hover .w-auto">
+						<thead>
+							<tr>
+								<th>UserName</th>
+								<th>FullName</th>
+								<th>Created By</th>
+								<th>Created Date</th>
+								<th>Modified By</th>
+								<th>Modified Date</th>
+								<th>DOB</th>
+								<th>Email</th>
+								<th>Phone</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="item" items="${model.listResult}">
 								<tr>
 									<td>${item.username}</td>
 									<td>${item.fullName}</td>
+									<td>${item.createdBy}</td>
+									<td>${item.createdDate}</td>
+									<td>${item.modifiedBy}</td>
+									<td>${item.modifiedDate}</td>
+									<td>${item.dob}</td>
 									<td>${item.email}</td>
 									<td>${item.phoneNumber}</td>
-									<td><c:if test="${item.gender == 'm'}">Male</c:if><c:if test="${item.gender == 'f'}">Female</c:if></td>
 									<td>
 									<c:url var="editNewURL" value='/admin/user-manage/edit/${item.username}'/>
-								<a href="${editNewURL}"><button><i class="fas fa-eye"></i> View Detail</button></a>
+								<a href="${editNewURL}">View</a>
 									</td>
 								</tr>
 							</c:forEach>
-			            </tbody>
-			          </table>
+						</tbody>
+					</table>
+				</div>
+				<!-- Pagination -->
+				<div class="clearfix">
+					<div class="hint-text">
+						Showing <b>5</b> out of <b>10</b> entries
+					</div>
+					<div class="pagination">
+						 <ul class="pagination" id="pagination"></ul>
+						<input type="hidden" value="" id="page" name="page" /> 
+						<input type="hidden" value="" id="limit" name="limit" />
+					</div>
+				</div>
+				</form>
+			</div>
+			<!-- Edit Modal HTML -->
+			<div id="editEmployeeModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content"></div>
+				</div>
+			</div>
+			<!-- Delete Modal HTML -->
+			<div id="deleteEmployeeModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content"></div>
 				</div>
 			</div>
 		</div>
@@ -152,7 +171,7 @@
 		</div>
 	</div>
 </div>
-<!-- <script>
+<script>
 var totalPages = ${model.totalPage};
 var currentPage = ${model.page};
 $(function() {
@@ -169,4 +188,4 @@ $(function() {
 		}
 	});
 });
-</script> -->
+</script>

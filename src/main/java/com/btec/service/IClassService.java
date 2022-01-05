@@ -26,7 +26,9 @@ public interface IClassService {
 	boolean checkClassPassword(ClassDTO dto);
 
 	String genLinkInvite(Long id);
+	Boolean isExsist(String name);
 	ClassDTO savePass(ClassDTO dto);
 	List<ClassDTO> findClassByUser(String username);
 	List<AsmDTO> findAsmByUsernameAndClassId(Long classId);
+	
 }

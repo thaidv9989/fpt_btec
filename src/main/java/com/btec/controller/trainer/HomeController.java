@@ -59,15 +59,14 @@ public class HomeController {
 	   }
 	
 	@RequestMapping(value = "/trainer/manageclass", method = RequestMethod.GET)
-	   public ModelAndView manageClass(@RequestParam(value = "username") String username, @RequestParam("page") int page, @RequestParam("limit") int limit,
+	   public ModelAndView manageClass(@RequestParam("page") int page, @RequestParam("limit") int limit,
 				HttpServletRequest request) {
 		ClassDTO model = new ClassDTO();
 		model.setPage(page);
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("trainer/manageclass");
 		Pageable pageable = new PageRequest(page - 1, limit);
-//		model.setListResult(classService.findAll(pageable));
-		model.setListResult(classService.findClassByUser(username));
+		model.setListResult(classService.findAll(pageable));
 		model.setTotalItem(classService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
 		if (request.getParameter("message") != null) {

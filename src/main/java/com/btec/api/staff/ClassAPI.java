@@ -28,10 +28,6 @@ public class ClassAPI {
 		return classService.save(newclassDTO);
 	
 	}
-	@PutMapping("/api/class/resetpass")
-	public ClassDTO editClassPass(@RequestBody ClassDTO editclassDTO) {
-		return classService.savePass(editclassDTO);
-	}
 	@PutMapping("/api/class")
 	public ClassDTO editClass(@RequestBody ClassDTO editclassDTO) {
 		return classService.save(editclassDTO);
@@ -53,6 +49,10 @@ public class ClassAPI {
 	@GetMapping("/api/class/gen")
 	public ResponseEntity<?> getLinkClass(@RequestParam Long id){
 		return ResponseEntity.ok(classService.genLinkInvite(id));
+	}
+	@GetMapping("/api/class/ce")
+	public ResponseEntity<?> checkExsist(@RequestParam(name = "name") String className){
+		return classService.isExsist(className) ? ResponseEntity.ok(true) : ResponseEntity.ok(false);
 	}
 	
 

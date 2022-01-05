@@ -80,20 +80,7 @@
                       </select>
                     </td>
                   </tr>
-                  <tr>
-                    <th>Decription</th>
-                    <td>
-                      <div id="editor">
-                        <!-- <textarea class="input-user-info" name="user-desc" style="resize: none;" id="" cols="30" rows="5"></textarea> -->
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Avatar</th>
-                    <td>
-                      <input class="input-user-info" type="file" mutiple />
-                    </td>
-                  </tr>
+                  
                   <tr>
                     <th></th>
                     <td>

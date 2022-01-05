@@ -1,8 +1,7 @@
 package com.btec.service.impl;
 
 import java.util.ArrayList;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,17 +9,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.btec.constant.SystemConstant;
 import com.btec.converter.ClassConverter;
 import com.btec.converter.UserConverter;
 import com.btec.dto.ClassDTO;
 import com.btec.dto.UserDTO;
 import com.btec.entity.ClassEntity;
 import com.btec.entity.UserEntity;
-import com.btec.repository.ClassRepository;
 import com.btec.repository.RoleRepository;
 import com.btec.repository.UserRepository;
 import com.btec.service.IUserService;
@@ -36,15 +34,12 @@ public class UserService implements IUserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	@Autowired 
-	private ClassRepository classRepository;
-	
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
-//	@Autowired
-//	private ClassConverter classConverter;
+	@Autowired
+	private ClassConverter classConverter;
 	
 	@Autowired UserConverter userConverter;
 	
@@ -57,11 +52,11 @@ public class UserService implements IUserService {
 	}
 	@Override
 	public List<UserDTO> findAll(){
-		return userRepository.findAll().stream().map(u -> userConverter.toDto(u)).collect(Collectors.toList());
+		return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());
 	}
 	@Override
 	public Map<String, String> findAllTrainer() {
-		Long roleId = 2L;
+		Long roleId = 3L;
 		Map<String, String> result = new HashMap<>();
 		List<UserEntity> entities = roleRepository.findOne(roleId).getUsers();
 		for (UserEntity item: entities) {
@@ -99,33 +94,28 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserDTO save(UserDTO dto) {
-		// TODO Auto-generated method stub
-//		UserEntity userEntity = new UserEntity();
-//		UserEntity oldUser = userRepository.findOne(dto.getUsername());
-//		if (oldUser != null) {
-//			userEntity = userConverter.toEntity(oldUser,dto);
-//		}
-//		else
-//		{
-//			userEntity = userConverter.toEntity(dto);
-//		}
-//		return userConverter.toDto(userRepository.save(userEntity));
-		/*
-		 * UserEntity userEntity = new UserEntity(); if(dto.getUsername() != null) {
-		 * UserEntity oldUser = userRepository.findOne(dto.getUsername()); userEntity =
-		 * userConverter.toEntity(oldUser,dto); }else { userEntity =
-		 * userConverter.toEntity(dto); } return
-		 * userConverter.toDto(userRepository.save(userEntity));
-		 */
-		
-		return userConverter.toDto(userRepository.save(userConverter.toEntity(dto)));
+		UserEntity userEntity = new UserEntity();
+		List<UserEntity> userEntities = roleRepository.findOne(dto.getRoleId()).getUsers();
+		UserEntity oldUser = userRepository.findOne(dto.getUsername());
+		if (oldUser != null) {
+			userEntity = userConverter.toEntity(oldUser,dto);
+			userEntity.setModifiedDate(new Date());
+		}
+		else
+		{
+			userEntity = userConverter.toEntity(dto);
+			userEntity.getRoles().add(roleRepository.findOne(dto.getRoleId()));
+			userEntities.add(userEntity);
+			userEntity.setCreatedDate(new Date());
+			userEntity.setModifiedDate(new Date());
+		}
+		return userConverter.toDto(userRepository.save(userEntity));
 	}
 	@Override
 	public boolean delete(String usernames) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
 	@Override
 	public List<ClassDTO> getClassesOfTrainee(String username){
 		return userRepository.findOne(username).getClassuser().stream().map((ClassEntity c) -> {
@@ -144,13 +134,7 @@ public class UserService implements IUserService {
 			return dto;
 		}).collect(Collectors.toList());
 	}
-	
-//	@Override
-//	public boolean delete(String usernames) {
-//		for (String username: usernames) {
-//			userRepository.delete(username);
-//		}
-//	}
+
 	
 	@Override
 	public boolean checkPassword(String password){
@@ -168,7 +152,27 @@ public class UserService implements IUserService {
 		}
 		return false;
 	}
-	
-
+	@Override
+	public List<UserDTO> findAllInactiveUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void inactiveUser(String[] usernames) {
+		for (String username : usernames) {
+			UserEntity userEntity = userRepository.findOne(username);
+			userEntity.setStatus(SystemConstant.INACTIVE_STATUS);
+			userRepository.save(userEntity);
+		}
+	}
+	@Override
+	public void activeUser(String[] usernames) {
+		// TODO Auto-generated method stub
+		for (String username : usernames) {
+			UserEntity userEntity = userRepository.findOne(username);
+			userEntity.setStatus(SystemConstant.ACTIVE_STATUS);
+			userRepository.save(userEntity);
+		}
+	}
 
 }

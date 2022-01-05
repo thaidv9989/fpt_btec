@@ -20,5 +20,9 @@ public interface IUserService {
 	boolean delete(String usernames);
 	List<ClassDTO> getClassesOfTrainee(String username);
 	boolean checkPassword(String password);
+
 	boolean changePwd(String password);
+	List<UserDTO> findAllInactiveUser();
+	void inactiveUser(String[] usernames);
+	void activeUser(String[] usernames);
 }

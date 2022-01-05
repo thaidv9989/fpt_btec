@@ -57,17 +57,5 @@ public class HomeController {
 		return mav;
 	   }
 	
-	@RequestMapping(value = "/staff/{username}", method = RequestMethod.GET)
-	   public ModelAndView updateProfile(@PathVariable String username,@RequestParam(required = false) Boolean success, HttpServletRequest request) {
-	      ModelAndView mav = new ModelAndView("staff/updateprofile");
-	      UserDTO userinfo = new UserDTO();
-	      userinfo = userService.findOne(username);
-	      if (request.getParameter("message") != null) {
-				Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
-				mav.addObject("message", message.get("message"));
-				mav.addObject("alert", message.get("alert"));
-			}
-	      mav.addObject("userinfo", userinfo);
-	      return mav;
-	   }
+	
 }

@@ -4,6 +4,9 @@ import com.btec.dto.AsmDTO;
 import com.btec.entity.AsmEntity;
 import com.btec.service.IAsmService;
 import com.btec.service.IClassService;
+
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -40,10 +43,10 @@ public class HomeController {
 
 	@GetMapping("/submit-asm")
 	public String submitDetail(@RequestParam String id, Model model){
-		AsmDTO asm = asmService.findById(Long.parseLong(id));
-		Long due =  asm.getAsmDateDue().getTime() + asm.getAsmTimeDue().getTime();
-		model.addAttribute("due", due);
-		model.addAttribute("assignment", asm);
+		AsmDTO a = asmService.findById(Long.parseLong(id));
+		long due =  a.getAsmDateDue().getTime() + (a.getAsmTimeDue().getHours() * 60 * 60 + a.getAsmTimeDue().getMinutes()* 60 + a.getAsmTimeDue().getSeconds())*1000;
+		model.addAttribute("due", new Timestamp(due));
+		model.addAttribute("assignment", a);
 		return "trainee/submit-asm";
 	}
 }

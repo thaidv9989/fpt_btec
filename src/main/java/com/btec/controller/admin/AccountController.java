@@ -32,24 +32,15 @@ public class AccountController{
 	private MessageUtil messageUtil;
 
 	@RequestMapping(value = "/admin/user-manage", method = RequestMethod.GET)
-	public ModelAndView showList(HttpServletRequest request) {
+	public ModelAndView showList(@RequestParam("page") int page, @RequestParam("limit") int limit, HttpServletRequest request) {
 		UserDTO model = new UserDTO();
+		model.setPage(page);
+		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("admin/account/listuser");
-		model.setListResult(userService.findAll());
-		if (request.getParameter("message") != null) {
-			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
-			mav.addObject("message", message.get("message"));
-			mav.addObject("alert", message.get("alert"));
-		}
-		mav.addObject("model", model);
-		return mav;
-	}
-	
-	@RequestMapping(value = "/admin/user-manage/inactive-users", method = RequestMethod.GET)
-	public ModelAndView inactiveUsers(HttpServletRequest request) {
-		UserDTO model = new UserDTO();
-		ModelAndView mav = new ModelAndView("admin/account/inactiveUsers");
-		model.setListResult(userService.findAllInactiveUser());
+		Pageable pageable = new PageRequest(page - 1, limit);
+		model.setListResult(userService.findAll(pageable));
+		model.setTotalItem(userService.getTotalItem());
+		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
 		if (request.getParameter("message") != null) {
 			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
 			mav.addObject("message", message.get("message"));

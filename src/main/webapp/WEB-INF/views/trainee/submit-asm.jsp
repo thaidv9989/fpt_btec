@@ -25,7 +25,7 @@
                         </tr>
                         <tr>
                             <th>DUE</th>
-                            <td>${assignment.asmDateDue} ${assignment.asmTimeDue}</td>
+                            <td id="submit-due"></td>
                         </tr>
                         <tr>
                             <th>SUBMISSION TYPE</th>
@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <script type="text/javascript">
+                    $("#submit-due").text(new Date($("#asmDueInSecond").val()).toLocaleString())
                     $("#formUpload").hide();
                     $("#buttonUpload").hide();
                     $("#formButtonEdit").hide();

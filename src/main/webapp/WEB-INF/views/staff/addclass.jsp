@@ -39,6 +39,7 @@
 				</c:if>
 				<div id="Create-Assignment" class="tab-content">
 					<form:form role="form" id="formAddClass" modelAttribute="classmodel">
+					    <input type="hidden" readonly id="classId">
 						<h4>Class Name</h4>
 						<form:input cssClass="input-info" path="className"/>
 						<h4>Select Subject</h4>
@@ -57,8 +58,8 @@
 							<form:options items="${usermodel}"/>
 						</form:select>
 						<br/>
-						<form:hidden path="classId"/>
-						<button type="button" id="btnAddClass" class="btn btn-create-asm">Create
+						<form:hidden path="classId"/> 
+						<button id="btnAddClass" class="btn btn-create-asm" onclick="validateClassName()">Create
 						Class</button>
 					</form:form>
 					
@@ -138,7 +139,34 @@
 			</div>
 		</div>
 	</div>
-	<script>
+	<script type="text/javascript">
+	var count = 0;
+	
+	function validateClassName(){
+		var result = false;
+		$.ajax({
+			url: "http://localhost:8080/cms-btec/api/class/ce?name="+$("#className").val(),
+			type: "GET",
+			success: function(res){
+				if(!res){
+					addClass()
+					
+				}
+				else{
+					alert("This class is existed. try another !"),
+					$("#className").val("")
+				}
+			},
+			error: function(res){
+				console.log(res)
+			}
+		})
+		console.log("Sau khi ra khoi ajax:", result)
+		return result
+	}
+	
+	
+	
 		$('#btnAddClass').click(function(e) {
 			e.preventDefault();
 			var data = {};
@@ -160,9 +188,10 @@
 				type : 'POST',
 				contentType : 'application/json',
 				data : JSON.stringify(data),
-				dataType : 'json',
+				dataType : "json",
 				success : function(result) {
 					window.location.href = "${contentdetailURL}?classId="+result.classId+"&message=insert_success";
+					
 				},
 				error : function(error) {
 					window.location.href = "${staffaddclassURL}&message=error_system";

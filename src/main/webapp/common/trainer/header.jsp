@@ -56,7 +56,7 @@
 					class="fas fa-angle-down"></i>
 			</a>
 				<ul class="subnav">
-					<li><a href="<c:url value='/trainer/manageclass?page=1&limit=4'/>"><i
+					<li><a href="<c:url value='/trainer/manageclass?page=1&limit=10'/>"><i
 							class="fas fa-graduation-cap"></i> Manage Class</a></li>
 					<li><a href="manage-student.html"><i
 							class="fas fa-user-graduate"></i> Manage Student</a></li>

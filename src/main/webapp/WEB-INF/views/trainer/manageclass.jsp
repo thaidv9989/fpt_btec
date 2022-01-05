@@ -48,7 +48,7 @@
 										<td>${item.createdDate}</td>
 										<td>${item.subjectName}</td>
 										<td><c:url var="classoverviewURL"
-												value='/trainer/manageclass/class-overview?page=1&limit=4'>
+												value='/trainer/manageclass/class-overview?page=1&limit=10'>
 												<c:param name="classId" value="${item.classId}" />
 											</c:url> <a href="${classoverviewURL}" class=""><i
 												class="fas fa-eye"></i>View</a></td>

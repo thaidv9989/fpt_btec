@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,11 +21,18 @@ import com.btec.util.MessageUtil;
 @Controller(value = "homeControllerOfAdmin")
 public class HomeController {
 	
+	@Autowired
+	private IUserService userService;
+	
+	@Autowired
+	private MessageUtil messageUtil;
+	
 
 	@RequestMapping(value = "/admin/home", method = RequestMethod.GET)
 	public ModelAndView homePage() {
 		ModelAndView mav = new ModelAndView("admin/home");
 		return mav;
 	}
+	
 
 }

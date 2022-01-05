@@ -9,21 +9,7 @@ public class UserDTO extends AbstractDTO<UserDTO> {
 	private String phoneNumber;
 	private String email;
 	private Date dob;
-	private String gender;
-	private String country;
 	private Integer userStatus;
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
 	public Integer getUserStatus() {
 		return userStatus;
 	}

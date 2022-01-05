@@ -60,8 +60,8 @@ public class AsmController {
 	}
 
 
-	@RequestMapping(value = {"/trainer/classoverview/{classId}/detail", "/trainer/classoverview/{classId}/create"}, method = RequestMethod.GET)
-	public ModelAndView createEditAsm(@PathVariable(value = "classId") Long classId, @RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
+	@RequestMapping(value = "/trainer/classoverview/edit", method = RequestMethod.GET)
+	public ModelAndView createEditAsm(@RequestParam(value = "asmId", required = false) Long asmId, HttpServletRequest request) {
 		ModelAndView mav;
 		SubAsmDTO subasm = new SubAsmDTO();
 		AsmDTO model = new AsmDTO();
@@ -81,7 +81,7 @@ public class AsmController {
 			mav.addObject("message", message.get("message"));
 			mav.addObject("alert", message.get("alert"));
 		}
-		mav.addObject("classlist", classService.findOne(classId));
+		mav.addObject("classlist", classService.findAll());
 		mav.addObject("model", model);
 		return mav;
 	}
