@@ -88,7 +88,7 @@ public class UserService implements IUserService {
 	
 	@Override
 	public Map<String, String> findAllTrainer() {
-		Long roleId = 2L;
+		Long roleId = 3L;
 		Map<String, String> result = new HashMap<>();
 		List<UserEntity> entities = roleRepository.findOne(roleId).getUsers();
 		for (UserEntity item: entities) {
