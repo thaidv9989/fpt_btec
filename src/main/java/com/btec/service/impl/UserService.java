@@ -54,32 +54,6 @@ public class UserService implements IUserService {
 	public List<UserDTO> findAll(){
 		return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());
 	}
-	
-	
-	@Override
-	public List<UserDTO> findAllActiveUser(){
-		List<UserDTO> userDTOs = new ArrayList<>();
-		List<UserEntity> userEntities = userRepository.findAllByStatus(SystemConstant.ACTIVE_STATUS);
-		for (UserEntity userEntity: userEntities) {
-			UserDTO userDTO = userConverter.toDto(userEntity);
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
-	}
-	
-	
-	@Override
-	public List<UserDTO> findAllInactiveUser(){
-		/*return userRepository.findAll().stream().map(u->userConverter.toDto(u)).collect(Collectors.toList());*/
-		List<UserDTO> userDTOs = new ArrayList<>();
-		List<UserEntity> userEntities = userRepository.findAllByStatus(SystemConstant.INACTIVE_STATUS);
-		for (UserEntity userEntity: userEntities) {
-			UserDTO userDTO = userConverter.toDto(userEntity);
-			userDTOs.add(userDTO);
-		}
-		return userDTOs;
-	}
-	
 	@Override
 	public Map<String, String> findAllTrainer() {
 		Long roleId = 3L;
@@ -178,7 +152,6 @@ public class UserService implements IUserService {
 		}
 		return false;
 	}
-<<<<<<< HEAD
 	@Override
 	public List<UserDTO> findAllInactiveUser() {
 		// TODO Auto-generated method stub
@@ -192,9 +165,6 @@ public class UserService implements IUserService {
 			userRepository.save(userEntity);
 		}
 	}
-=======
-
->>>>>>> e777997bf3aa1210d94fb461de14d8adeaee0862
 	@Override
 	public void activeUser(String[] usernames) {
 		// TODO Auto-generated method stub
@@ -204,24 +174,5 @@ public class UserService implements IUserService {
 			userRepository.save(userEntity);
 		}
 	}
-<<<<<<< HEAD
-=======
-	@Override
-	public List<UserDTO> findAllTrainee() {
-		// TODO Auto-generated method stub
-		String roleName = "trainee";
-		List<UserDTO> userDTOs = new ArrayList<>();
-		List<UserEntity> userEntities = roleRepository.findOneByRoleName(roleName).getUsers();
-		for (UserEntity userEntity : userEntities) {
-			UserDTO userDTO = new UserDTO();
-			if (userEntity.getStatus() == 1) {
-				userDTO = userConverter.toDto(userEntity);
-				userDTOs.add(userDTO);
-			}
-		}
-		return userDTOs;
-	}
-
->>>>>>> e777997bf3aa1210d94fb461de14d8adeaee0862
 
 }

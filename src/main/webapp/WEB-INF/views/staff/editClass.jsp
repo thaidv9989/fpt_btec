@@ -5,8 +5,6 @@
 <c:url var="staffmanageclassURL"
 	value="/staff/manageclass?page=1&limit=6" />
 <c:url var="classdetailURL" value="/staff/manageclass/class-detail" />
-<c:url var="mngClassURL" value="/staff/class/${classmodel.classId}/mng"/>
-<c:url var="reportClassURL" value="/staff/class/${classmodel.classId}/report"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,15 +31,12 @@
 					</c:url>
 					<button class="btn tablink first-tab"
 						onclick="openTab(event,'content-overview')">
-						Class Detail
-					</button>
-					<button class="btn tablink first-tab"
-						onclick="window.location.href='${mngClassURL}';">
-						Class Member
-					</button>
-					<button class="btn tablink first-tab"
-						onclick="window.location.href='${reportClassURL}';">
-						Grade Report
+						<c:if test="${not empty classmodel.classId }">
+							Update Class
+						</c:if>
+						<c:if test="${empty classmodel.classId}">
+							Create New Class
+						</c:if>
 					</button>
 				</div>
 				<c:if test="${not empty message}">

@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ISubAsmService {
 	List<SubAsmDTO> findAll();
-	List<SubAsmDTO> findAllByAsmId(Long asmId);
 	SubAsmDTO findById(long subAsmId);
 
 	SubAsmDTO savegrade(SubAsmDTO dto);
@@ -21,4 +20,6 @@ public interface ISubAsmService {
     String uploadFile(MultipartFile file);
 
     String generateUniqueFileName(String username, String fileName);
+    
+    List<SubAsmDTO> findByAsmId(Long id);
 }

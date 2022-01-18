@@ -37,28 +37,10 @@ public class AccountController{
 		model.setPage(page);
 		model.setLimit(limit);
 		ModelAndView mav = new ModelAndView("admin/account/listuser");
-<<<<<<< HEAD
 		Pageable pageable = new PageRequest(page - 1, limit);
 		model.setListResult(userService.findAll(pageable));
 		model.setTotalItem(userService.getTotalItem());
 		model.setTotalPage((int) Math.ceil((double) model.getTotalItem() / model.getLimit()));
-=======
-		model.setListResult(userService.findAllActiveUser());
-		if (request.getParameter("message") != null) {
-			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
-			mav.addObject("message", message.get("message"));
-			mav.addObject("alert", message.get("alert"));
-		}
-		mav.addObject("model", model);
-		return mav;
-	}
-	
-	@RequestMapping(value = "/admin/user-manage/inactive-users", method = RequestMethod.GET)
-	public ModelAndView inactiveUsers(HttpServletRequest request) {
-		UserDTO model = new UserDTO();
-		ModelAndView mav = new ModelAndView("admin/account/inactiveUsers");
-		model.setListResult(userService.findAllInactiveUser());
->>>>>>> e777997bf3aa1210d94fb461de14d8adeaee0862
 		if (request.getParameter("message") != null) {
 			Map<String, String> message = messageUtil.getMessage(request.getParameter("message"));
 			mav.addObject("message", message.get("message"));

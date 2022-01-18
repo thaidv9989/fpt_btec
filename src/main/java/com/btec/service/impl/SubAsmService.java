@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.btec.entity.AsmEntity;
 import com.btec.entity.UserEntity;
@@ -146,14 +147,7 @@ public class SubAsmService implements ISubAsmService {
 	}
 
 	@Override
-	public List<SubAsmDTO> findAllByAsmId(Long asmId) {
-		// TODO Auto-generated method stub
-		List<SubasmEntity> subasmEntities = asmRepository.findOne(asmId).getSubasms();
-		List<SubAsmDTO> subAsmDTOs = new ArrayList<>();
-		for (SubasmEntity subasmEntity: subasmEntities) {
-			SubAsmDTO subAsmDTO = subAsmConverter.toDtoReport(subasmEntity);
-			subAsmDTOs.add(subAsmDTO);
-		}
-		return subAsmDTOs;
+	public List<SubAsmDTO> findByAsmId(Long id){
+		return subAsmRepository.findAll().stream().filter(s -> s.getAsm().getAsmId().equals(id)).map(s -> subAsmConverter.toDto(s)).collect(Collectors.toList());
 	}
 }

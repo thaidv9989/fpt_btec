@@ -14,10 +14,10 @@
                     Search By Subject <input type="text" id="search-input" oninput="searchClasses()">
                 </div>
                 <div class="row place-list">
-                        <table style="width: 100%">
+                        <table style="width: 100%; border: 1px solid #333">
                             <thead>
                                 <tr>
-                                    <th>ClASS</th>
+                                    <th>CLASS</th>
                                     <th>SUBJECT</th>
                                     <th>STATUS</th>
                                     <th>ACTION</th>
