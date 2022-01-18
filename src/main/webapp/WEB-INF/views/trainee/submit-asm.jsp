@@ -14,7 +14,7 @@
                     <input type="hidden" id="asmId"  value="${assignment.asmId}">
                     <input type="hidden" id="subAsmId" value="">
                     <input type="hidden" id="asmDueInSecond" value="${due}">
-                    <table id="subasm-table">
+                    <table style="width: 600px" id="subasm-table">
                         <tr>
                             <th>ASSIGNMENT NAME</th>
                             <td>${assignment.asmName}</td>
@@ -71,7 +71,24 @@
                         $("#formButtonEdit").show();
                         $("#buttonUpload").hide();
                     }
-
+					
+                    function isOverDued(){
+                    	let due = new Date($("#asmDueInSecond").val())
+                    	let curr = new Date()
+                    	if(due > curr){
+                    		return false
+                    	}else{
+                    		return true
+                    	}
+                    }
+                    
+                    function displayFail(){
+	                   	 $("#submit-status").text("Overdued")
+	                	 $("#submit-status").css("background-color", "#FB4570")
+	                     $("#formUpload").hide();
+	                     $("#buttonUpload").hide();
+	                     $("#formButtonEdit").hide();
+                    }
 
 
                     $("#formEdit").on("submit", function (e){
@@ -118,8 +135,7 @@
                                 if(res == ""){
                                     
                                 }
-                                else{
-                                        console.log(res)
+                                else{	
                                         $("#submit-time").text(new Date(res.modifiedDate).toLocaleString())
                                         if(res.subStatus == 3){
                                         	 $("#submit-status").text("Overdued")
@@ -154,14 +170,20 @@
                                             $("#formButtonEdit").hide();
                                             
                                         }
-                                        $("#submit-file").text(res.fileName.split("-").pop());
+                                        $("#submit-file").text(res.fileName.split("-+I+-+d+-+E+-+N+-+t+-+I+-+f+-+E+-+r+-").pop());
                                         $("#subAsmId").val(res.subAsmId);
                                 }
                             },
                             error: function () {
-                            	$("#formUpload").show()
-                            	$("#submit-status").text("No Attempt")
-                                $("#submit-status").css("background-color", "#FF8300")
+                            	if(isOverDued()){
+                            		console.log(isOverDued())
+                            		displayFail()
+                            	}
+                            	else{
+                                	$("#formUpload").show()
+                                	$("#submit-status").text("No Attempt")
+                                    $("#submit-status").css("background-color", "#FF8300")	
+                            	}
                             	
                             }
                         })

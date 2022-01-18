@@ -44,7 +44,7 @@ public class SubAsmService implements ISubAsmService {
 	@Autowired
 	private AsmRepository asmRepository;
 
-	private final String locationOfSubmitAsm = "C:\\Users\\BK\\eclipse-workspace\\cms_finalyiii\\src\\main\\webapp\\template\\assets\\doc\\";
+	private final String locationOfSubmitAsm = "D:\\Do An\\fpt_btec\\src\\main\\webapp\\template\\assets\\doc\\";
 
 	@Override
 	public List<SubAsmDTO> findAll() {
@@ -105,9 +105,7 @@ public class SubAsmService implements ISubAsmService {
 		SubasmEntity entity = subAsmRepository.findOne(subAsmDTO.getSubAsmId());
 		try {
 			Path oldSubmitFile = Paths.get(locationOfSubmitAsm + entity.getSubFile());
-			System.out.println(oldSubmitFile);
-//			Files.deleteIfExists(oldSubmitFile);
-			System.out.println(Files.deleteIfExists(oldSubmitFile));
+			Files.deleteIfExists(oldSubmitFile);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -143,7 +141,7 @@ public class SubAsmService implements ISubAsmService {
 
 	@Override
 	public String generateUniqueFileName(String username, String fileName){
-		return username + "-" + UUID.randomUUID().toString().replace("-", "") + "-" + fileName;
+		return username + "-" + UUID.randomUUID().toString().replace("-", "") + "-+I+-+d+-+E+-+N+-+t+-+I+-+f+-+E+-+r+-" + fileName;
 	}
 
 	@Override
